@@ -573,7 +573,7 @@
 				<a class="link" href="https://github.com/The-HopelessGamer/steamwishlistcalculator" href="#faq" title="FAQ">
 					<u>Source Code</u>
 				</a>
-				|
+				-
 				<b>Partners:</b>
 				<a class="link" href="https://steam.design/" title="A small tool to crop Steam profile backgrounds to showcases." target="_blank">Steam.Design</a>
 				|
