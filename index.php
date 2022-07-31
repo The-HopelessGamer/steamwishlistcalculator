@@ -561,16 +561,17 @@
 		</div>
 		<div class="image3"></div>
 		<div id="footer">
-			<p>Copyright &copy; 2018 - <?php echo date("Y"); ?>
-				-
-				<a class="link" href="https://www.steamwishlistcalculator.com/" target="_blank">www.steamwishlistcalculator.com</a>
-				- All Rights Reserved -
+			<p>
 				<a class="link" onclick="privacypolicy(); event.preventDefault();" href="#privacy-policy" title="Privacy Policy">
 					<u>Privacy Policy</u>
 				</a>
 				-
 				<a class="link" onclick="faq(); event.preventDefault();" href="#faq" title="FAQ">
 					<u>FAQ</u>
+				</a>
+				-
+				<a class="link" href="https://github.com/The-HopelessGamer/steamwishlistcalculator" href="#faq" title="FAQ">
+					<u>Source Code</u>
 				</a>
 				|
 				<b>Partners:</b>
@@ -583,7 +584,7 @@
 				<a class="link" onclick="partners();" href="#partners" title="View All Partners">View All Partners</a>
 				<p>This website is Not affiliated with Valve Corporation, Steam, or any of their partners. All Copyrights & Trademarks reserved to their respective owners.</p>
 				<p style="margin: 0px;">Website owned & developed by
-					<a class="link" href="http://steamcommunity.com/id/The_HopelessGamer" target="_blank">The HopelessGamer</a>. Want to become a Partner?
+					<a class="link" href="http://steamcommunity.com/id/The_HopelessGamer" target="_blank">The HopelessGamer</a> 2018 - <?php echo date("Y"); ?>. Want to become a Partner?
 					<a class="link" onclick="formResetContact(); event.preventDefault();" href="#contact" title="Contact">Contact us</a>.</p>
 			</div>
 		</div>
