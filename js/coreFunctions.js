@@ -292,7 +292,7 @@
  }
 
 function onResize() { //Places the currency dropdown either in the hamburger menu or in the header depending on the screen resolution.
-    if ($(window).width() <= 1000) {
+    if ($(window).width() <= 1050) {
         $(".customSelect").appendTo("#select");
         $(".selectSelected").css("display", "none");
         $("#customSelect").css("width", "auto");

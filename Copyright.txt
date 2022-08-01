@@ -1,6 +1,7 @@
 Simple Html Dom Parser: https://sourceforge.net/projects/simplehtmldom/ | Licensed under The MIT License
 jQuery: https://jquery.org/ | Licensed under The MIT License
 Accounting.js: http://openexchangerates.github.io/accounting.js | Licensed under The MIT License
+Bootstrap-professbar: https://github.com/minddust/bootstrap-progressbar | Licensed under The MIT License
 -------------------------
 
 Font Awesome Free License

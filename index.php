@@ -88,6 +88,9 @@
 						<a class="menu-button hide-menu-mobile" style="transition: none;" title="Discord" href="https://discord.gg/abyAUJU" alt="Discord" target="_blank">
 							<i class="fab fa-discord button-menu" alt="Discord"></i>
 						</a>
+						<a class="menu-button hide-menu-mobile" style="transition: none;" title="Github" href="https://github.com/The-HopelessGamer/steamwishlistcalculator" alt="Github" target="_blank">
+							<i class="fab fa-github button-menu" alt="Github"></i>
+						</a>
 					</div>
 					<span id="currencyDropdown"></span>
 					<div class="customSelect" id="customSelect" style="width:250px;">
@@ -131,6 +134,7 @@
 							<a class="menu-button sidenav-buttons" title="Partners" onclick="partners(); closeNav(); event.preventDefault(); callCancelFetch();" alt="partners" href="#partners">Partners</a>
 							<a class="menu-button sidenav-buttons" title="Discord" href="https://discord.gg/abyAUJU" alt="Discord" target="_blank">Discord</a>
 							<a class="menu-button sidenav-buttons" title="Steam Group" href="https://steamcommunity.com/groups/SteamWishlistCalculator" alt="Steam Group" target="_blank">Steam Group</a>
+							<a class="menu-button sidenav-buttons" title="Github" href="https://github.com/The-HopelessGamer/steamwishlistcalculator" alt="Github" target="_blank">Github</a>
 							<a id="select" style="text-align: center;"></a>
 						</div>
 					</div>
