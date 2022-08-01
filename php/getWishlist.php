@@ -13,6 +13,7 @@
         $CC = filter_var($_GET["cc"], FILTER_SANITIZE_STRING);
         $url = "https://store.steampowered.com/wishlist/" . $urlType . "/" . $profileId . "/wishlistdata?p=" . $pageNumber . "&cc=" . $CC;
         $html = file_get_html($url);
+        http_response_code(200);
         echo $html;
     }
 
@@ -48,6 +49,7 @@
                             "msg" => "Rate Limit Exceeded"
                         );
                         $_SESSION['rateLimited'] = $rateLimited;
+                        http_response_code(429);
                         echo(json_encode($data));
                     } else { //We have not reached the rate limit. Increment the count value once.
                         $_SESSION['count']++;
@@ -80,6 +82,7 @@
                     "msg" => "Rate Limit Exceeded",
                     "Time Since Rate Limiting Was Applied" => $timeSince
                 );
+                http_response_code(429);
                 echo(json_encode($data));
             }
         } else {
@@ -98,6 +101,7 @@
     } else if ($switch == "false") {
         $url = "https://store.steampowered.com/wishlist/" . $urlType . "/" . $profileId;
         $html = file_get_html($url);
+        http_response_code(200);
         echo $html;
     }
 ?>
