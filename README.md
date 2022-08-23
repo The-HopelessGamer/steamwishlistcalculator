@@ -1,7 +1,10 @@
 # Steam Wishlist Calculator
---------------------------------------------------------------------------------------------------------------------------------------
- * This is the source code behind Steam Wishlist Calculator.
- --------------------------------------------------------------------------------------------------------------------------------------
- * Written by The HopelessGamer
- * Email: TheHopelessGamer@outlook.com
- * Steam: http://steamcommunity.com/id/The_HopelessGamer
+The Steam Wishlist Calculator is a tool which one can use to calculcate the total value of ones Steam wishlist.
+
+## Licensing
+The Steam Wishlist Calculator is licensed under the AGPLv3.0 license. Certain components of this project may fall under a different GPL-compatible license, see [COMPONENT_LICENSE](COMPONENT_LICENSE) for details.
+
+## Contact the developer
+- The HopelessGamer
+- TheHopelessGamer@outlook.com
+- http://steamcommunity.com/id/The_HopelessGamer
