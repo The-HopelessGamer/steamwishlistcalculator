@@ -8,7 +8,7 @@
 
     include 'simple_html_dom.php';
 
-    function getWishlistFunction($pageNumber) {
+    function mainFunction($pageNumber) {
         global $urlType, $profileId;
         $CC = filter_var($_GET["cc"], FILTER_SANITIZE_STRING);
         $url = "https://store.steampowered.com/wishlist/" . $urlType . "/" . $profileId . "/wishlistdata?p=" . $pageNumber . "&cc=" . $CC;
@@ -57,7 +57,7 @@
                             "error" => "false",
                             "msg" => "Rate Limit Not Exceeded"
                         );
-                        getWishlistFunction($pageNumber);
+                        mainFunction($pageNumber);
                     }
                 } else if ($sec >= 30) { //If the time since last form submission is greater than 10 seconds, we will clear the submission count.
                     $_SESSION['count'] = 0;
@@ -65,7 +65,7 @@
                         "error" => "false",
                         "msg" => "Rate Limit Not Exceeded"
                     );
-                    getWishlistFunction($pageNumber);
+                    mainFunction($pageNumber);
                 }
             } else if ($timeSince >= 60) { //If we are rate limited and the time since the rate limit was applied is greater than 60 seconds, remove the rate limit and reset the submission count.
                 $_SESSION['rateLimited'] = false;
@@ -74,7 +74,7 @@
                     "error" => "false",
                     "msg" => "Rate Limit Not Exceeded"
                 );
-                getWishlistFunction($pageNumber);
+                mainFunction($pageNumber);
             } else { //If we are rate limited but the time since has not passed 60 seconds, do not remove the rate limit.
                 $_SESSION['rateLimited'] = true;
                 $data = array (
@@ -86,7 +86,7 @@
                 echo(json_encode($data));
             }
         } else {
-            getWishlistFunction($pageNumber);
+            mainFunction($pageNumber);
         }
         $_SESSION['LAST_CALL'] = date("Y-m-d h:i:s");
     }
@@ -96,7 +96,7 @@
         if ($pageNumber === 0) {
             rateLimiter($pageNumber);
         } else {
-            getWishlistFunction($pageNumber);
+            mainFunction($pageNumber);
         }
     } else if ($switch == "false") {
         $url = "https://store.steampowered.com/wishlist/" . $urlType . "/" . $profileId;

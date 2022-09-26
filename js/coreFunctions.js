@@ -1,7 +1,7 @@
  function currencyChange() {
      if (resultsLoaded == true) {
          window.history.pushState("object or string", "Title", "/" + window.location.href.substring(window.location.href.lastIndexOf('/') + 1).split("?")[0]);
-         getWishlist();
+         main();
          closeNav();
      }
  }
@@ -351,7 +351,7 @@ function urlProfileLookup(locationHash) {
         if (u !== -1) { //If the URL contains a "&currency" or "?id" then we get the currency from the URL.
             currency = getAllUrlParams(t).currency; //Assign the currency from the URL to a global variable.
             document.getElementById("userInput").value = getAllUrlParams(t).id; //Append the ID to the userInput form.
-            getWishlist(); //Submit the form using the ID and Currency from the URL.
+            main(); //Submit the form using the ID and Currency from the URL.
         } else {
             formReset(); //If js is enabled then display the form but only display it if the hash is NOT equal to #privacy-policy or #contact also clear the hash for the home page.
             document.getElementById("wishlist-container").style.textAlign = "center";

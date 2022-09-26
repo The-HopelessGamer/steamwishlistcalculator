@@ -29,7 +29,7 @@ function calculateResult(
   freeTitles,
   preOrder
 ) {
-  //Display results once called by the getWishlist function.
+  //Display results once called by the main function.
   setTimeout(function () {
     sortBy();
     let priceTotal = 0;
@@ -141,7 +141,7 @@ function calculateResult(
 
 //CORE FUNCTION:
 
-function getWishlist(wishlistUrlType = "profiles") {
+function main(wishlistUrlType = "profiles") {
   (async () => {
     let sale = 0,
       priceEmpty = 0,
@@ -223,7 +223,7 @@ function getWishlist(wishlistUrlType = "profiles") {
           }
           xmlhttp.open(
             "GET",
-            "php/getWishlist.php?urlType=" +
+            "php/main.php?urlType=" +
               wishlistUrlType +
               "&profileId=" +
               document
@@ -245,7 +245,7 @@ function getWishlist(wishlistUrlType = "profiles") {
                 //If the final url does NOT contain "wishlist</title>" then we were redirected.
                 if (wishlistUrlType == "profiles") {
                   //Have we tried using "id" yet?
-                  getWishlist("id"); //Try everything again with the other url type "id".
+                  main("id"); //Try everything again with the other url type "id".
                 } else {
                   throwError();
                   document.getElementById("errorText").innerHTML =
@@ -328,7 +328,7 @@ function getWishlist(wishlistUrlType = "profiles") {
                       pageNumber++
                     ) {
                       wishlistData = await fetch(
-                        "php/getWishlist.php?urlType=" +
+                        "php/main.php?urlType=" +
                           wishlistUrlType +
                           "&profileId=" +
                           profileId +

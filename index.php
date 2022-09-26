@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <?php
 
-	$cssVersion = "3.4";
-	$jsVersion = "3.1";
+	$cssVersion = "3.5";
+	$jsVersion = "3.2";
 
 	$_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
 	$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -373,7 +373,7 @@
 						</div>
 					</div>
 				</div>
-				<form name="userInputForm" action="javascript:;" onsubmit="getWishlist();" class="THG-form" id="form-display">
+				<form name="userInputForm" action="javascript:;" onsubmit="main();" class="THG-form" id="form-display">
 					<input id="extraMain" name="extra" type="text">
 					<div class="THG-form-box">
 						<h1 class="form-font-size" style="text-align: center;">Calculate Your Wishlist</h1>
