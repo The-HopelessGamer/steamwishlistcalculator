@@ -18,17 +18,7 @@ let currencySymbolCheck = ""; //Sets the symbol to look for when looking for the
 let currencySymbolRight = " "; //Adds a space for the right currency symbol.
 let currencySymbolNumber = ""; //Sets the amount of characters that are before the Currency Symbol. Example for the Canadian Currency: "CDN$ = 3" So there are 3 characters before the Currency Symbol: $.
 
-function calculateResult(
-  wishlistArray,
-  profileNameHyperLink,
-  profileId,
-  countryCode,
-  sale,
-  withPrice,
-  priceEmpty,
-  freeTitles,
-  preOrder
-) {
+function calculateResult(wishlistArray, profileNameHyperLink, profileId, countryCode, sale, withPrice, priceEmpty, freeTitles, preOrder) {
   //Display results once called by the main function.
   setTimeout(function () {
     sortBy();
@@ -51,9 +41,7 @@ function calculateResult(
       countryCode //Check what currency type was selected and use the corrosponding formatting for the selected currency type.
     ) {
       case "VN":
-        document.getElementById("priceTotal").innerHTML =
-          accounting.formatMoney(priceTotal, currencySymbol, 3, ".", ".") +
-          currencySymbolRight;
+        document.getElementById("priceTotal").innerHTML = accounting.formatMoney(priceTotal, currencySymbol, 3, ".", ".") + currencySymbolRight;
         break;
       case "AR":
       case "PL":
@@ -62,67 +50,39 @@ function calculateResult(
       case "NL":
       case "NO":
       case "EU":
-        document.getElementById("priceTotal").innerHTML =
-          accounting.formatMoney(priceTotal, currencySymbol, 2, ".", ",") +
-          currencySymbolRight;
+        document.getElementById("priceTotal").innerHTML = accounting.formatMoney(priceTotal, currencySymbol, 2, ".", ",") + currencySymbolRight;
         break;
       case "JP":
-        document.getElementById("priceTotal").innerHTML =
-          accounting.formatMoney(priceTotal, currencySymbol, 3, ".", ",") +
-          currencySymbolRight;
+        document.getElementById("priceTotal").innerHTML = accounting.formatMoney(priceTotal, currencySymbol, 3, ".", ",") + currencySymbolRight;
         break;
       case "IN":
-        document.getElementById("priceTotal").innerHTML =
-          accounting.formatMoney(priceTotal, currencySymbol, 0, ",", "") +
-          currencySymbolRight;
+        document.getElementById("priceTotal").innerHTML = accounting.formatMoney(priceTotal, currencySymbol, 0, ",", "") + currencySymbolRight;
         break;
       case "CR":
-        document.getElementById("priceTotal").innerHTML =
-          accounting.formatMoney(priceTotal, currencySymbol, 3, ",", ".") +
-          currencySymbolRight;
+        document.getElementById("priceTotal").innerHTML = accounting.formatMoney(priceTotal, currencySymbol, 3, ",", ".") + currencySymbolRight;
         break;
       case "RU":
-        document.getElementById("priceTotal").innerHTML =
-          accounting.formatMoney(priceTotal, currencySymbol, 0, "", "") +
-          currencySymbolRight;
+        document.getElementById("priceTotal").innerHTML = accounting.formatMoney(priceTotal, currencySymbol, 0, "", "") + currencySymbolRight;
         break;
       case "KZ":
       case "ID":
       case "UA":
-        document.getElementById("priceTotal").innerHTML =
-          accounting.formatMoney(priceTotal, currencySymbol, 0, " ", " ") +
-          currencySymbolRight;
+        document.getElementById("priceTotal").innerHTML = accounting.formatMoney(priceTotal, currencySymbol, 0, " ", " ") + currencySymbolRight;
         break;
       default:
-        document.getElementById("priceTotal").innerHTML =
-          accounting.formatMoney(priceTotal, currencySymbol) +
-          currencySymbolRight;
+        document.getElementById("priceTotal").innerHTML = accounting.formatMoney(priceTotal, currencySymbol) + currencySymbolRight;
         break;
     }
     //Display the data
-    document.getElementById("titleCount").innerHTML = formatNumber(
-      dataArray.length
-    );
+    document.getElementById("titleCount").innerHTML = formatNumber(dataArray.length);
     document.getElementById("onSale").innerHTML = formatNumber(sale);
     document.getElementById("preOrder").innerHTML = formatNumber(preOrder);
-    document.getElementById("withoutPrice").innerHTML = formatNumber(
-      priceEmpty
-    );
+    document.getElementById("withoutPrice").innerHTML = formatNumber(priceEmpty);
     document.getElementById("withPrice").innerHTML = formatNumber(withPrice);
     document.getElementById("isFree").innerHTML = formatNumber(freeTitles);
-    document.getElementById("unlisted").innerHTML = formatNumber(
-      unlistedAppidTotal
-    );
+    document.getElementById("unlisted").innerHTML = formatNumber(unlistedAppidTotal);
     document.getElementById("profileName").innerHTML = profileNameHyperLink;
-    let urlShare =
-      window.location.protocol +
-      "//" +
-      window.location.host +
-      window.location.pathname +
-      "?id=" +
-      profileId +
-      "&currency=" +
-      countryCode; //Set the parameters for the URL.
+    let urlShare = window.location.protocol + "//" + window.location.host + window.location.pathname + "?id=" + profileId + "&currency=" + countryCode; //Set the parameters for the URL.
     window.history.pushState(
       {
         path: urlShare,
@@ -190,18 +150,12 @@ function main(wishlistUrlType = "profiles") {
         } else {
           let urlId = "";
           let xmlhttp = new XMLHttpRequest();
-          let httpCheck = document
-            .getElementById("userInput")
-            .value.replace(/ /g, ""); //assign the contents of the input field to httpCheck. We also remove the spaces.
+          let httpCheck = document.getElementById("userInput").value.replace(/ /g, ""); //assign the contents of the input field to httpCheck. We also remove the spaces.
           let http = httpCheck.indexOf("http://"); //Check if httpCheck includes http.
           let https = httpCheck.indexOf("https://"); //Check if httpCheck includes https.
           if (http && https == -1) {
             //If the variables "http" and "https" do not equal "https://" or "http://" then we will use the following method for getting the wishlist.
-            url =
-              "https://store.steampowered.com/wishlist/" +
-              wishlistUrlType +
-              "/" +
-              document.getElementById("userInput").value.replace(/ /g, "");
+            url = "https://store.steampowered.com/wishlist/" + wishlistUrlType + "/" + document.getElementById("userInput").value.replace(/ /g, "");
           } else {
             //If the http and/or https variables include "https://" or "http://" in the input field then we will check if it has "ID" or "Profiles" in the url then grab the ID.
             let httpId = httpCheck.indexOf("id/"); //Check if httpCheck includes "id/" then assign that letiable to httpId.
@@ -214,30 +168,17 @@ function main(wishlistUrlType = "profiles") {
               urlId = httpCheck.split("profiles/")[1];
             } else {
               throwError();
-              document.getElementById("errorText").innerHTML =
-                "Error: Invalid id!";
+              document.getElementById("errorText").innerHTML = "Error: Invalid id!";
               return false;
             }
             let urlIdFinal = urlId.split("/")[0].split("#")[0]; //If we have a user ID then we split what is on the right of the ID. Then we assign the ID to the letiable "urlIdFinal".
             document.getElementById("userInput").value = urlIdFinal; //Assign the ID taken from the URL to the input field to be added to the URL as a parameter later.
           }
-          xmlhttp.open(
-            "GET",
-            "php/main.php?urlType=" +
-              wishlistUrlType +
-              "&profileId=" +
-              document
-                .getElementById("userInput")
-                .value.replace(/[\s\/]|#| /g, "") +
-              "&switch=false",
-            true
-          ); //Get the steam wishlist webpage using PHP.
+          xmlhttp.open("GET", "php/main.php?urlType=" + wishlistUrlType + "&profileId=" + document.getElementById("userInput").value.replace(/[\s\/]|#| /g, "") + "&switch=false", true); //Get the steam wishlist webpage using PHP.
           xmlhttp.send();
           xmlhttp.onreadystatechange = function () {
             //If the request was successful
-            let profileId = document
-              .getElementById("userInput")
-              .value.replace(/[\s\/]|#| /g, ""); //Assign the user profile id to a letiable and remove the spaces and forward slashes.
+            let profileId = document.getElementById("userInput").value.replace(/[\s\/]|#| /g, ""); //Assign the user profile id to a letiable and remove the spaces and forward slashes.
             if (this.readyState == 4 && this.status == 200) {
               let html = this.responseText; //This contain the raw code from the wishlist page.
               let titleCheck = html.indexOf("wishlist</title>"); //Check the title in the response to see if we got redirected.
@@ -248,20 +189,13 @@ function main(wishlistUrlType = "profiles") {
                   main("id"); //Try everything again with the other url type "id".
                 } else {
                   throwError();
-                  document.getElementById("errorText").innerHTML =
-                    "Error: Invalid id!";
+                  document.getElementById("errorText").innerHTML = "Error: Invalid id!";
                 }
               } else {
                 //We weren't redirected
                 try {
-                  let htmlAppid = html
-                    .split("var g_rgWishlistData = ")[1]
-                    .split("var g_rgAppInfo = ")[0]
-                    .trim()
-                    .replace(/;+$/, "");
-                  var pageCount = html
-                    .split("var g_nAdditionalPages = ")[1]
-                    .split(";")[0];
+                  let htmlAppid = html.split("var g_rgWishlistData = ")[1].split("var g_rgAppInfo = ")[0].trim().replace(/;+$/, "");
+                  var pageCount = html.split("var g_nAdditionalPages = ")[1].split(";")[0];
                   if (pageCount > 150) {
                     wishlistSizeLimitReached();
                     return false;
@@ -270,22 +204,12 @@ function main(wishlistUrlType = "profiles") {
                 } catch (error) {
                   console.log(error);
                   throwError();
-                  document.getElementById("errorText").innerHTML =
-                    "Error: Unknown!";
+                  document.getElementById("errorText").innerHTML = "Error: Unknown!";
                   return false;
                 }
                 let profileName = html.split("<title>")[1]; //Get the users profile name to display at the top of the wishlist container.
                 profileName = profileName.split("</title>")[0]; //https://store.steampowered.com/wishlist/id/The_HopelessGamer/
-                let profileNameHyperLink =
-                  '<a href="https://store.steampowered.com/wishlist/' +
-                  wishlistUrlType +
-                  "/" +
-                  profileId +
-                  '" class="titleLinks" title="' +
-                  profileName +
-                  '" target="_blank">' +
-                  profileName +
-                  "</a>";
+                let profileNameHyperLink = '<a href="https://store.steampowered.com/wishlist/' + wishlistUrlType + "/" + profileId + '" class="titleLinks" title="' + profileName + '" target="_blank">' + profileName + "</a>";
                 wishlistSize = html.indexOf("g_nAdditionalPages = 0;");
                 if (wishlistSize == -1) {
                   //The wishlist is empty or the profile is private.
@@ -296,14 +220,9 @@ function main(wishlistUrlType = "profiles") {
                     if (urlCurrencyIndex !== -1) {
                       countryCode = currency;
                     } else {
-                      countryCode = document
-                        .getElementById("selectSelected")
-                        .getAttribute("value");
+                      countryCode = document.getElementById("selectSelected").getAttribute("value");
                     }
-                    if (
-                      countryCode == "AutoDetect" ||
-                      countryCode == "autodetect"
-                    ) {
+                    if (countryCode == "AutoDetect" || countryCode == "autodetect") {
                       //Auto detection system for the currency.
                       try {
                         let response = await fetch("php/ip2country.php");
@@ -314,36 +233,19 @@ function main(wishlistUrlType = "profiles") {
                         countryCode = "US";
                         callSwitch(countryCode);
                         console.log(error);
-                        alert(
-                          "Error: Unable to detect currency. Defaulted to USD."
-                        );
+                        alert("Error: Unable to detect currency. Defaulted to USD.");
                       }
                     } else {
                       callSwitch(countryCode);
                     }
 
-                    for (
-                      let pageNumber = 0;
-                      pageNumber < pageCount;
-                      pageNumber++
-                    ) {
-                      wishlistData = await fetch(
-                        "php/main.php?urlType=" +
-                          wishlistUrlType +
-                          "&profileId=" +
-                          profileId +
-                          "&pageNumber=" +
-                          pageNumber +
-                          "&cc=" +
-                          countryCode +
-                          "&switch=true"
-                      );
+                    for (let pageNumber = 0; pageNumber < pageCount; pageNumber++) {
+                      wishlistData = await fetch("php/main.php?urlType=" + wishlistUrlType + "&profileId=" + profileId + "&pageNumber=" + pageNumber + "&cc=" + countryCode + "&switch=true");
                       try {
                         wishlistData = await wishlistData.json(); //parse it as json.
                         if (wishlistData.error == "true") {
                           throwError();
-                          document.getElementById("errorText").innerHTML =
-                            "Error: Rate Limit Exceeded! Please try again in 60 seconds.";
+                          document.getElementById("errorText").innerHTML = "Error: Rate Limit Exceeded! Please try again in 60 seconds.";
                           return false;
                         }
                         allAppids += Object.keys(wishlistData);
@@ -352,40 +254,26 @@ function main(wishlistUrlType = "profiles") {
                       } catch (error) {
                         console.log(error);
                         throwError();
-                        document.getElementById("errorText").innerHTML =
-                          "Error: Unknown!";
+                        document.getElementById("errorText").innerHTML = "Error: Unknown!";
                         return false;
                       }
                       for (key in wishlistData) {
                         //For each key we will loop over the response from the fetch.
                         if (wishlistData[key]["subs"][0] !== undefined) {
                           //Only grab games that have a price.
-                          wishlistArray.push(
-                            wishlistData[key]["subs"][0]["discount_block"]
-                          );
-                          var price = wishlistData[key]["subs"][0][
-                            "discount_block"
-                          ]
-                            .split('final_price">')[1]
-                            .split("<")[0];
+                          wishlistArray.push(wishlistData[key]["subs"][0]["discount_block"]);
+                          var price = wishlistData[key]["subs"][0]["discount_block"].split('final_price">')[1].split("<")[0];
                           var discountPercent = "N/A";
                           var discountPercentUnformatted = 0;
                           var originalPrice = "";
                           var originalPriceStyled = "";
                           var onSaleBoolean;
-                          priceUnformatted =
-                            wishlistData[key]["subs"][0]["price"];
-                          if (
-                            wishlistData[key]["subs"][0]["discount_pct"] !== 0
-                          ) {
+                          priceUnformatted = wishlistData[key]["subs"][0]["price"];
+                          if (wishlistData[key]["subs"][0]["discount_pct"] !== null) {
                             sale++;
                             onSaleIds += key + seperator;
-                            discountPercent =
-                              "-" +
-                              wishlistData[key]["subs"][0]["discount_pct"] +
-                              "%";
-                            discountPercentUnformatted =
-                              wishlistData[key]["subs"][0]["discount_pct"];
+                            discountPercent = "-" + wishlistData[key]["subs"][0]["discount_pct"] + "%";
+                            discountPercentUnformatted = wishlistData[key]["subs"][0]["discount_pct"];
                             /*
                              * For some weird reason during scraping, some game data is not obtained which means it will skip a price and cause an error. Looking into it atm.
                              * Added a temporary solution for the time being. If a game bugs out during scraping, skip it, log it in the console and continue on.
@@ -393,18 +281,10 @@ function main(wishlistUrlType = "profiles") {
                              * This has a side effect of adding a small discrepancy in total price accuracy. Big problem. Must fix.
                              */
                             try {
-                              originalPrice = wishlistData[key]["subs"][0][
-                                "discount_block"
-                              ]
-                                .split('original_price">')[1]
-                                .split("<")[0];
-                              originalPriceStyled =
-                                "<span style='text-decoration: line-through;'>" +
-                                originalPrice +
-                                "</span>";
+                              originalPrice = wishlistData[key]["subs"][0]["discount_block"].split('original_price">')[1].split("<")[0];
+                              originalPriceStyled = "<span style='text-decoration: line-through;'>" + originalPrice + "</span>";
                             } catch (error) {
-                              originalPriceStyled =
-                                "<span style='text-decoration: none;'> N/A </span>";
+                              originalPriceStyled = "<span style='text-decoration: none;'> N/A </span>";
                               console.log(error + " | Appid: " + key);
                             }
                           }
@@ -430,11 +310,7 @@ function main(wishlistUrlType = "profiles") {
                         } else {
                           linuxCompatible = false;
                         }
-                        if (
-                          wishlistData[key]["platform_icons"].includes(
-                            "VR Supported"
-                          )
-                        ) {
+                        if (wishlistData[key]["platform_icons"].includes("VR Supported")) {
                           vrSupported = true;
                         } else {
                           vrSupported = false;
@@ -459,9 +335,7 @@ function main(wishlistUrlType = "profiles") {
                         } else if (wishlistData[key]["release_date"] <= 1) {
                           releaseDateFormatted = "Date Unknown";
                         } else {
-                          releaseDateFormatted = new Date(
-                            wishlistData[key]["release_date"] * 1000
-                          ).toLocaleDateString();
+                          releaseDateFormatted = new Date(wishlistData[key]["release_date"] * 1000).toLocaleDateString();
                         }
                         if (onSaleIds.includes(key)) {
                           onSaleBoolean = true;
@@ -485,10 +359,7 @@ function main(wishlistUrlType = "profiles") {
                         } else {
                           priceEmptyBoolean = false;
                         }
-                        if (
-                          wishlistData[key]["is_free_game"] === true &&
-                          releaseDateFormatted !== "Coming Soon"
-                        ) {
+                        if (wishlistData[key]["is_free_game"] === true && releaseDateFormatted !== "Coming Soon") {
                           freeTitles++;
                           freeBoolean = true;
                         } else {
@@ -520,23 +391,14 @@ function main(wishlistUrlType = "profiles") {
                           appid: key,
                           price: price,
                           priority: wishlistData[key]["priority"],
-                          url:
-                            '<a href="http://store.steampowered.com/app/' +
-                            key +
-                            '/" class="titleLinks" title="' +
-                            wishlistData[key]["name"] +
-                            '" target="_blank">' +
-                            wishlistData[key]["name"] +
-                            "</a>",
+                          url: '<a href="http://store.steampowered.com/app/' + key + '/" class="titleLinks" title="' + wishlistData[key]["name"] + '" target="_blank">' + wishlistData[key]["name"] + "</a>",
                           priceUnformatted: priceUnformatted,
                         });
                         price = "";
                       }
                     }
                     dataArray.sort(function (a, b) {
-                      return a.title
-                        .toLowerCase()
-                        .localeCompare(b.title.toLowerCase());
+                      return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
                     }); //Sort by title A - B.
                     for (let i = 0; i < jsonAppids.length; i++) {
                       //Get unlisted games
@@ -545,42 +407,19 @@ function main(wishlistUrlType = "profiles") {
                       } else {
                         unlistedAppidTotal++;
                         jsonAppids[i].unlistedGame = true;
-                        unlistedAppids +=
-                          '<a href="https://steamdb.info/app/' +
-                          jsonAppids[i]["appid"] +
-                          '/" class="titleLinks" title="' +
-                          jsonAppids[i]["appid"] +
-                          '" target="_blank">' +
-                          jsonAppids[i]["appid"] +
-                          "</a>" +
-                          seperator;
+                        unlistedAppids += '<a href="https://steamdb.info/app/' + jsonAppids[i]["appid"] + '/" class="titleLinks" title="' + jsonAppids[i]["appid"] + '" target="_blank">' + jsonAppids[i]["appid"] + "</a>" + seperator;
                       }
                     }
-                    calculateResult(
-                      wishlistArray,
-                      profileNameHyperLink,
-                      profileId,
-                      countryCode,
-                      sale,
-                      withPrice,
-                      priceEmpty,
-                      freeTitles,
-                      preOrder
-                    );
+                    calculateResult(wishlistArray, profileNameHyperLink, profileId, countryCode, sale, withPrice, priceEmpty, freeTitles, preOrder);
                     return wishlistData;
                   };
                   getData();
                 } else if (wishlistSize !== -1) {
                   throwError();
-                  document.getElementById("wishlist-container").style.width =
-                    "500px";
-                  document.getElementById("profileName").style.display =
-                    "block";
-                  document.getElementById(
-                    "profileName"
-                  ).innerHTML = profileName;
-                  document.getElementById("errorText").innerHTML =
-                    "Error: Wishlist is Empty or Private!";
+                  document.getElementById("wishlist-container").style.width = "500px";
+                  document.getElementById("profileName").style.display = "block";
+                  document.getElementById("profileName").innerHTML = profileName;
+                  document.getElementById("errorText").innerHTML = "Error: Wishlist is Empty or Private!";
                 }
               }
             }
