@@ -208,8 +208,8 @@ function callSwitch(setVariables) { //Sets the currency for the calculator and t
 			break;
 		case "PH":
 			countryCode = "PH";
-			currencySymbol = "P";
-			currencySymbolCheck = "P";
+			currencySymbol = "₱";
+			currencySymbolCheck = "₱";
 			currencySymbolRight = "";
 			currencySymbolNumber = "0";
 			document.getElementById("selectList").selectedIndex = "18";

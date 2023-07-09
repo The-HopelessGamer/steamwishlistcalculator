@@ -56,7 +56,10 @@ function calculateResult(wishlistArray, profileNameHyperLink, profileId, country
         document.getElementById("priceTotal").innerHTML = accounting.formatMoney(priceTotal, currencySymbol, 3, ".", ",") + currencySymbolRight;
         break;
       case "IN":
-        document.getElementById("priceTotal").innerHTML = accounting.formatMoney(priceTotal, currencySymbol, 0, ",", "") + currencySymbolRight;
+        document.getElementById("priceTotal").innerHTML = accounting.formatMoney(priceTotal, currencySymbol, 0, ",", ".") + currencySymbolRight;
+        break;
+      case "PH":
+        document.getElementById("priceTotal").innerHTML = accounting.formatMoney(priceTotal, currencySymbol, 2, "", ".") + currencySymbolRight;
         break;
       case "CR":
         document.getElementById("priceTotal").innerHTML = accounting.formatMoney(priceTotal, currencySymbol, 3, ",", ".") + currencySymbolRight;
