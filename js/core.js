@@ -64,7 +64,6 @@ function calculateResult(wishlistArray, profileNameHyperLink, profileId, country
       case "VN":
         originalFormattedPriceTotal = accounting.formatMoney(originalPriceTotal, currencySymbol, 3, ".", ".") + currencySymbolRight;
         formattedPrice = accounting.formatMoney(priceTotal, currencySymbol, 3, ".", ".") + currencySymbolRight;
-        document.getElementById("priceTotal").innerHTML = formattedPrice;
         break;
       case "AR":
       case "PL":
@@ -73,27 +72,34 @@ function calculateResult(wishlistArray, profileNameHyperLink, profileId, country
       case "NL":
       case "NO":
       case "EU":
-        document.getElementById("priceTotal").innerHTML = accounting.formatMoney(priceTotal, currencySymbol, 2, ".", ",") + currencySymbolRight;
+        originalFormattedPriceTotal = accounting.formatMoney(originalPriceTotal, currencySymbol, 2, ".", ",") + currencySymbolRight;
+        formattedPrice = accounting.formatMoney(priceTotal, currencySymbol, 2, ".", ",") + currencySymbolRight;
         break;
       case "JP":
-        document.getElementById("priceTotal").innerHTML = accounting.formatMoney(priceTotal, currencySymbol, 3, ".", ",") + currencySymbolRight;
+        originalFormattedPriceTotal = accounting.formatMoney(originalPriceTotal, currencySymbol, 3, ".", ",") + currencySymbolRight;
+        formattedPrice = accounting.formatMoney(priceTotal, currencySymbol, 3, ".", ",") + currencySymbolRight;
         break;
       case "IN":
-        document.getElementById("priceTotal").innerHTML = accounting.formatMoney(priceTotal, currencySymbol, 0, ",", ".") + currencySymbolRight;
+        originalFormattedPriceTotal = accounting.formatMoney(originalPriceTotal, currencySymbol, 0, ",", ".") + currencySymbolRight;
+        formattedPrice = accounting.formatMoney(priceTotal, currencySymbol, 0, ",", ".") + currencySymbolRight;
         break;
       case "PH":
-        document.getElementById("priceTotal").innerHTML = accounting.formatMoney(priceTotal, currencySymbol, 2, "", ".") + currencySymbolRight;
+        originalFormattedPriceTotal = accounting.formatMoney(originalPriceTotal, currencySymbol, 2, "", ".") + currencySymbolRight;
+        formattedPrice = accounting.formatMoney(priceTotal, currencySymbol, 2, "", ".") + currencySymbolRight;
         break;
       case "CR":
-        document.getElementById("priceTotal").innerHTML = accounting.formatMoney(priceTotal, currencySymbol, 3, ",", ".") + currencySymbolRight;
+        originalFormattedPriceTotal = accounting.formatMoney(originalPriceTotal, currencySymbol, 3, ",", ".") + currencySymbolRight;
+        formattedPrice = accounting.formatMoney(priceTotal, currencySymbol, 3, ",", ".") + currencySymbolRight;
         break;
       case "RU":
-        document.getElementById("priceTotal").innerHTML = accounting.formatMoney(priceTotal, currencySymbol, 0, "", "") + currencySymbolRight;
+        originalFormattedPriceTotal = accounting.formatMoney(originalPriceTotal, currencySymbol, 0, "", "") + currencySymbolRight;
+        formattedPrice = accounting.formatMoney(priceTotal, currencySymbol, 0, "", "") + currencySymbolRight;
         break;
       case "KZ":
       case "ID":
       case "UA":
-        document.getElementById("priceTotal").innerHTML = accounting.formatMoney(priceTotal, currencySymbol, 0, " ", " ") + currencySymbolRight;
+        originalFormattedPriceTotal = accounting.formatMoney(originalPriceTotal, currencySymbol, 0, " ", " ") + currencySymbolRight;
+        formattedPrice = accounting.formatMoney(priceTotal, currencySymbol, 0, " ", " ") + currencySymbolRight;
         break;
       default:
         originalFormattedPriceTotal = accounting.formatMoney(originalPriceTotal, currencySymbol) + currencySymbolRight;
