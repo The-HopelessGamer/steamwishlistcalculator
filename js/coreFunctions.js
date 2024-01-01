@@ -102,6 +102,10 @@
          case "AR":
          case "BR":
          case "JP":
+            if (currencyString !== undefined) {
+                currencyString = currencyString.replace(',', '');
+            }
+            break;
          case "NL":
          case "NO":
          case "PL":

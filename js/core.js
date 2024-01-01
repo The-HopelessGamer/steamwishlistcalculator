@@ -51,13 +51,12 @@ function calculateResult(wishlistArray, profileNameHyperLink, profileId, country
         if (price.charAt(currencySymbolNumber) == currencySymbolCheck) {
           //Check if it has a price (check if it's a number) Alt: Check that the symbol matches the character location.
           priceTotal += priceToFloat(price.split(currencySymbolCheck)[1]); //Calculates the prices and appends them to a variable.
-          console.log(originalPrice);
-          if (originalPrice !== undefined) {
+          if (originalPrice !== "") {
             originalPriceTotal += priceToFloat(originalPrice.split(currencySymbolCheck)[1]);
           }
         } else if (CurrencySymbolCheck !== -1) {
           priceTotal += priceToFloat(price.split(currencySymbolRight)[0]);
-          if (originalPrice !== undefined) {
+          if (originalPrice !== "") {
             originalPriceTotal += priceToFloat(originalPrice.split(currencySymbolRight)[0]);
           }
         }
@@ -81,8 +80,8 @@ function calculateResult(wishlistArray, profileNameHyperLink, profileId, country
         formattedPrice = accounting.formatMoney(priceTotal, currencySymbol, 2, ".", ",") + currencySymbolRight;
         break;
       case "JP":
-        originalFormattedPriceTotal = accounting.formatMoney(originalPriceTotal, currencySymbol, 3, ".", ",") + currencySymbolRight;
-        formattedPrice = accounting.formatMoney(priceTotal, currencySymbol, 3, ".", ",") + currencySymbolRight;
+        originalFormattedPriceTotal = accounting.formatMoney(originalPriceTotal, currencySymbol, 0, ",", ",") + currencySymbolRight;
+        formattedPrice = accounting.formatMoney(priceTotal, currencySymbol, 0, ",", ",") + currencySymbolRight;
         break;
       case "IN":
         originalFormattedPriceTotal = accounting.formatMoney(originalPriceTotal, currencySymbol, 0, ",", ".") + currencySymbolRight;
