@@ -18,22 +18,43 @@ let currencySymbolCheck = ""; //Sets the symbol to look for when looking for the
 let currencySymbolRight = " "; //Adds a space for the right currency symbol.
 let currencySymbolNumber = ""; //Sets the amount of characters that are before the Currency Symbol. Example for the Canadian Currency: "CDN$ = 3" So there are 3 characters before the Currency Symbol: $.
 
+let originalFormattedPriceTotal = 0;
+let formattedPrice = 0;
+
+let toggle = false;
+function ToggleSalePricing() {
+  if (toggle == false) {
+    toggle = true;
+    document.getElementById("priceTotal").innerHTML = formattedPrice;
+    document.getElementById("salePricingButton").innerHTML = "Turn Sale Pricing Off";
+  } else {
+    toggle = false;
+    document.getElementById("priceTotal").innerHTML = originalFormattedPriceTotal;
+    document.getElementById("salePricingButton").innerHTML = "Turn Sale Pricing On";
+  }
+}
+
+
 function calculateResult(wishlistArray, profileNameHyperLink, profileId, countryCode, sale, withPrice, priceEmpty, freeTitles, preOrder) {
   //Display results once called by the main function.
   setTimeout(function () {
     sortBy();
     let priceTotal = 0;
+    let originalPriceTotal = 0;
     for (key in wishlistArray) {
       //For each using keys instead of indexes.
       if (wishlistArray.hasOwnProperty(key)) {
         //Extract the price and add it to the total
         let price = wishlistArray[key].split('final_price">')[1].split("<")[0];
+        let originalPrice = dataArray[key]["originalPrice"];
         let CurrencySymbolCheck = price.indexOf(currencySymbolRight); //If the price has a symbol on the right side of the price then we will keep only the contents on the left of split. If not then we will keep whats on the right of the split.
         if (price.charAt(currencySymbolNumber) == currencySymbolCheck) {
           //Check if it has a price (check if it's a number) Alt: Check that the symbol matches the character location.
           priceTotal += priceToFloat(price.split(currencySymbolCheck)[1]); //Calculates the prices and appends them to a variable.
+          originalPriceTotal += priceToFloat(originalPrice.split(currencySymbolCheck)[1]);
         } else if (CurrencySymbolCheck !== -1) {
           priceTotal += priceToFloat(price.split(currencySymbolRight)[0]);
+          originalPriceTotal += priceToFloat(originalPrice.split(currencySymbolRight)[0]);
         }
       }
     }
@@ -41,7 +62,9 @@ function calculateResult(wishlistArray, profileNameHyperLink, profileId, country
       countryCode //Check what currency type was selected and use the corrosponding formatting for the selected currency type.
     ) {
       case "VN":
-        document.getElementById("priceTotal").innerHTML = accounting.formatMoney(priceTotal, currencySymbol, 3, ".", ".") + currencySymbolRight;
+        originalFormattedPriceTotal = accounting.formatMoney(originalPriceTotal, currencySymbol, 3, ".", ".") + currencySymbolRight;
+        formattedPrice = accounting.formatMoney(priceTotal, currencySymbol, 3, ".", ".") + currencySymbolRight;
+        document.getElementById("priceTotal").innerHTML = formattedPrice;
         break;
       case "AR":
       case "PL":
@@ -73,9 +96,12 @@ function calculateResult(wishlistArray, profileNameHyperLink, profileId, country
         document.getElementById("priceTotal").innerHTML = accounting.formatMoney(priceTotal, currencySymbol, 0, " ", " ") + currencySymbolRight;
         break;
       default:
-        document.getElementById("priceTotal").innerHTML = accounting.formatMoney(priceTotal, currencySymbol) + currencySymbolRight;
+        originalFormattedPriceTotal = accounting.formatMoney(originalPriceTotal, currencySymbol) + currencySymbolRight;
+        formattedPrice = accounting.formatMoney(priceTotal, currencySymbol) + currencySymbolRight;
         break;
     }
+    ToggleSalePricing();
+
     //Display the data
     document.getElementById("titleCount").innerHTML = formatNumber(dataArray.length);
     document.getElementById("onSale").innerHTML = formatNumber(sale);
@@ -284,12 +310,19 @@ function main(wishlistUrlType = "profiles") {
                              * This has a side effect of adding a small discrepancy in total price accuracy. Big problem. Must fix.
                              */
                             try {
+                              if (wishlistData[key]["win"] !== undefined) {
+                                winCompatible = true;
+                              } else {
+                                winCompatible = false;
+                              }
                               originalPrice = wishlistData[key]["subs"][0]["discount_block"].split('original_price">')[1].split("<")[0];
                               originalPriceStyled = "<span style='text-decoration: line-through;'>" + originalPrice + "</span>";
                             } catch (error) {
                               originalPriceStyled = "<span style='text-decoration: none;'> N/A </span>";
                               console.log(error + " | Appid: " + key);
                             }
+                          } else {
+                            originalPrice = price;
                           }
                           withPrice++;
                           withPriceIds += key + seperator;
@@ -390,7 +423,8 @@ function main(wishlistUrlType = "profiles") {
                           releaseDateFormatted: releaseDateFormatted,
                           discountPercentage: discountPercent,
                           discountPercentUnformatted: discountPercentUnformatted,
-                          originalPrice: originalPriceStyled,
+                          originalPriceStyled: originalPriceStyled,
+                          originalPrice: originalPrice,
                           appid: key,
                           price: price,
                           priority: wishlistData[key]["priority"],

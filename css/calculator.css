@@ -645,6 +645,7 @@ ul {
 
     .modalButtonStyle {
         position: unset !important;
+        margin: 5px!important;
     }
 
     .modal {

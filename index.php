@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <?php
 
-	$cssVersion = "3.5";
-	$jsVersion = "3.5";
+	$cssVersion = "3.6";
+	$jsVersion = "3.6";
 
 	$_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
 	$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -489,6 +489,7 @@
 							<button class="Reset-Button Reset-Contact" id="resetButtonContactSuccess" onclick="formResetContact()">Back</button>
 							<div class="container-results" id="container-results">
 								<div class="item">
+									<button style="left:16px;right:unset;" id="salePricingButton" class="modalButtonStyle" onclick="ToggleSalePricing()">Toggle Sale Pricing Off</button>
 									<button class="modalButtonStyle" id="showModal">Export Wishlist</button>
 								</div>
 							</div>

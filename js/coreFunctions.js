@@ -260,7 +260,7 @@
                  }
              } else {
                  priceText = dataArray[key]["price"];
-                 originalPriceText = dataArray[key]["originalPrice"];
+                 originalPriceText = dataArray[key]["originalPriceStyled"];
              }
 
              if (dataArray[key]["preOrderBoolean"] == true) {
