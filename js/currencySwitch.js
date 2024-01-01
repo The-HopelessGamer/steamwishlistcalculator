@@ -8,10 +8,10 @@ function callSwitch(setVariables) { //Sets the currency for the calculator and t
 	switch (setVariables) { //Check what the user selected and set the variables to the corresponding values.
 		case "AR":
 			countryCode = "AR";
-			currencySymbol = "ARS$ ";
+			currencySymbol = "$ ";
 			currencySymbolCheck = "$";
 			currencySymbolRight = "";
-			currencySymbolNumber = "3";
+			currencySymbolNumber = "0";
 			document.getElementById("selectList").selectedIndex = "1";
 			document.getElementById("selectSelected").setAttribute("value", countryCode); //Sets the selection for the currency dropdown.
 			document.getElementById("selectSelected").innerHTML = "Argentinian Peso (ARS)";

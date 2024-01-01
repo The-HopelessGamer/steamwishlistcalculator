@@ -111,6 +111,7 @@ function calculateResult(wishlistArray, profileNameHyperLink, profileId, country
         formattedPrice = accounting.formatMoney(priceTotal, currencySymbol) + currencySymbolRight;
         break;
     }
+    toggle = false;
     ToggleSalePricing();
 
     //Display the data
