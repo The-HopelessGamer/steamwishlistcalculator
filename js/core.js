@@ -51,10 +51,15 @@ function calculateResult(wishlistArray, profileNameHyperLink, profileId, country
         if (price.charAt(currencySymbolNumber) == currencySymbolCheck) {
           //Check if it has a price (check if it's a number) Alt: Check that the symbol matches the character location.
           priceTotal += priceToFloat(price.split(currencySymbolCheck)[1]); //Calculates the prices and appends them to a variable.
-          originalPriceTotal += priceToFloat(originalPrice.split(currencySymbolCheck)[1]);
+          console.log(originalPrice);
+          if (originalPrice !== undefined) {
+            originalPriceTotal += priceToFloat(originalPrice.split(currencySymbolCheck)[1]);
+          }
         } else if (CurrencySymbolCheck !== -1) {
           priceTotal += priceToFloat(price.split(currencySymbolRight)[0]);
-          originalPriceTotal += priceToFloat(originalPrice.split(currencySymbolRight)[0]);
+          if (originalPrice !== undefined) {
+            originalPriceTotal += priceToFloat(originalPrice.split(currencySymbolRight)[0]);
+          }
         }
       }
     }
