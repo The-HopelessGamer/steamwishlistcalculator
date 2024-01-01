@@ -2,7 +2,7 @@
 <?php
 
 	$cssVersion = "3.5";
-	$jsVersion = "3.4";
+	$jsVersion = "3.5";
 
 	$_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
 	$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -52,7 +52,6 @@
 		<link rel="stylesheet" href="css/select.min.css?v=<?php echo $cssVersion; ?>">
 		<script src="js/jquery-3.3.1.min.js?v=<?php echo $jsVersion; ?>"></script>
 		<script src="js/select.js?v=<?php echo $jsVersion; ?>"></script>
-		<script src="js/customimage.js?v=<?php echo $jsVersion; ?>"></script>
 		<script src="js/core.js?v=<?php echo $jsVersion; ?>"></script>
 		<script src="js/sortBy.js?v=<?php echo $jsVersion; ?>"></script>
 		<script src="js/coreFunctions.js?v=<?php echo $jsVersion; ?>"></script>

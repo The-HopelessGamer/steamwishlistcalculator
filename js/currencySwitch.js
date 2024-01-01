@@ -67,10 +67,10 @@ function callSwitch(setVariables) { //Sets the currency for the calculator and t
 			break;
 		case "CA":
 			countryCode = "CA";
-			currencySymbol = "CDN$ ";
+			currencySymbol = "C$ ";
 			currencySymbolCheck = "$";
 			currencySymbolRight = "";
-			currencySymbolNumber = "3";
+			currencySymbolNumber = "1";
 			document.getElementById("selectList").selectedIndex = "6";
 			document.getElementById("selectSelected").setAttribute("value", countryCode);
 			document.getElementById("selectSelected").innerHTML = "Canadian Dollar (CAD)";
