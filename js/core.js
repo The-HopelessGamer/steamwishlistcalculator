@@ -236,7 +236,7 @@ function main(wishlistUrlType = "profiles") {
                 try {
                   let htmlAppid = html.split("var g_rgWishlistData = ")[1].split("var g_rgAppInfo = ")[0].trim().replace(/;+$/, "");
                   var pageCount = html.split("var g_nAdditionalPages = ")[1].split(";")[0];
-                  if (pageCount > 150) {
+                  if (pageCount > 500) {
                     wishlistSizeLimitReached();
                     return false;
                   }
