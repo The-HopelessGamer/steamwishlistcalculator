@@ -446,7 +446,9 @@ function main(wishlistUrlType = "profiles") {
                       }
                     }
                     dataArray.sort(function (a, b) {
-                      return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
+                      if (a.title !== null && b.title !== null) {
+                        return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
+                      }
                     }); //Sort by title A - B.
                     for (let i = 0; i < jsonAppids.length; i++) {
                       //Get unlisted games

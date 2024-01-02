@@ -2,7 +2,7 @@
 <?php
 
 	$cssVersion = "3.6";
-	$jsVersion = "3.6";
+	$jsVersion = "3.7";
 
 	$_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
 	$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
