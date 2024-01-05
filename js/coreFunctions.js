@@ -81,6 +81,19 @@
      }
  }
 
+ let toggle = false;
+function ToggleSalePricing() {
+  if (toggle == false) {
+    toggle = true;
+    document.getElementById("priceTotal").innerHTML = formattedPrice;
+    document.getElementById("salePricingButton").innerHTML = "Turn Sale Pricing Off";
+  } else {
+    toggle = false;
+    document.getElementById("priceTotal").innerHTML = originalFormattedPriceTotal;
+    document.getElementById("salePricingButton").innerHTML = "Turn Sale Pricing On";
+  }
+}
+
  function sortBy() {
      let sortValue = document.getElementById("sort").value;
      switch (sortValue) {
@@ -771,16 +784,17 @@ function free() {
 
 function unlistedIds() {
     tab = 9;
-    document.getElementById("sort").disabled = true;
     document.getElementById("guide").innerHTML = 'To learn how to remove unlisted games, check out this <a class="link" href="https://steamcommunity.com/sharedfiles/filedetails/?id=1746978201" target="_blank">Steam Guide</a>.';
     document.getElementById("exportTitle").innerHTML = "Wishlist Items - Unlisted Appids";
     if (unlistedAppids !== "") {
         document.getElementById("titles").innerHTML = unlistedAppids.slice(0, -9);
+        document.getElementById("sort").disabled = false;
         displayUnlisted();
         cancelFetch = false;
     } else {
         document.getElementById("titles").innerHTML = "There are no unlisted games on your wishlist.";
         document.getElementById("exportTitle").innerHTML = "Wishlist Items - Unlisted";
+        document.getElementById("sort").disabled = true;
         cancelFetch = false;
     }
 }

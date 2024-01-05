@@ -1104,7 +1104,7 @@ fieldset {
 .tooltip {
     position: relative;
     display: inline-block;
-    float: right
+    float: right;
 }
 
 .tooltip .tooltiptext {
@@ -1164,6 +1164,13 @@ select {
 }
 
 #sort:disabled {
+    background-color: #005fb3;
+    color: #C3C3C3;
+    opacity: 80%;
+    cursor: not-allowed;
+}
+
+#salePricingButton:disabled {
     background-color: #005fb3;
     color: #C3C3C3;
     opacity: 80%;

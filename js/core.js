@@ -21,19 +21,6 @@ let currencySymbolNumber = ""; //Sets the amount of characters that are before t
 let originalFormattedPriceTotal = 0;
 let formattedPrice = 0;
 
-let toggle = false;
-function ToggleSalePricing() {
-  if (toggle == false) {
-    toggle = true;
-    document.getElementById("priceTotal").innerHTML = formattedPrice;
-    document.getElementById("salePricingButton").innerHTML = "Turn Sale Pricing Off";
-  } else {
-    toggle = false;
-    document.getElementById("priceTotal").innerHTML = originalFormattedPriceTotal;
-    document.getElementById("salePricingButton").innerHTML = "Turn Sale Pricing On";
-  }
-}
-
 
 function calculateResult(wishlistArray, profileNameHyperLink, profileId, countryCode, sale, withPrice, priceEmpty, freeTitles, preOrder) {
   //Display results once called by the main function.
@@ -51,13 +38,21 @@ function calculateResult(wishlistArray, profileNameHyperLink, profileId, country
         if (price.charAt(currencySymbolNumber) == currencySymbolCheck) {
           //Check if it has a price (check if it's a number) Alt: Check that the symbol matches the character location.
           priceTotal += priceToFloat(price.split(currencySymbolCheck)[1]); //Calculates the prices and appends them to a variable.
-          if (originalPrice !== "") {
+          if (originalPrice !== "" && originalPrice !== undefined && sale > 0) {
             originalPriceTotal += priceToFloat(originalPrice.split(currencySymbolCheck)[1]);
+            document.getElementById("salePricingButton").disabled = false;
+          } else {
+            originalPriceTotal = priceTotal;
+            document.getElementById("salePricingButton").disabled = true;
           }
         } else if (CurrencySymbolCheck !== -1) {
           priceTotal += priceToFloat(price.split(currencySymbolRight)[0]);
-          if (originalPrice !== "") {
+          if (originalPrice !== "" && originalPrice !== undefined && sale > 0) {
             originalPriceTotal += priceToFloat(originalPrice.split(currencySymbolRight)[0]);
+            document.getElementById("salePricingButton").disabled = false;
+          } else {
+            originalPriceTotal = priceTotal;
+            document.getElementById("salePricingButton").disabled = true;
           }
         }
       }
