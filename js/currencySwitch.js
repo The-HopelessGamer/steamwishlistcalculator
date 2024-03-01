@@ -131,7 +131,7 @@ function callSwitch(setVariables) { //Sets the currency for the calculator and t
 			currencySymbolCheck = "¥";
 			currencySymbolRight = "";
 			currencySymbolNumber = "0";
-			document.getElementById("selectList").selectedIndex = "1`";
+			document.getElementById("selectList").selectedIndex = "11";
 			document.getElementById("selectSelected").setAttribute("value", countryCode);
 			document.getElementById("selectSelected").innerHTML = "Japanese Yen (JPY)";
 			var optList = document.getElementById("selectItems").childNodes;
@@ -142,7 +142,7 @@ function callSwitch(setVariables) { //Sets the currency for the calculator and t
 			currencySymbol = "";
 			currencySymbolRight = "₸";
 			currencySymbolCheck = "₸";
-			document.getElementById("selectList").selectedIndex = "11";
+			document.getElementById("selectList").selectedIndex = "12";
 			document.getElementById("selectSelected").setAttribute("value", countryCode);
 			document.getElementById("selectSelected").innerHTML = "Kazakhstani Tenge (KZT)";
 			var optList = document.getElementById("selectItems").childNodes;
@@ -153,7 +153,7 @@ function callSwitch(setVariables) { //Sets the currency for the calculator and t
 			currencySymbol = "";
 			currencySymbolRight = " KD";
 			currencySymbolCheck = "KD";
-			document.getElementById("selectList").selectedIndex = "12";
+			document.getElementById("selectList").selectedIndex = "13";
 			document.getElementById("selectSelected").setAttribute("value", countryCode);
 			document.getElementById("selectSelected").innerHTML = "Kuwaiti Dinar (KWD)";
 			var optList = document.getElementById("selectItems").childNodes;

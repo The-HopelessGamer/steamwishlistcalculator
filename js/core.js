@@ -22,37 +22,38 @@ let originalFormattedPriceTotal = 0;
 let formattedPrice = 0;
 
 
-function calculateResult(wishlistArray, profileNameHyperLink, profileId, countryCode, sale, withPrice, priceEmpty, freeTitles, preOrder) {
+function calculateResult(profileNameHyperLink, profileId, countryCode, sale, withPrice, priceEmpty, freeTitles, preOrder) {
   //Display results once called by the main function.
   setTimeout(function () {
     sortBy();
     let priceTotal = 0;
     let originalPriceTotal = 0;
-    for (key in wishlistArray) {
+    for (key in dataArray) {
       //For each using keys instead of indexes.
-      if (wishlistArray.hasOwnProperty(key)) {
-        //Extract the price and add it to the total
-        let price = wishlistArray[key].split('final_price">')[1].split("<")[0];
-        let originalPrice = dataArray[key]["originalPrice"];
-        let CurrencySymbolCheck = price.indexOf(currencySymbolRight); //If the price has a symbol on the right side of the price then we will keep only the contents on the left of split. If not then we will keep whats on the right of the split.
-        if (price.charAt(currencySymbolNumber) == currencySymbolCheck) {
-          //Check if it has a price (check if it's a number) Alt: Check that the symbol matches the character location.
-          priceTotal += priceToFloat(price.split(currencySymbolCheck)[1]); //Calculates the prices and appends them to a variable.
-          if (originalPrice !== "" && originalPrice !== undefined && sale > 0) {
-            originalPriceTotal += priceToFloat(originalPrice.split(currencySymbolCheck)[1]);
-            document.getElementById("salePricingButton").disabled = false;
-          } else {
-            originalPriceTotal = priceTotal;
-            document.getElementById("salePricingButton").disabled = true;
-          }
-        } else if (CurrencySymbolCheck !== -1) {
-          priceTotal += priceToFloat(price.split(currencySymbolRight)[0]);
-          if (originalPrice !== "" && originalPrice !== undefined && sale > 0) {
-            originalPriceTotal += priceToFloat(originalPrice.split(currencySymbolRight)[0]);
-            document.getElementById("salePricingButton").disabled = false;
-          } else {
-            originalPriceTotal = priceTotal;
-            document.getElementById("salePricingButton").disabled = true;
+      if (dataArray.hasOwnProperty(key)) {
+        if (dataArray[key]["priceUnfiltered"] !== "") {
+          //Extract the price and add it to the total.
+          let price = dataArray[key]["priceUnfiltered"].split('final_price">')[1].split("<")[0];
+          let originalPrice = dataArray[key]["originalPrice"];
+          if (currencySymbolRight !== currencySymbolCheck) { //If the price has a symbol on the right side of the price then we will keep only the contents on the left of split. If not then we will keep whats on the right of the split.
+            //Check if it has a price (check if it's a number) Alt: Check that the symbol matches the character location.
+            priceTotal += priceToFloat(price.split(currencySymbolCheck)[1]); //Calculates the prices and appends them to a variable.
+            if (originalPrice !== "" && originalPrice !== undefined && sale > 0) {
+              originalPriceTotal += priceToFloat(originalPrice.split(currencySymbolCheck)[1]);
+              document.getElementById("salePricingButton").disabled = false;
+            } else {
+              originalPriceTotal = priceTotal;
+              document.getElementById("salePricingButton").disabled = true;
+            }
+          } else if (currencySymbolRight == currencySymbolCheck) {
+            priceTotal += priceToFloat(price.split(currencySymbolRight)[0]);
+            if (originalPrice !== "" && originalPrice !== undefined && sale > 0) {
+              originalPriceTotal += priceToFloat(originalPrice.split(currencySymbolRight)[0]);
+              document.getElementById("salePricingButton").disabled = false;
+            } else {
+              originalPriceTotal = priceTotal;
+              document.getElementById("salePricingButton").disabled = true;
+            }
           }
         }
       }
@@ -248,7 +249,6 @@ function main(wishlistUrlType = "profiles") {
                 wishlistSize = html.indexOf("g_nAdditionalPages = 0;");
                 if (wishlistSize == -1) {
                   //The wishlist is empty or the profile is private.
-                  let wishlistArray = [];
                   let wishlistData = "";
                   const getData = async () => {
                     //Get each wishlist page that contains the json for the wishlist.
@@ -296,7 +296,7 @@ function main(wishlistUrlType = "profiles") {
                         //For each key we will loop over the response from the fetch.
                         if (wishlistData[key]["subs"][0] !== undefined) {
                           //Only grab games that have a price.
-                          wishlistArray.push(wishlistData[key]["subs"][0]["discount_block"]);
+                          var priceUnfiltered = wishlistData[key]["subs"][0]["discount_block"];
                           var price = wishlistData[key]["subs"][0]["discount_block"].split('final_price">')[1].split("<")[0];
                           var discountPercent = "N/A";
                           var discountPercentUnformatted = 0;
@@ -336,6 +336,7 @@ function main(wishlistUrlType = "profiles") {
                           priceEmpty++;
                           priceEmptyIds += key + seperator;
                           priceUnformatted = 0;
+                          priceUnfiltered = "";
                         }
                         if (wishlistData[key]["mac"] !== undefined) {
                           macCompatible = true;
@@ -436,6 +437,7 @@ function main(wishlistUrlType = "profiles") {
                           priority: wishlistData[key]["priority"],
                           url: '<a href="http://store.steampowered.com/app/' + key + '/" class="titleLinks" title="' + wishlistData[key]["name"] + '" target="_blank">' + wishlistData[key]["name"] + "</a>",
                           priceUnformatted: priceUnformatted,
+                          priceUnfiltered: priceUnfiltered
                         });
                         price = "";
                       }
@@ -455,7 +457,7 @@ function main(wishlistUrlType = "profiles") {
                         unlistedAppids += '<a href="https://steamdb.info/app/' + jsonAppids[i]["appid"] + '/" class="titleLinks" title="' + jsonAppids[i]["appid"] + '" target="_blank">' + jsonAppids[i]["appid"] + "</a>" + seperator;
                       }
                     }
-                    calculateResult(wishlistArray, profileNameHyperLink, profileId, countryCode, sale, withPrice, priceEmpty, freeTitles, preOrder);
+                    calculateResult(profileNameHyperLink, profileId, countryCode, sale, withPrice, priceEmpty, freeTitles, preOrder);
                     return wishlistData;
                   };
                   getData();
