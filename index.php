@@ -370,6 +370,12 @@
 							</h4>
 							<p style="margin: 0; ">A small tool to crop Steam profile backgrounds to showcases.</p>
 						</div>
+						<div class="partnersColumn">
+							<h4 class="partnersTitle">
+								<a class="link" href="https://steamlevelup.com/" title="The Cheapest and Fastest Way to Level Up Your Steam Profile. Buy Steam Levels with Card, Crypto, CS2 Skins, and Steam Gems!" target="_blank">Steam Level Up</a>
+							</h4>
+							<p style="margin: 0; ">The Cheapest and Fastest Way to Level Up Your Steam Profile. Buy Steam Levels with Card, Crypto, CS2 Skins, and Steam Gems!</p>
+						</div>
 					</div>
 				</div>
 				<form name="userInputForm" action="javascript:;" onsubmit="main();" class="THG-form" id="form-display">
@@ -584,6 +590,8 @@
 				<a class="link" href="https://steamladder.com/" title="Steam Ladder is a ranking and stats website for Steam profiles. View your worldwide or country rank in playtime, level, games owned, and more." target="_blank">Steam Ladder</a>
 				|
 				<a class="link" href="https://steam-backlog.com/" title="Steam Backlog is a Steam library manager built with simplicity in mind." target="_blank">Steam BackLog</a>
+				|
+				<a class="link" href="https://steamlevelup.com/" title="The Cheapest and Fastest Way to Level Up Your Steam Profile. Buy Steam Levels with Card, Crypto, CS2 Skins, and Steam Gems!" target="_blank">Steam Level Up</a>
 				-
 				<a class="link" onclick="partners();" href="#partners" title="View All Partners">View All Partners</a>
 				<p>This website is Not affiliated with Valve Corporation, Steam, or any of their partners. All Copyrights & Trademarks reserved to their respective owners.</p>
