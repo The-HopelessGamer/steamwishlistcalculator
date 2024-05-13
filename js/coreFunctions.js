@@ -87,10 +87,12 @@ function ToggleSalePricing() {
     toggle = true;
     document.getElementById("priceTotal").innerHTML = formattedPrice;
     document.getElementById("salePricingButton").innerHTML = "Turn Sale Pricing Off";
+    displayTable(toggle);
   } else {
     toggle = false;
     document.getElementById("priceTotal").innerHTML = originalFormattedPriceTotal;
     document.getElementById("salePricingButton").innerHTML = "Turn Sale Pricing On";
+    displayTable(toggle);
   }
 }
 
@@ -183,7 +185,7 @@ function ToggleSalePricing() {
 
 
  //This creates, fills and displays the tables on the webpage.
- function displayTable() {
+ function displayTable(saleOff) {
      rowArray = [];
      $("#wishlistTableBody .tr").remove();
      $("#wishlistEmpty").remove();
@@ -269,36 +271,65 @@ function ToggleSalePricing() {
              }
              let priceText = "";
              let originalPriceText = "";
+             let originalPrice = "";
              if (dataArray[key]["price"] == "" || dataArray[key]["price"] == undefined) {
                  if (dataArray[key]["free"] == true) {
                      priceText = "Free";
                  } else {
                      priceText = "N/A";
                  }
+
              } else {
                  priceText = dataArray[key]["price"];
                  originalPriceText = dataArray[key]["originalPriceStyled"];
              }
+             if (dataArray[key]["price"] == "" || dataArray[key]["price"] == undefined) {
+                if (dataArray[key]["free"] == true) {
+                    originalPrice = "Free";
+                } else {
+                    originalPrice = "N/A";
+                }
+
+            } else {
+                priceText = dataArray[key]["price"];
+                originalPriceText = dataArray[key]["originalPriceStyled"];
+                originalPrice = dataArray[key]["originalPrice"];
+            }
 
              if (dataArray[key]["preOrderBoolean"] == true) {
                  $(cell5).html("Yes");
              } else {
                  $(cell5).html("No");
              }
-
-             $(cell6).html(
-                 `<span class="desktopPrice">
-                    <span class="tr" style="text-decoration: none; font-size: small; color: gray;line-height: 0px;box-shadow: none;">
-                  		<span style="text-decoration: line-through; text-align: center;width: 100%;">${originalPriceText}</span>
-                  	</span>
-
-                  	<span class="tr" style="line-height: 0px;box-shadow: none;">
-                  		<span style="text-align: center;width: 100%;">${priceText}</span>
-                  	</span>
-                </span>
-
-                <span class="mobilePrice">${priceText}<span style='text-decoration: none; font-size: small; color: gray;'> ${originalPriceText}</span></span>`
-            );
+             if (saleOff == false) {
+                $(cell6).html(
+                    `<span class="desktopPrice">
+                       <span class="tr" style="text-decoration: none; font-size: small; color: gray;line-height: 0px;box-shadow: none;">
+                             <span style="text-decoration: line-through; text-align: center;width: 100%;"></span>
+                         </span>
+   
+                         <span class="tr" style="line-height: 0px;box-shadow: none;">
+                             <span style="text-align: center;width: 100%;">${originalPrice}</span>
+                         </span>
+                   </span>
+   
+                   <span class="mobilePrice"> ${originalPrice}<span style='text-decoration: none; font-size: small; color: gray;'></span></span>`
+               );
+             } else {
+                $(cell6).html(
+                    `<span class="desktopPrice">
+                       <span class="tr" style="text-decoration: none; font-size: small; color: gray;line-height: 0px;box-shadow: none;">
+                             <span style="text-decoration: line-through; text-align: center;width: 100%;">${originalPriceText}</span>
+                         </span>
+   
+                         <span class="tr" style="line-height: 0px;box-shadow: none;">
+                             <span style="text-align: center;width: 100%;">${priceText}</span>
+                         </span>
+                   </span>
+   
+                   <span class="mobilePrice">${priceText}<span style='text-decoration: none; font-size: small; color: gray;'> ${originalPriceText}</span></span>`
+               );
+             }
              row.append(cell1, cell2, cell3, cell4, cell5, cell6);
              rowArray.push(row);
              table.append(rowArray[key]);
