@@ -59,6 +59,15 @@
 		<script src="js/getallurlparams.min.js?v=<?php echo $jsVersion; ?>"></script>
 		<script src="js/accounting.min.js?v=<?php echo $jsVersion; ?>"></script>
 		<script src="js/contact-form.js?v=<?php echo $jsVersion; ?>"></script>
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-VFS7QXTHFN"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+
+			gtag('config', 'G-VFS7QXTHFN');
+		</script>
 	</head>
 	<div id="container">
 		<div id="header">
@@ -180,8 +189,8 @@
 						to set the currency based on your location whilst using the Currency Auto Detect Feature then please choose one of the preset Currencies from the Currency Dropdown instead.
 					</p>
 					<p>
-						<strong>Cookies</strong>
-						<br>We do not use cookies that collect personal information on this website.
+						<strong>Google Analytics</strong>
+						<br>This site uses cookies from Google Analytics to analyze website traffic. By using this site, you consent to the processing of data by Google as described in their <a class="link" href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a>. 
 					</p>
 					<p>
 						<strong>Security</strong>
@@ -192,7 +201,7 @@
 						</strong>
 					</p>
 					<p>
-						<b>- Updated: 1/01/2020</b>
+						<b>- Updated: 19/05/2024</b>
 					</p>
 				</div>
 				<div class="THG-form faq" id="faq">
@@ -250,24 +259,6 @@
 						<p>
 							<b>Answer:</b>
 							The URL parameters are generated from your steam ID or Custom Steam ID if your wishlist succesfully calculates. It uses the parameters for form submission for the purpose of allowing the user to share their wishlist calculation result.</p>
-					</div>
-					<br>
-					<div class="faqQA">
-						<p>
-							<b>Question:</b>
-							Does this website use cookies that collect personal information?</p>
-						<p>
-							<div class="tooltip" style="float: unset;">
-								<b>Answer:</b>
-								This website does not use cookies that collect personal information. Sadly the
-								<a class="" onmouseover="cookieEasterEgg()">
-									<span class="tooltiptext cookieTooltip" style="margin-left: unset; margin-bottom: 15px;" id="cookieTooltip"><img src="media/cookie.png" alt="" width="64" height="64"><br>What?! Is this a Cookie?!</span>
-									Cookie
-								</a>
-								Monster ate all my chocolate chip cookies.
-							</div>
-
-						</p>
 					</div>
 					<br>
 					<div class="faqQA">
