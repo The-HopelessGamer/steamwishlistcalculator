@@ -67,7 +67,6 @@ function calculateResult(profileNameHyperLink, profileId, countryCode, sale, wit
         break;
       case "AR":
       case "PL":
-      case "BR":
       case "TR":
       case "NL":
       case "NO":
@@ -94,6 +93,10 @@ function calculateResult(profileNameHyperLink, profileId, countryCode, sale, wit
       case "RU":
         originalFormattedPriceTotal = accounting.formatMoney(originalPriceTotal, currencySymbol, 0, "", "") + currencySymbolRight;
         formattedPrice = accounting.formatMoney(priceTotal, currencySymbol, 0, "", "") + currencySymbolRight;
+        break;
+      case "BR":
+        originalFormattedPriceTotal = accounting.formatMoney(originalPriceTotal, currencySymbol, 2, ".", ",") + currencySymbolRight;
+        formattedPrice = accounting.formatMoney(priceTotal, currencySymbol, 2, ".", ",") + currencySymbolRight;
         break;
       case "KZ":
       case "ID":
@@ -304,6 +307,7 @@ function main(wishlistUrlType = "profiles") {
                           var originalPriceStyled = "";
                           var onSaleBoolean;
                           priceUnformatted = wishlistData[key]["subs"][0]["price"];
+                          console.log(priceUnformatted);
                           if (wishlistData[key]["subs"][0]["discount_pct"] !== null) {
                             sale++;
                             onSaleIds += key + seperator;

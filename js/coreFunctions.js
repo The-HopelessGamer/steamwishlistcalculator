@@ -40,13 +40,6 @@
          tabSwitch();
      });
 
-/* Testing with PHP Instead.
-     let date = new Date(); //Automatically updates the date in the footer.
-     let newYear = date.getFullYear();
-     if (newYear > 2018) {
-         document.getElementById("newYear").innerHTML = newYear;
-     }
- */
  });
 
  function tabSwitch() {
@@ -115,10 +108,14 @@ function ToggleSalePricing() {
  function priceToFloat(currencyString) {
      switch (countryCode) {
          case "AR":
-         case "BR":
          case "JP":
             if (currencyString !== undefined) {
                 currencyString = currencyString.replace(',', '');
+            }
+            break;
+        case "BR":
+            if (currencyString !== undefined) {
+                currencyString = currencyString.replace(',', '.');
             }
             break;
          case "NL":
@@ -313,7 +310,7 @@ function ToggleSalePricing() {
                          </span>
                    </span>
    
-                   <span class="mobilePrice"> ${originalPrice}<span style='text-decoration: none; font-size: small; color: gray;'></span></span>`
+                   <span class="mobilePrice">${originalPrice}<span style='text-decoration: none; font-size: small; color: gray;'></span></span>`
                );
              } else {
                 $(cell6).html(
