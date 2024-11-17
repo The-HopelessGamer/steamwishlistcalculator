@@ -207,7 +207,7 @@ function main(wishlistUrlType = "profiles") {
               urlId = httpCheck.split("profiles/")[1];
             } else {
               throwError();
-              document.getElementById("errorText").innerHTML = "Error: Invalid id!";
+              document.getElementById("errorText").innerHTML = "Error: Invalid Id or Wishlist Private!";
               return false;
             }
             let urlIdFinal = urlId.split("/")[0].split("#")[0]; //If we have a user ID then we split what is on the right of the ID. Then we assign the ID to the letiable "urlIdFinal".
@@ -228,7 +228,7 @@ function main(wishlistUrlType = "profiles") {
                   main("id"); //Try everything again with the other url type "id".
                 } else {
                   throwError();
-                  document.getElementById("errorText").innerHTML = "Error: Invalid id!";
+                  document.getElementById("errorText").innerHTML = "Error: Invalid Id or Wishlist Private!";
                 }
               } else {
                 //We weren't redirected
