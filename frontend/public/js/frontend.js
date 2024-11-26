@@ -768,19 +768,17 @@ async function getCountryCode() {
 			.getElementById("selectSelected")
 			.getAttribute("value");
 	}
-
 	countryCodeCheck = countryCodesList.includes(countryCode);
-
 	if (
-		countryCode == "AutoDetect" ||
-		(countryCode == "autodetect" && countryCodeCheck !== false)
+		(countryCode === "AutoDetect" ||
+		(countryCode === "autodetect") && (countryCodeCheck !== false))
 	) {
 		response = await fetch("/ip2Country");
 		response = await response.text();
 		switchResponse = callSwitch(response);
 		countryCode = switchResponse.countryCode;
 	} else {
-		countryCode = callSwitch("US");
+		countryCode = callSwitch(countryCode);
 		countryCode = countryCode.countryCode;
 	}
 	return countryCode;
