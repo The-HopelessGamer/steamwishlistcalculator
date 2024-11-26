@@ -681,7 +681,7 @@ function currencyDropdown() {
 			let opt = document.getElementById("selectList").value;
 			document.getElementById("selectSelected").setAttribute("value", opt);
 			toggle = false;
-			currencyChange();
+			currencyChange(opt);
 			callCancelFetch();
 		}
 	});
@@ -693,7 +693,7 @@ function currencyDropdown() {
 			toggle = false;
 			let opt = document.getElementById("selectList").value;
 			document.getElementById("selectSelected").setAttribute("value", opt);
-			currencyChange();
+			currencyChange(opt);
 			callCancelFetch();
 		}
 	});
@@ -1254,28 +1254,20 @@ function callSwitch(setVariables) {
 	};
 }
 
-async function currencyChange() {
+async function currencyChange(countryCode) {
 	const formData = new FormData(document.getElementById("form-display"));
 	let steamIdOrVanityUrl = formData.get("steamIdOrVanityUrl");
 	if (steamIdOrVanityUrl == "") {
 		let urlParams = window.location.href; //Assign the URL to "urlParams".
-		let urlParamsCheck = urlParams.indexOf("?id" || "&currency"); //Check whether the URL contains "&currency" or "?id".
-
+		let urlParamsCheck = urlParams.indexOf("?id"); //Check whether the URL contains "?id".
 		if (urlParamsCheck !== -1) {
 			//If the URL contains a "&currency" or "?id" then we get the id and currency from the URL Params.
 			steamIdOrVanityUrl = getAllUrlParams(urlParams).id;
 		}
 	}
-
-	window.history.pushState(
-		"object or string",
-		"Title",
-		"/" +
-			window.location.href
-				.substring(window.location.href.lastIndexOf("/") + 1)
-				.split("?")[0]
-	);
-	let countryCode = await getCountryCode();
+	if (countryCode === null) {
+		countryCode = await getCountryCode();
+	}
 	getWishlist(steamIdOrVanityUrl, countryCode);
 	closeNav();
 }
