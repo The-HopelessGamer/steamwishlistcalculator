@@ -188,7 +188,9 @@ async function getWishlistItems(steamId, countryCode) {
 function main() {
 	const app = express();
 
-	app.use(
+	const router = express.Router()
+
+	router.use(
 		helmet({
 			contentSecurityPolicy: {
 				directives: {
@@ -208,7 +210,7 @@ function main() {
 
 	app.use(express.static("frontend/public"));
 
-	app.get(
+	router.get(
 		"/resolveVanityUrl",
 		query("vanityUrl").notEmpty().escape(),
 		async function (req, res) {
@@ -224,7 +226,7 @@ function main() {
 		}
 	);
 
-	app.get(
+	router.get(
 		"/wishlist",
 		query("steamId" && "countryCode")
 			.notEmpty()
@@ -248,7 +250,7 @@ function main() {
 		}
 	);
 
-	app.get(
+	router.get(
 		"/getProfileInfo",
 		query("steamId").notEmpty().escape(),
 		async function (req, res) {
@@ -262,12 +264,12 @@ function main() {
 		}
 	);
 
-	app.get("/counterRead", async function (req, res) {
+	router.get("/counterRead", async function (req, res) {
 		const data = fs.readFileSync("frontend/public/counter.txt", "utf8");
 		res.send(data);
 	});
 
-	app.get("/counterUpdate", async function (req, res) {
+	router.get("/counterUpdate", async function (req, res) {
 		const readCount = fs.readFileSync("frontend/public/counter.txt", "utf8");
 		const readCheck = fs.readFileSync("frontend/public/counter.txt", "utf8");
 		let count = readCount.toString();
@@ -281,7 +283,7 @@ function main() {
 		res.send(count.toString());
 	});
 
-	app.get("/ip2Country", async function (req, res) {
+	router.get("/ip2Country", async function (req, res) {
 		const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 		const location = lookup(ip);
 		if (location !== null) {
@@ -292,6 +294,7 @@ function main() {
 		}
 	});
 
+	app.use("/", router);
 	app.listen(3000);
 }
 
