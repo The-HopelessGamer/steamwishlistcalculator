@@ -770,8 +770,8 @@ async function getCountryCode() {
 	}
 	countryCodeCheck = countryCodesList.includes(countryCode);
 	if (
-		(countryCode === "AutoDetect" ||
-		(countryCode === "autodetect") && (countryCodeCheck !== false))
+		countryCode === "AutoDetect" ||
+		(countryCode === "autodetect" && countryCodeCheck !== false)
 	) {
 		response = await fetch("/ip2Country");
 		response = await response.text();
