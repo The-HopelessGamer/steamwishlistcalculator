@@ -7,6 +7,37 @@ let originalFormattedPriceTotal = 0;
 let formattedCurrentPrice = 0;
 let toggle = false;
 let getHyperLinks = [];
+let countryCodeCheck = "";
+let countryCodesList = [
+	"AR",
+	"AU",
+	"AZ",
+	"BR",
+	"GB",
+	"CA",
+	"CR",
+	"IN",
+	"ID",
+	"IL",
+	"JP",
+	"KZ",
+	"KW",
+	"MX",
+	"EU",
+	"NL",
+	"NZ",
+	"NO",
+	"PH",
+	"PL",
+	"QA",
+	"RU",
+	"SG",
+	"TH",
+	"TR",
+	"UA",
+	"US",
+	"VM",
+];
 
 $(document).ready(function () {
 	initialPageLoad();
@@ -53,7 +84,6 @@ async function calculateWishlist(steamId, countryCode) {
 					originalPrice.split(currencyData.currencySymbolCheck)[1],
 					countryCode
 				);
-				
 			} else {
 				originalPriceTotal += priceToFloat(
 					currentPrice.split(currencyData.currencySymbolCheck)[1],
@@ -74,7 +104,6 @@ async function calculateWishlist(steamId, countryCode) {
 					originalPrice.split(currencyData.currencySymbolRight)[0],
 					countryCode
 				);
-				
 			} else {
 				originalPriceTotal += priceToFloat(
 					currentPrice.split(currencyData.currencySymbolRight)[0],
@@ -368,9 +397,7 @@ async function getWishlist(steamIdOrVanityUrl, countryCode) {
 				}).toString()
 		);
 		steamData = await response.text();
-		if (
-			response.status !== 400
-		) {
+		if (response.status !== 400) {
 			steamData = await JSON.parse(steamData);
 			calculateWishlist(steamId, countryCode);
 		} else {
@@ -394,9 +421,7 @@ async function isVanityUrl(steamIdOrVanityUrl) {
 				}).toString()
 		);
 		steamId = await response.text();
-		if (
-			response.status === 400
-		) {
+		if (response.status === 400) {
 			steamId = response.status;
 		}
 	}
@@ -703,8 +728,14 @@ function initialPageLoad() {
 	if (urlParamsCheck !== -1) {
 		//If the URL contains a "&currency" or "?id" then we get the id and currency from the URL Params.
 		const steamIdOrVanityUrl = getAllUrlParams(urlParams).id;
-		const countryCode = getAllUrlParams(urlParams).currency;
-		callSwitch(countryCode);
+		let countryCode = getAllUrlParams(urlParams).currency;
+		countryCodeCheck = countryCodesList.includes(countryCode);
+		if (countryCode !== undefined && countryCodeCheck !== false) {
+			callSwitch(countryCode);
+		} else {
+			alert("Error: Unable to detect currency. Defaulted to USD.");
+			countryCode = "US";
+		}
 		getWishlist(steamIdOrVanityUrl, countryCode);
 	} else {
 		switch (location.hash) {
@@ -729,7 +760,6 @@ async function getCountryCode() {
 	let switchResponse = [];
 	let urlParams = window.location.href; //Assign the URL to "urlParams".
 	let urlParamsCheck = urlParams.indexOf("&currency");
-
 	if (urlParamsCheck !== -1) {
 		//If the URL contains "&currency" then we get the currency from the URL.
 		countryCode = getAllUrlParams(urlParams).currency; //Assign the currency from the URL to a global variable.
@@ -738,15 +768,21 @@ async function getCountryCode() {
 			.getElementById("selectSelected")
 			.getAttribute("value");
 	}
-	if (countryCode == "AutoDetect" || countryCode == "autodetect") {
+
+	countryCodeCheck = countryCodesList.includes(countryCode);
+
+	if (
+		countryCode == "AutoDetect" ||
+		(countryCode == "autodetect" && countryCodeCheck !== false)
+	) {
 		response = await fetch("/ip2Country");
 		response = await response.text();
 		switchResponse = callSwitch(response);
 		countryCode = switchResponse.countryCode;
 	} else {
-		switchResponse = callSwitch(countryCode);
-		countryCode = switchResponse.countryCode;
+		countryCode = callSwitch("US");
 	}
+
 	return countryCode;
 }
 

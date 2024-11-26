@@ -1,5 +1,6 @@
 import express from "express";
 import axios from "axios";
+import helmet from "helmet";
 import protobuf from "protobufjs";
 import fs from "fs";
 import { query, validationResult } from "express-validator";
@@ -29,30 +30,38 @@ const GET_ITEMS_REQUEST_LIMIT = 700;
 const STEAM_API_KEY = process.env.STEAM_API_KEY;
 
 async function resolveVanityUrl(vanityUrl) {
-	const response = await axios({
-		method: "get",
-		baseURL: BASE_URL,
-		url: "ISteamUser/ResolveVanityURL/v1",
-		params: {
-			key: STEAM_API_KEY,
-			vanityUrl,
-		},
-	});
-
+	let response = "";
+	try {
+		response = await axios({
+			method: "get",
+			baseURL: BASE_URL,
+			url: "ISteamUser/ResolveVanityURL/v1",
+			params: {
+				key: STEAM_API_KEY,
+				vanityUrl,
+			},
+		});
+	} catch {
+		return undefined;
+	}
 	return response.data.response?.steamid;
 }
 
 async function getProfileInfo(steamId) {
-	const response = await axios({
-		method: "get",
-		baseURL: BASE_URL,
-		url: "ISteamUser/GetPlayerSummaries/v2",
-		params: {
-			key: STEAM_API_KEY,
-			steamids: steamId,
-		},
-	});
-
+	let response = "";
+	try {
+		response = await axios({
+			method: "get",
+			baseURL: BASE_URL,
+			url: "ISteamUser/GetPlayerSummaries/v2",
+			params: {
+				key: STEAM_API_KEY,
+				steamids: steamId,
+			},
+		});
+	} catch {
+		return undefined;
+	}
 	return response.data.response.players[0];
 }
 
@@ -62,15 +71,21 @@ async function getWishlistItemIds(steamId) {
 	});
 	const getWishlistRequestBuffer =
 		CWishlist_GetWishlist_Request.encode(getWishlistRequest).finish();
-	const response = await axios({
-		method: "get",
-		baseURL: BASE_URL,
-		url: "IWishlistService/GetWishlist/v1",
-		params: {
-			input_protobuf_encoded: getWishlistRequestBuffer.toString("base64"),
-		},
-		responseType: "arraybuffer",
-	});
+	let response = "";
+	try {
+		response = await axios({
+			method: "get",
+			baseURL: BASE_URL,
+			url: "IWishlistService/GetWishlist/v1",
+			params: {
+				input_protobuf_encoded: getWishlistRequestBuffer.toString("base64"),
+			},
+			responseType: "arraybuffer",
+		});
+	} catch {
+		return undefined;
+	}
+
 	const getWishlistResponse = CWishlist_GetWishlist_Response.decode(
 		response.data
 	);
@@ -97,15 +112,21 @@ async function getItems(appIds, countryCode) {
 		});
 		const getItemsRequestBuffer =
 			CStoreBrowse_GetItems_Request.encode(getItemsRequest).finish();
-		const response = await axios({
-			method: "get",
-			baseURL: BASE_URL,
-			url: "IStoreBrowseService/GetItems/v1",
-			params: {
-				input_protobuf_encoded: getItemsRequestBuffer.toString("base64"),
-			},
-			responseType: "arraybuffer",
-		});
+
+		let response = "";
+		try {
+			response = await axios({
+				method: "get",
+				baseURL: BASE_URL,
+				url: "IStoreBrowseService/GetItems/v1",
+				params: {
+					input_protobuf_encoded: getItemsRequestBuffer.toString("base64"),
+				},
+				responseType: "arraybuffer",
+			});
+		} catch {
+			return undefined;
+		}
 		const getItemsResponse = CStoreBrowse_GetItems_Response.decode(
 			response.data
 		);
@@ -119,19 +140,71 @@ async function getItems(appIds, countryCode) {
 }
 
 async function getWishlistItems(steamId, countryCode) {
-	const wishlistItems = await getWishlistItemIds(steamId);
-	if (wishlistItems !== undefined) {
-		const items = await getItems(
-			wishlistItems.map((item) => item.appid),
-			countryCode
-		);
-		return items;
+	let countryCodeCheck = "";
+	let countryCodesList = [
+		"AR",
+		"AU",
+		"AZ",
+		"BR",
+		"GB",
+		"CA",
+		"CR",
+		"IN",
+		"ID",
+		"IL",
+		"JP",
+		"KZ",
+		"KW",
+		"MX",
+		"EU",
+		"NL",
+		"NZ",
+		"NO",
+		"PH",
+		"PL",
+		"QA",
+		"RU",
+		"SG",
+		"TH",
+		"TR",
+		"UA",
+		"US",
+		"VM",
+	];
+	countryCodeCheck = countryCodesList.includes(countryCode);
+	if (countryCodeCheck !== false) {
+		const wishlistItems = await getWishlistItemIds(steamId);
+		if (wishlistItems !== undefined) {
+			const items = await getItems(
+				wishlistItems.map((item) => item.appid),
+				countryCode
+			);
+			return items;
+		}
 	}
 	return undefined;
 }
 
 function main() {
 	const app = express();
+
+	app.use(
+		helmet({
+			contentSecurityPolicy: {
+				directives: {
+					defaultSrc: ["'self'"],
+					scriptSrc: [
+						"'self'",
+						"'unsafe-eval'",
+						"'unsafe-inline'",
+						"https://www.googletagmanager.com",
+						"*.googletagmanager.com",
+					],
+					scriptSrcAttr: ["'unsafe-inline'"],
+				},
+			},
+		})
+	);
 
 	app.use(express.static("frontend/public"));
 
