@@ -36,7 +36,7 @@ let countryCodesList = [
 	"TR",
 	"UA",
 	"US",
-	"VM",
+	"VN",
 ];
 
 $(document).ready(function () {

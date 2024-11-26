@@ -169,7 +169,7 @@ async function getWishlistItems(steamId, countryCode) {
 		"TR",
 		"UA",
 		"US",
-		"VM",
+		"VN",
 	];
 	countryCodeCheck = countryCodesList.includes(countryCode);
 	if (countryCodeCheck !== false) {
