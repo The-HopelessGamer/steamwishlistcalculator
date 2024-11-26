@@ -2050,12 +2050,3 @@ function headerSort(key) {
 	}
 	generateTableStructure();
 }
-
-function cookieEasterEgg() {
-	document.getElementById("cookieTooltip").style.visibility = "visible";
-	setTimeout(cookieEasterEggHide, 3000);
-}
-
-function cookieEasterEggHide() {
-	document.getElementById("cookieTooltip").style.visibility = "hidden";
-}
