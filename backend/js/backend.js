@@ -241,7 +241,7 @@ function main() {
 					return res.send(JSON.stringify(wishlist));
 				}
 				res.status(400);
-				return res.send("Error: Wishlist Empty");
+				return res.send("Error: Wishlist Empty or Private");
 			}
 			res.status(400);
 			res.send("Error: Invalid Shareable Link");
