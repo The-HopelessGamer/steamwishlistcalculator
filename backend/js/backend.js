@@ -188,7 +188,7 @@ async function getWishlistItems(steamId, countryCode) {
 function main() {
 	const app = express();
 
-	const router = express.Router()
+	const router = express.Router();
 
 	router.use(
 		helmet({
