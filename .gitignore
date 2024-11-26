@@ -1,1 +1,4 @@
-/counter.txt
+/frontend/public/counter.txt
+/backend/config.env
+*proto
+node_modules

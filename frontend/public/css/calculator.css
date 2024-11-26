@@ -1103,7 +1103,7 @@ fieldset {
 
 .tooltip {
     position: relative;
-    display: inline-block;
+    display: block;
     float: right;
 }
 

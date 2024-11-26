@@ -1,0 +1,22 @@
+{
+  "name": "steam-wishlist-calculator",
+  "version": "2.0.0",
+  "description": "Steam Wishlist Calculator allows you to calculate the total cost of your Steam wishlist!",
+  "main": "backend/js/backend.js",
+  "type": "module",
+  "scripts": {
+    "start": "node --env-file=backend/config.env backend/js/backend.js"
+  },
+  "keywords": [],
+  "author": "The HopelessGamer",
+  "license": "AGPL-3.0",
+  "dependencies": {
+    "axios": "^1.7.7",
+    "express": "^4.21.1",
+    "express-validator": "^7.2.0",
+    "fs": "^0.0.1-security",
+    "helmet": "^8.0.0",
+    "ip-location-api": "^2.3.2",
+    "protobufjs": "^7.4.0"
+  }
+}

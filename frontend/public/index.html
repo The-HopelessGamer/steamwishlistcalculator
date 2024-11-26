@@ -1,16 +1,5 @@
 <!DOCTYPE html>
-<?php
-
-	$cssVersion = "3.8";
-	$jsVersion = "4.2";
-
-	$_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
-	$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-	$count = file_get_contents("counter.txt");
-?>
-
 <html>
-
 	<head>
 		<title>Steam Wishlist Calculator</title>
 		<meta charset="UTF-8">
@@ -45,20 +34,17 @@
 		<link rel="manifest" href="media/site.webmanifest">
 		<link rel="mask-icon" href="media/safari-pinned-tab.svg" color="#5bbad5">
 		<link rel="shortcut icon" href="favicon.ico">
-		<link rel="stylesheet" href="css/THG.min.css?v=<?php echo $cssVersion; ?>">
-		<link rel="stylesheet" type="text/css" href="css/calculator.css?v=<?php echo $cssVersion; ?>">
-		<link rel="stylesheet" href="css/bootstrap-progress.min.css?v=<?php echo $cssVersion; ?>">
-		<link rel="stylesheet" href="css/fontawesome-all.min.css?v=<?php echo $cssVersion; ?>">
-		<link rel="stylesheet" href="css/select.min.css?v=<?php echo $cssVersion; ?>">
-		<script src="js/jquery-3.3.1.min.js?v=<?php echo $jsVersion; ?>"></script>
-		<script src="js/select.js?v=<?php echo $jsVersion; ?>"></script>
-		<script src="js/core.js?v=<?php echo $jsVersion; ?>"></script>
-		<script src="js/sortBy.js?v=<?php echo $jsVersion; ?>"></script>
-		<script src="js/coreFunctions.js?v=<?php echo $jsVersion; ?>"></script>
-		<script src="js/currencySwitch.js?v=<?php echo $jsVersion; ?>"></script>
-		<script src="js/getallurlparams.min.js?v=<?php echo $jsVersion; ?>"></script>
-		<script src="js/accounting.min.js?v=<?php echo $jsVersion; ?>"></script>
-		<script src="js/contact-form.js?v=<?php echo $jsVersion; ?>"></script>
+		<link rel="stylesheet" href="css/THG.min.css">
+		<link rel="stylesheet" type="text/css" href="css/calculator.css">
+		<link rel="stylesheet" href="css/bootstrap-progress.min.css">
+		<link rel="stylesheet" href="css/fontawesome-all.min.css">
+		<link rel="stylesheet" href="css/select.min.css">
+		<script src="js/jquery-3.3.1.min.js"></script>
+		<script src="js/select.js"></script>
+		<script src="js/frontend.js"></script>
+		<script src="js/sortBy.js"></script>
+		<script src="js/getallurlparams.min.js"></script>
+		<script src="js/accounting.min.js"></script>
 		<!-- Google tag (gtag.js) -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=G-VFS7QXTHFN"></script>
 		<script>
@@ -69,7 +55,7 @@
 			gtag('config', 'G-VFS7QXTHFN');
 		</script>
 	</head>
-	<div id="container">
+	<div id="container" onhashchange="initialPageLoad()">
 		<div id="header">
 			<header>
 				<nav>
@@ -80,9 +66,6 @@
 					<div class="menu-buttons">
 						<a class="menu-button hide-menu-mobile" style="transition: none;" title="Home" href=" " onclick="formReset(); event.preventDefault(); callCancelFetch();" alt="Home">
 							<i class="fas fa-home button-menu" alt="Home"></i>
-						</a>
-						<a class="menu-button hide-menu-mobile" style="transition: none;" title="Contact" href="#contact" onclick="formResetContact(); event.preventDefault(); callCancelFetch();" alt="Contact">
-							<i class="fas fa-envelope button-menu" alt="Contact"></i>
 						</a>
 						<a class="menu-button hide-menu-mobile" style="transition: none;" title="FAQ" href="#faq" onclick="faq(); event.preventDefault(); callCancelFetch();" alt="faq">
 							<i class="far fa-question-circle button-menu" alt="faq"></i>
@@ -137,7 +120,6 @@
 						<a class="closebtn" href="javascript:void(0)" onclick="closeNav()">&#10060;</a>
 						<div style="margin-top: 50px;">
 							<a class="menu-button sidenav-buttons" title="Home" href=" " onclick="formReset(); closeNav(); event.preventDefault(); callCancelFetch();" alt="Home">Home</a>
-							<a class="menu-button sidenav-buttons" title="Contact" onclick="formResetContact(); closeNav(); event.preventDefault(); callCancelFetch();" alt="Contact" href="#contact">Contact</a>
 							<a class="menu-button sidenav-buttons" title="FAQ" onclick="faq(); closeNav(); event.preventDefault(); callCancelFetch();" alt="faq" href="#faq">FAQ</a>
 							<a class="menu-button sidenav-buttons" title="Partners" onclick="partners(); closeNav(); event.preventDefault(); callCancelFetch();" alt="partners" href="#partners">Partners</a>
 							<a class="menu-button sidenav-buttons" title="Discord" href="https://discord.gg/abyAUJU" alt="Discord" target="_blank">Discord</a>
@@ -175,20 +157,6 @@
 							sell or rent this information to anyone.</p>
 					<p>We will use your information to respond to you, regarding the reason you contacted us.</p>
 					<p>
-						<strong>Third-Party Services</strong>
-						<br>We use
-						<a class="link" href="https://opengeoscience.github.io/geojs/" target="_blank">GeoJS</a>
-						to set the Currency based on the users location. Please refer to
-						<a class="link" href="https://opengeoscience.github.io/geojs/" target="_blank">GeoJS's Website</a>
-						for more information.
-						<br><br>Your IP Address will only be provided to
-						<a class="link" href="https://opengeoscience.github.io/geojs/" target="_blank">GeoJS</a>
-						If you calculate your wishlist whilst using the Currency Auto Detect Feature on this website.
-						<br><br>If you would prefer not to provide your IP Address to
-						<a class="link" href="https://www.geojs.io" target="_blank">GeoJS</a>
-						to set the currency based on your location whilst using the Currency Auto Detect Feature then please choose one of the preset Currencies from the Currency Dropdown instead.
-					</p>
-					<p>
 						<strong>Google Analytics</strong>
 						<br>This site uses cookies from Google Analytics to analyze website traffic. By using this site, you consent to the processing of data by Google as described in their <a class="link" href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a>. 
 					</p>
@@ -196,12 +164,7 @@
 						<strong>Security</strong>
 						<br>We take precautions to protect your information. When you submit sensitive information on our contact form in which you must provide information such as Full Name and Email via the website, your information is protected both online and offline.</p>
 					<p>
-						<strong>If you have any concerns regarding this privacy policy, you should contact us immediately&nbsp;via our email:
-							<a class="link" href="mailto:Admin@steamwishlistcalculator.com" target="_top">Admin@steamwishlistcalculator.com</a>
-						</strong>
-					</p>
-					<p>
-						<b>- Updated: 19/05/2024</b>
+						<b>- Updated: 30/11/2024</b>
 					</p>
 				</div>
 				<div class="THG-form faq" id="faq">
@@ -264,34 +227,10 @@
 					<div class="faqQA">
 						<p>
 							<b>Question:</b>
-							My currency is not in the currency dropdown. What can i do?</p>
-						<p>
-							<b>Answer:</b>
-							If steam supports the currency, you can contact us and request your currency to be added via the
-							<a class="link" onclick="formResetContact(); event.preventDefault();" href="#contact" title="Contact">
-								<u>Contact Page</u>
-							</a>.</p>
-					</div>
-					<br>
-					<div class="faqQA">
-						<p>
-							<b>Question:</b>
-							The website is not working. What can i do?</p>
-						<p>
-							<b>Answer:</b>
-							Contact the developer by using the
-							<a class="link" onclick="formResetContact(); event.preventDefault();" href="#contact" title="Contact">
-								<u>Contact Form</u>
-							</a>.</p>
-					</div>
-					<br>
-					<div class="faqQA">
-						<p>
-							<b>Question:</b>
 							What is the maximum wishlist Size that this website will calculate and why?</p>
 						<p>
 							<b>Answer:</b>
-							The maximum wishlist this website will calculate is 10000 games. Calculating bigger wishlists could result in Steam Rate Limiting the website.</p>
+							There is no limit. Go your hardest. The biggest Wishlist I have calculated is 60,000 games.</p>
 					</div>
 					<br>
 					<div class="faqQA">
@@ -320,7 +259,7 @@
 							Does this website use the Steam API?</p>
 						<p>
 							<b>Answer:</b>
-							As of writing this FAQ, the Steam API does not support getting wishlists.</p>
+							As of 2024, the site was rebuilt and now uses the Steam API to request data.</p>
 					</div>
 					<br>
 					<div class="faqQA">
@@ -331,10 +270,6 @@
 							<b>Answer:</b>
 							This website does not currently have a database. Maybe one day it will but for the time being it does not.</p>
 					</div>
-					<p style="margin-bottom: 0px;">Got any more questions? Please contact us via our
-						<a class="link" onclick="formResetContact(); event.preventDefault();" href="#contact" title="Contact">
-							<u>Contact Page</u>
-						</a>.</p>
 				</div>
 				<p class="detectIE">Sorry, This browser is not supported.</p>
 				<noscript>
@@ -369,13 +304,13 @@
 						</div>
 					</div>
 				</div>
-				<form name="userInputForm" action="javascript:;" onsubmit="main();" class="THG-form" id="form-display">
+				<form name="userInputForm" action="javascript:;" class="THG-form" id="form-display">
 					<input id="extraMain" name="extra" type="text">
 					<div class="THG-form-box">
 						<h1 class="form-font-size" style="text-align: center;">Calculate Your Wishlist</h1>
 						<p class="wishlistCount">Total Wishlists Calculated:
 							<span id="wishlistCount"></span></p>
-						<input name="userInput" class="THG-input userInput" id="userInput" type="text" placeholder="Steam ID" required="required">
+						<input name="steamIdOrVanityUrl" class="THG-input userInput" id="userInput" type="text" placeholder="Steam ID" required="required">
 					</div>
 					<p style="font-size: 15px;">Supports:</p>
 					<ul>
@@ -386,55 +321,6 @@
 					</ul>
 					<input type="submit" name="submit" class="THG-submit button-main" value="Calculate">
 				</form>
-				<form action="Going no where until a real user clicks submit." name="contactForm" method="POST" class="THG-form" id="ajax-contact" autocomplete="off">
-					<div class="THG-form-box-validation">
-						<label for="nameBox">Email Address:</label>
-						<input name="nameBox" type="email" placeholder="Insert Email" maxlength="254">
-					</div>
-					<div class="THG-form-box-validation">
-						<label for="emailBox">Email Address:</label>
-						<input name="emailBox" type="email" placeholder="Insert Email" maxlength="254">
-					</div>
-					<div class="THG-form-box-validation">
-						<label for="messageBox">Message:</label>
-						<textarea name="messageBox" type="text" placeholder="Type here" maxlength="2000"></textarea>
-					</div>
-					<fieldset>
-						<legend>Contact Form</legend>
-						<div class="THG-form-box">
-							<label for="name">Name:</label>
-							<span id="nameError" style="display: none; color: red;">Please fill in this field.</span>
-							<input oninput="nameValidation()" name="name" id="name" type="text" class="THG-input" placeholder="Insert Full Name" pattern="[a-zA-Z\s0-9]{1,}" maxlength="50">
-						</div>
-						<div class="THG-form-box">
-							<label for="email">Email Address:</label>
-							<span id="emailError" style="display: none; color: red;">Please insert a valid email address.</span>
-							<input oninput="emailValidation()" name="email" id="email" type="email" class="THG-input" placeholder="Insert Email" maxlength="254">
-						</div>
-						<div class="THG-form-box" style="padding-bottom: 0px!important;">
-							<label for="message">Message:</label>
-							<span id="messageError" style="display: none; color: red;">Please fill in this field.</span>
-							<textarea oninput="messageValidation()" name="message" id="message" type="text" class="THG-input-textarea THG-input" placeholder="Type here" maxlength="2000"></textarea>
-						</div>
-						<div style="padding: 0px 0px 10px 0px;">
-							<input oninput="checkboxValidation()" type="checkbox" class="checkbox" id="checkbox" name="checkbox">
-							<label for="checkbox" class="checkboxMobile">I have read & accepted the
-								<a class="link" onclick="privacypolicy(); event.preventDefault();" href="#privacy-policy" title="Privacy Policy">
-									<u>Privacy Policy</u>
-								</a>
-								<a></a>
-							</label>
-							<span id="checkboxValidationSymbol" class="THG-require"></span>
-							<span id="checkboxError" style="display: none; color: red;">Please tick this box if you want to proceed.</span>
-						</div>
-						<input type="submit" name="submit" class="THG-submit button-main" id="submit" value="Submit">
-						<p style="margin-bottom: 0px; margin-top: 7px;">
-							<span class="THG-require"></span>
-							= Required
-						</p>
-					</fieldset>
-				</form>
-
 				<div id="modal" class="modal">
 					<div class="modalContent">
 						<div class="modalHeader">
@@ -446,21 +332,13 @@
 								<a class="modalHeaderButtons" onclick="onWishlist(); callCancelFetch()">Titles</a>
 								<a class="modalHeaderButtons" onclick="withoutPrice(); callCancelFetch()">Without Price</a>
 								<a class="modalHeaderButtons" onclick="hasPrice(); callCancelFetch()">With Price</a>
-								<a class="modalHeaderButtons" onclick="unlistedIds(); callCancelFetch()">Unlisted Appids</a>
 								<a class="modalHeaderButtons" onclick="Sale(); callCancelFetch()">On Sale</a>
 								<a class="modalHeaderButtons" onclick="free(); callCancelFetch()">Free</a>
-								<a class="modalHeaderButtons" onclick="preOrderable(); callCancelFetch()">Pre Order</a>
+								<a class="modalHeaderButtons" onclick="preOrder(); callCancelFetch()">Pre Order</a>
 								<a class="modalHeaderButtons" onclick="appidList(); callCancelFetch()">Appids</a>
 							</div>
 							<h4 id="exportTitle"></h4>
 							<div class="THG-input-textarea THG-input titleBox" id="titles" spellcheck="false" autocomplete="off"></div>
-							<div class="progressBarMain" id="unlistedGameloader" style="margin: 10px auto 20px auto; max-width: none; display: none;">
-								<h1 class="loadingText">Retrieving Unlisted Games<span class="blink">.</span><span class="blink">.</span><span class="blink">.</span></h1>
-								<div class="progress" style="background-color: #e6e6e6;">
-									<div class="progress-bar progress-bar-striped active" style="width: 0%" id="unlistedGameBar"></div>
-								</div>
-							</div>
-							<p id="guide"></p>
 						</div>
 						<div class="modalFooter">
 							<div class="tooltip" id="tooltip">
@@ -483,7 +361,6 @@
 						<div class="wishlist-inner-container" id="wishlist-inner-container">
 							<h1 class="wishlist-text" id="profileName"></h1>
 							<button class="Reset-Button Reset-Button-Cal" id="resetButtonError" onclick="formReset()">Back</button>
-							<button class="Reset-Button Reset-Contact" id="resetButtonContactSuccess" onclick="formResetContact()">Back</button>
 							<div class="container-results" id="container-results">
 								<div class="item">
 									<button style="left:16px;right:unset;" id="salePricingButton" class="modalButtonStyle" onclick="ToggleSalePricing()">Toggle Sale Pricing Off</button>
@@ -500,7 +377,6 @@
 										<th>Free</th>
 										<th>On Sale</th>
 										<th>Pre Order</th>
-										<th>Unlisted</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -512,7 +388,6 @@
 										<td data-label="Free" id="isFree">0</td>
 										<td data-label="On Sale" id="onSale">0</td>
 										<td data-label="Pre Order" id="preOrder">0</td>
-										<td data-label="Unlisted" id="unlisted">0</td>
 									</tr>
 								</tbody>
 							</table>
@@ -550,7 +425,6 @@
 								</div>
 								<div id="wishlistTableBody" class="tbody"></div>
 							</div>
-							<button class="Reset-Button Reset-Contact" id="resetButtonContact" onclick="formResetContact()">Back</button>
 							<div class="errorBox" id="errorBox">
 								<h1 id="errorText" class="errorText"></h1>
 								<p id="successMsg" class="successMsg"></p>
@@ -587,13 +461,14 @@
 				<a class="link" onclick="partners();" href="#partners" title="View All Partners">View All Partners</a>
 				<p>This website is Not affiliated with Valve Corporation, Steam, or any of their partners. All Copyrights & Trademarks reserved to their respective owners.</p>
 				<p style="margin: 0px;">Website owned & developed by
-					<a class="link" href="http://steamcommunity.com/id/The_HopelessGamer" target="_blank">The HopelessGamer</a> 2018 - <?php echo date("Y"); ?>. Want to become a Partner?
-					<a class="link" onclick="formResetContact(); event.preventDefault();" href="#contact" title="Contact">Contact us</a>.</p>
+					<a class="link" href="http://steamcommunity.com/id/The_HopelessGamer" target="_blank">The HopelessGamer</a> 2018 - <span id="year"></span>.
+				</p>
 			</div>
 		</div>
-		<script>
-			//This is handled with PHP.
-			document.getElementById("wishlistCount").innerHTML = formatNumber("<?php echo $count ?>");
-		</script>
+<script>
+		const d = new Date();
+		let year = d.getFullYear();
+		document.getElementById("year").innerHTML = year;
+</script>
 
 </html>
