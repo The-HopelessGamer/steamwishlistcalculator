@@ -651,7 +651,7 @@ function initForm() {
 				}
 			}
 
-			const countryCode = await getCountryCode();
+			let countryCode = await getCountryCode();
 			getWishlist(steamIdOrVanityUrl, countryCode);
 		});
 }
@@ -781,8 +781,8 @@ async function getCountryCode() {
 		countryCode = switchResponse.countryCode;
 	} else {
 		countryCode = callSwitch("US");
+		countryCode = countryCode.countryCode;
 	}
-
 	return countryCode;
 }
 
