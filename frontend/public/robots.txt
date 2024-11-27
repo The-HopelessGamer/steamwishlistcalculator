@@ -1,5 +1,7 @@
 Sitemap: https://www.steamwishlistcalculator.com/sitemap.xml
 User-agent: *
-Disallow: /php/
+Disallow: /
 Disallow: /counter.txt
+Disallow: /counterUpdate
+Disallow: /counterRead
 Disallow: /*?*

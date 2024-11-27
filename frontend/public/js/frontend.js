@@ -353,11 +353,17 @@ async function displayFinalResult(
 	document.getElementById("withPrice").innerHTML =
 		formatNumber(withPriceCountTotal);
 	document.getElementById("isFree").innerHTML = formatNumber(isFreeCountTotal);
-	updateCounter();
+	updateCounter(true);
 }
 
-async function updateCounter() {
-	let response = await fetch("/counterUpdate");
+async function updateCounter(flag) {
+	let response = await fetch(
+		"/counterUpdate?" +
+			new URLSearchParams({
+				flag,
+			}).toString()
+	);
+
 	response = await response.text();
 	document.getElementById("wishlistCount").innerHTML = formatNumber(response);
 }

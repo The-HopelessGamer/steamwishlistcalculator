@@ -259,7 +259,7 @@ function main() {
 				const profileInfo = await getProfileInfo(req.query.steamId);
 				return res.send(JSON.stringify(profileInfo));
 			}
-			res.statusCode(400);
+			res.status(400);
 			res.send("Error: Invalid Steam ID");
 		}
 	);
@@ -269,19 +269,33 @@ function main() {
 		res.send(data);
 	});
 
-	router.get("/counterUpdate", async function (req, res) {
-		const readCount = fs.readFileSync("frontend/public/counter.txt", "utf8");
-		const readCheck = fs.readFileSync("frontend/public/counter.txt", "utf8");
-		let count = readCount.toString();
-		let countCheck = readCheck.toString();
-		count++;
-		if (count < countCheck) {
-			count = countCheck;
-			count++;
+	router.get(
+		"/counterUpdate",
+		query("flag").notEmpty().escape(),
+		async function (req, res) {
+			const result = validationResult(req);
+			if (result.isEmpty() && req.query.flag === "true") {
+				const readCount = fs.readFileSync(
+					"frontend/public/counter.txt",
+					"utf8"
+				);
+				const readCheck = fs.readFileSync(
+					"frontend/public/counter.txt",
+					"utf8"
+				);
+				let count = readCount.toString();
+				let countCheck = readCheck.toString();
+				count++;
+				if (count < countCheck) {
+					count = countCheck;
+					count++;
+				}
+				fs.writeFileSync("frontend/public/counter.txt", count.toString());
+				return res.send(count.toString());
+			}
+			res.status(403).end();
 		}
-		fs.writeFileSync("frontend/public/counter.txt", count.toString());
-		res.send(count.toString());
-	});
+	);
 
 	router.get("/ip2Country", async function (req, res) {
 		const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
