@@ -521,9 +521,9 @@ function generateTableStructure(saleOff) {
 				'<a href="https://steamdb.info/app/' +
 				data.appid +
 				'/" class="titleLinks" title="' +
-				"Error: Game Unlisted From StoreFront" +
+				"Game Unlisted on Steam" +
 				'" target="_blank">' +
-				"Error: Game Unlisted From StoreFront" +
+				"Game Unlisted on Steam" +
 				"</a>";
 		}
 
