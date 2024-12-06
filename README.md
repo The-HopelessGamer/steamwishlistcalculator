@@ -6,5 +6,5 @@ The Steam Wishlist Calculator is licensed under the AGPLv3.0 license. Certain co
 
 ## Contact the developer
 - The HopelessGamer
-- TheHopelessGamer@outlook.com
+- Admin@SteamWishlistCalculator.com
 - http://steamcommunity.com/id/The_HopelessGamer
