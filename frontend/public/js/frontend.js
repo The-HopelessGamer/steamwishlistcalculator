@@ -1303,6 +1303,7 @@ function tabSwitch() {
 }
 
 function ToggleSalePricing() {
+
 	if (toggle == false) {
 		toggle = true;
 		document.getElementById("priceTotal").innerHTML = formattedCurrentPrice;
@@ -1534,6 +1535,7 @@ function changeStyles() {
 
 function formReset() {
 	//Clears the main form!
+	toggle = false;
 	if (pageLoadComplete == true) {
 		//Checks if the page is loading or not.
 		changeStyles();
