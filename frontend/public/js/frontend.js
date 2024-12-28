@@ -10,28 +10,44 @@ let getHyperLinks = [];
 let countryCodeCheck = "";
 let countryCodesList = [
 	"AR",
+	"AT",
 	"AU",
 	"AZ",
+	"BE",
 	"BR",
-	"GB",
 	"CA",
 	"CR",
-	"IN",
-	"ID",
-	"IL",
-	"JP",
-	"KZ",
-	"KW",
-	"MX",
+	"DE",
+	"EE",
 	"EU",
+	"FI",
+	"FR",
+	"GB",
+	"GR",
+	"ID",
+	"IE",
+	"IL",
+	"IN",
+	"IT",
+	"JP",
+	"KW",
+	"KZ",
+	"LI",
+	"LU",
+	"LV",
+	"MX",
 	"NL",
-	"NZ",
 	"NO",
+	"NZ",
 	"PH",
 	"PL",
+	"PT",
 	"QA",
 	"RU",
 	"SG",
+	"SI",
+	"SK",
+	"SP",
 	"TH",
 	"TR",
 	"UA",
@@ -151,6 +167,12 @@ async function calculateWishlist(steamId, countryCode) {
 				) + currencyData.currencySymbolRight;
 			break;
 		case "AR":
+		case "AT":
+		case "BE":
+		case "FR":
+		case "DE":
+		case "IT":
+		case "SP":
 		case "PL":
 		case "TR":
 		case "NL":
@@ -1029,8 +1051,24 @@ function callSwitch(setVariables) {
 			var optList = document.getElementById("selectItems").childNodes;
 			optList[14].setAttribute("class", "sameAsSelected");
 			break;
+		case "AT":
+		case "BE":
+		case "DE":
+		case "EE":
 		case "EU":
+		case "FI":
+		case "FR":
+		case "GR":
+		case "IE":
+		case "IT":
+		case "LI":
+		case "LU":
+		case "LV":
 		case "NL":
+		case "PT":
+		case "SI":
+		case "SK":
+		case "SP":
 			countryCode = "NL";
 			currencySymbol = "";
 			currencySymbolRight = "€";
@@ -1040,7 +1078,7 @@ function callSwitch(setVariables) {
 			document
 				.getElementById("selectSelected")
 				.setAttribute("value", countryCode);
-			document.getElementById("selectSelected").innerHTML = "Netherlands (EUR)";
+			document.getElementById("selectSelected").innerHTML = "Europe (EUR)";
 			var optList = document.getElementById("selectItems").childNodes;
 			optList[15].setAttribute("class", "sameAsSelected");
 			break;
@@ -1353,10 +1391,17 @@ function priceToFloat(currencyString, countryCode) {
 				currencyString = currencyString.replace(",", ".");
 			}
 			break;
+		case "DE":
+		case "EU":
+		case "FI":
+		case "FR":
+		case "IT":
+		case "LV":
 		case "NL":
 		case "NO":
 		case "PL":
-		case "EU":
+		case "PT":
+		case "SK":
 			currencyString = currencyString.replace(".", "").replace(",", ".");
 			break;
 		case "PH":
