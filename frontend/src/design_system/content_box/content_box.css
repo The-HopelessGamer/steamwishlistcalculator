@@ -1,0 +1,12 @@
+.contentBox {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+.contentBoxWhite {
+	background-color: white;
+}
+
+.contentBoxGrey {
+	background-color: #e6e6e6;
+}

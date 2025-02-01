@@ -1,0 +1,36 @@
+.app {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	background-color: #111;
+	background-image: url(/public/background-image.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+	background-position: center;
+}
+
+.panelArea {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.contentContainer {
+	flex-grow: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 2rem;
+}
+
+@media (min-width: 600px) {
+	.panelArea {
+		min-height: 0;
+	}
+
+	.fixedWidthContainer {
+		max-width: 100rem;
+	}
+}

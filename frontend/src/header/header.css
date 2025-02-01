@@ -1,0 +1,13 @@
+.header {
+	background-color: #1a75ff;
+	display: flex;
+	justify-content: space-between;
+}
+
+.title {
+	color: white;
+	font-size: 3rem;
+	padding: 2rem;
+	text-decoration: none;
+	display: inline-block;
+}

@@ -7,9 +7,9 @@ import { query, validationResult } from "express-validator";
 import { lookup } from "ip-location-api";
 
 const BASE_URL = "https://api.steampowered.com/";
-const COMMON_PROTO = protobuf.loadSync("./backend/proto/common.proto");
+const COMMON_PROTO = protobuf.loadSync("./proto/common.proto");
 const SERVICE_WISHLIST_PROTO = protobuf.loadSync(
-	"./backend/proto/service_wishlist.proto"
+	"./proto/service_wishlist.proto"
 );
 
 const CWishlist_GetWishlist_Request = SERVICE_WISHLIST_PROTO.lookupType(
@@ -208,7 +208,7 @@ function main() {
 		})
 	);
 
-	app.use(express.static("frontend/public"));
+	app.use(express.static("../frontend/dist"));
 
 	router.get(
 		"/resolveVanityUrl",
@@ -265,7 +265,7 @@ function main() {
 	);
 
 	router.get("/counterRead", async function (req, res) {
-		const data = fs.readFileSync("frontend/public/counter.txt", "utf8");
+		const data = fs.readFileSync("./counter.txt", "utf8");
 		res.send(data);
 	});
 
@@ -276,11 +276,11 @@ function main() {
 			const result = validationResult(req);
 			if (result.isEmpty() && req.query.flag === "true") {
 				const readCount = fs.readFileSync(
-					"frontend/public/counter.txt",
+					"./counter.txt",
 					"utf8"
 				);
 				const readCheck = fs.readFileSync(
-					"frontend/public/counter.txt",
+					"./counter.txt",
 					"utf8"
 				);
 				let count = readCount.toString();
@@ -290,7 +290,7 @@ function main() {
 					count = countCheck;
 					count++;
 				}
-				fs.writeFileSync("frontend/public/counter.txt", count.toString());
+				fs.writeFileSync("./counter.txt", count.toString());
 				return res.send(count.toString());
 			}
 			res.status(403).end();
