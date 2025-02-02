@@ -14,12 +14,18 @@
 
 .headerIcons {
 	display: none;
+	gap: 1rem;
+	margin-right: 1rem;
 }
 
 .headerIcon {
 	color: white;
 	height: 4.1rem;
-	margin-right: 1rem;
+}
+
+.headerSidebarButtonContainer {
+	display: flex;
+	align-items: center;
 }
 
 @media (min-width: 600px) {
@@ -27,5 +33,9 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+	}
+
+	.headerSidebarButtonContainer {
+		display: none;
 	}
 }

@@ -6,6 +6,8 @@ import PartnerIcon from "./icons/handshake-solid.svg?react";
 import SteamIcon from "./icons/steam-brands-solid.svg?react";
 import DiscordIcon from "./icons/discord-brands-solid.svg?react";
 import GithubIcon from "./icons/github-brands-solid.svg?react";
+import HamburgerIcon from "./icons/bars-solid.svg?react";
+import { BaseButton } from "../design_system/base_button/base_button";
 
 export function Header() {
 	return (
@@ -38,6 +40,11 @@ export function Header() {
 				>
 					<GithubIcon className="headerIcon" />
 				</Link>
+			</div>
+			<div className="headerSidebarButtonContainer">
+				<BaseButton onClick={() => console.log("Click")}>
+					<HamburgerIcon className="headerIcon" />
+				</BaseButton>
 			</div>
 		</div>
 	);
