@@ -4,10 +4,28 @@
 	justify-content: space-between;
 }
 
-.title {
+.headerTitle {
 	color: white;
 	font-size: 3rem;
 	padding: 2rem;
 	text-decoration: none;
 	display: inline-block;
+}
+
+.headerIcons {
+	display: none;
+}
+
+.headerIcon {
+	color: white;
+	height: 4.1rem;
+	margin-right: 1rem;
+}
+
+@media (min-width: 600px) {
+	.headerIcons {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
 }

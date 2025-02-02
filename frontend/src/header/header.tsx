@@ -1,13 +1,44 @@
 import "./header.css";
 import { Link } from "react-router";
+import HomeIcon from "./icons/home-solid.svg?react";
+import FaqIcon from "./icons/question-circle-regular.svg?react";
+import PartnerIcon from "./icons/handshake-solid.svg?react";
+import SteamIcon from "./icons/steam-brands-solid.svg?react";
+import DiscordIcon from "./icons/discord-brands-solid.svg?react";
+import GithubIcon from "./icons/github-brands-solid.svg?react";
 
 export function Header() {
 	return (
 		<div className="header">
 			<Link to="/">
-				<b className="title">Steam Wishlist Calculator</b>
+				<b className="headerTitle">Steam Wishlist Calculator</b>
 			</Link>
-			<span>Menu</span>
+			<div className="headerIcons">
+				<Link to="/">
+					<HomeIcon className="headerIcon" />
+				</Link>
+				<Link to="/faq">
+					<FaqIcon className="headerIcon" />
+				</Link>
+				<Link to="/partners">
+					<PartnerIcon className="headerIcon" />
+				</Link>
+				<Link
+					to="https://steamcommunity.com/groups/SteamWishlistCalculator"
+					target="blank"
+				>
+					<SteamIcon className="headerIcon" />
+				</Link>
+				<Link to="https://discord.com/invite/abyAUJU" target="blank">
+					<DiscordIcon className="headerIcon" />
+				</Link>
+				<Link
+					to="https://github.com/The-HopelessGamer/steamwishlistcalculator"
+					target="blank"
+				>
+					<GithubIcon className="headerIcon" />
+				</Link>
+			</div>
 		</div>
 	);
 }
