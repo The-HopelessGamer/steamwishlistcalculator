@@ -25,21 +25,21 @@ export function Header() {
 				<Link to="/partners">
 					<PartnerIcon className="headerIcon" />
 				</Link>
-				<Link
-					to="https://steamcommunity.com/groups/SteamWishlistCalculator"
+				<a
+					href="https://steamcommunity.com/groups/SteamWishlistCalculator"
 					target="blank"
 				>
 					<SteamIcon className="headerIcon" />
-				</Link>
-				<Link to="https://discord.com/invite/abyAUJU" target="blank">
+				</a>
+				<a href="https://discord.com/invite/abyAUJU" target="blank">
 					<DiscordIcon className="headerIcon" />
-				</Link>
-				<Link
-					to="https://github.com/The-HopelessGamer/steamwishlistcalculator"
+				</a>
+				<a
+					href="https://github.com/The-HopelessGamer/steamwishlistcalculator"
 					target="blank"
 				>
 					<GithubIcon className="headerIcon" />
-				</Link>
+				</a>
 			</div>
 			<div className="headerSidebarButtonContainer">
 				<BaseButton onClick={() => console.log("Click")}>
