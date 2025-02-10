@@ -6,6 +6,7 @@
 	flex-direction: column;
 	align-items: flex-start;
 	align-content: stretch;
+	overflow-y: auto;
 }
 
 .sidePanelCloseButton {
@@ -20,5 +21,6 @@
 	padding: 1rem 0;
 	text-decoration: none;
 	color: white;
+	font-weight: bold;
 	font-size: 3rem;
 }

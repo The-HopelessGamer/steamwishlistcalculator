@@ -32,6 +32,10 @@
 	padding: 2rem;
 }
 
+.fixedWidthContainer {
+	width: 100%;
+}
+
 .sidePanelContainer {
 	position: absolute;
 	top: 0;
@@ -51,6 +55,7 @@
 	}
 
 	.fixedWidthContainer {
+		width: unset;
 		max-width: 100rem;
 	}
 }

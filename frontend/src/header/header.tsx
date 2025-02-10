@@ -17,7 +17,7 @@ export function Header(props: HeaderProps) {
 	return (
 		<div className="header">
 			<Link to="/">
-				<b className="headerTitle">Steam Wishlist Calculator</b>
+				<span className="headerTitle">Steam Wishlist Calculator</span>
 			</Link>
 			<div className="headerIcons">
 				<Link to="/">

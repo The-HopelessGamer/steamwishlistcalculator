@@ -14,17 +14,17 @@ export function SidePanel(props: SidePanelProps) {
 				<CrossIcon className="sidePanelCloseButton" />
 			</BaseButton>
 			<Link to="/" className="sidePanelLink" onClick={props.onClickClose}>
-				<b>Home</b>
+				Home
 			</Link>
 			<Link to="/faq" className="sidePanelLink" onClick={props.onClickClose}>
-				<b>FAQ</b>
+				FAQ
 			</Link>
 			<Link
 				to="/partners"
 				className="sidePanelLink"
 				onClick={props.onClickClose}
 			>
-				<b>Partners</b>
+				Partners
 			</Link>
 
 			<a
@@ -32,7 +32,7 @@ export function SidePanel(props: SidePanelProps) {
 				href="https://steamcommunity.com/groups/SteamWishlistCalculator"
 				target="blank"
 			>
-				<b>Steam Group</b>
+				Steam Group
 			</a>
 
 			<a
@@ -40,7 +40,7 @@ export function SidePanel(props: SidePanelProps) {
 				target="blank"
 				className="sidePanelLink"
 			>
-				<b>Discord</b>
+				Discord
 			</a>
 
 			<a
@@ -48,7 +48,7 @@ export function SidePanel(props: SidePanelProps) {
 				href="https://github.com/The-HopelessGamer/steamwishlistcalculator"
 				target="blank"
 			>
-				<b>Github</b>
+				Github
 			</a>
 		</div>
 	);

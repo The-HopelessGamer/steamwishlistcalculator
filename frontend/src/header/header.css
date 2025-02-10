@@ -6,7 +6,8 @@
 
 .headerTitle {
 	color: white;
-	font-size: 3rem;
+	font-size: 2rem;
+	font-weight: bold;
 	padding: 2rem;
 	text-decoration: none;
 	display: inline-block;
@@ -29,6 +30,10 @@
 }
 
 @media (min-width: 600px) {
+	.headerTitle {
+		font-size: 3rem;
+	}
+
 	.headerIcons {
 		display: flex;
 		justify-content: space-between;

@@ -19,7 +19,15 @@ function App() {
 				<div className="contentContainer">
 					<div className="fixedWidthContainer">
 						<Routes>
-							<Route path="/" element={<WishlistCalculator />} />
+							<Route
+								path="/"
+								element={
+									<WishlistCalculator
+										totalWishlistsCalculated={100}
+										onClickCalculate={() => console.log("Calculating")}
+									/>
+								}
+							/>
 							<Route path="/faq" element={<Faq />} />
 							<Route path="/partners" element={<Partners />} />
 							<Route path="/privacy-policy" element={<PrivacyPolicy />} />

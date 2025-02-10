@@ -1,0 +1,41 @@
+.calculatorTitle {
+	font-size: 2rem;
+	font-weight: bold;
+	display: block;
+	text-align: center;
+}
+
+.calculatorTotal {
+	text-align: center;
+	display: block;
+	margin-bottom: 0.5rem;
+}
+
+.calculatorInput {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 1rem;
+	border-radius: 3px;
+	border: 1px solid #c3c3c3;
+	background-color: #efefef;
+}
+
+.calculatorInput:focus {
+	outline: 1px solid #1a75ff;
+}
+
+.supportedValuesList {
+	columns: 2;
+	font-size: 1.4rem;
+	padding: 0 2rem;
+}
+
+@media (min-width: 600px) {
+	.calculatorTitle {
+		font-size: 3rem;
+	}
+
+	.wishlistCalculator {
+		min-width: 50rem;
+	}
+}
