@@ -7,12 +7,15 @@ import { Faq } from "./content_views/faq/faq";
 import { Partners } from "./content_views/partners/partners";
 import { WishlistCalculator } from "./content_views/wishlist_calculator/wishlist_calculator";
 import { SidePanel } from "./side_panel/side_panel";
+import { useState } from "react";
+import { classNames } from "./utils";
 
 function App() {
+	const [sidePanelOpen, setSidePanelOpen] = useState(false);
 	return (
-		<div className="app">
+		<div className={classNames(["app", sidePanelOpen && "appNoScroll"])}>
 			<div className="mobileView">
-				<Header />
+				<Header onClickSidePanel={() => setSidePanelOpen(true)} />
 				<div className="contentContainer">
 					<div className="fixedWidthContainer">
 						<Routes>
@@ -25,8 +28,13 @@ function App() {
 				</div>
 			</div>
 			<Footer />
-			<div className="sidePanelContainer">
-				<SidePanel />
+			<div
+				className={classNames([
+					"sidePanelContainer",
+					!sidePanelOpen && "sidePanelContainerHidden",
+				])}
+			>
+				<SidePanel onClickClose={() => setSidePanelOpen(false)} />
 			</div>
 		</div>
 	);

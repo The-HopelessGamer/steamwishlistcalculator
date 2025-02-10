@@ -9,7 +9,11 @@ import GithubIcon from "./icons/github-brands-solid.svg?react";
 import HamburgerIcon from "./icons/bars-solid.svg?react";
 import { BaseButton } from "../design_system/base_button/base_button";
 
-export function Header() {
+type HeaderProps = {
+	onClickSidePanel: () => void;
+};
+
+export function Header(props: HeaderProps) {
 	return (
 		<div className="header">
 			<Link to="/">
@@ -42,7 +46,7 @@ export function Header() {
 				</a>
 			</div>
 			<div className="headerSidebarButtonContainer">
-				<BaseButton onClick={() => console.log("Click")}>
+				<BaseButton onClick={props.onClickSidePanel}>
 					<HamburgerIcon className="headerIcon" />
 				</BaseButton>
 			</div>

@@ -13,8 +13,12 @@
 	height: 4rem;
 }
 
-.sidePanelRow {
+.sidePanelLink {
 	border-bottom: 2px solid white;
 	text-align: center;
 	width: 100%;
+	padding: 1rem 0;
+	text-decoration: none;
+	color: white;
+	font-size: 3rem;
 }
