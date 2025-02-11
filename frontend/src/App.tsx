@@ -9,6 +9,7 @@ import { WishlistForm } from "./content_views/wishlist_form/wishlist_form";
 import { SidePanel } from "./side_panel/side_panel";
 import { useState } from "react";
 import { classNames } from "./utils";
+import { Wishlist } from "./content_views/wishlist/wishlist";
 
 function App() {
 	const [sidePanelOpen, setSidePanelOpen] = useState(false);
@@ -23,10 +24,7 @@ function App() {
 								path="/"
 								element={<WishlistForm totalWishlistsCalculated={100} />}
 							/>
-							<Route
-								path="/wishlist/:wishlistId"
-								element={<span>Hello</span>}
-							/>
+							<Route path="/wishlist/:wishlistId" element={<Wishlist />} />
 							<Route path="/faq" element={<Faq />} />
 							<Route path="/partners" element={<Partners />} />
 							<Route path="/privacy-policy" element={<PrivacyPolicy />} />
