@@ -10,9 +10,23 @@ import { SidePanel } from "./side_panel/side_panel";
 import { useState } from "react";
 import { classNames } from "./utils";
 import { Wishlist } from "./content_views/wishlist/wishlist";
+import { useEffect } from "react";
+import { counterRead } from "./backend_api";
 
 function App() {
 	const [sidePanelOpen, setSidePanelOpen] = useState(false);
+	const [totalWishlistsCalculated, setTotalWishlistsCalculated] = useState<
+		number | undefined
+	>(undefined);
+
+	useEffect(() => {
+		counterRead().then((serviceResponse) => {
+			if (serviceResponse.ok) {
+				setTotalWishlistsCalculated(serviceResponse.data);
+			}
+		});
+	});
+
 	return (
 		<div className={classNames(["app", sidePanelOpen && "appNoScroll"])}>
 			<div className="mobileView">
@@ -22,7 +36,11 @@ function App() {
 						<Routes>
 							<Route
 								path="/"
-								element={<WishlistForm totalWishlistsCalculated={100} />}
+								element={
+									<WishlistForm
+										totalWishlistsCalculated={totalWishlistsCalculated}
+									/>
+								}
 							/>
 							<Route path="/wishlist/:wishlistId" element={<Wishlist />} />
 							<Route path="/faq" element={<Faq />} />

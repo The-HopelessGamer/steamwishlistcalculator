@@ -275,14 +275,8 @@ function main() {
 		async function (req, res) {
 			const result = validationResult(req);
 			if (result.isEmpty() && req.query.flag === "true") {
-				const readCount = fs.readFileSync(
-					"./counter.txt",
-					"utf8"
-				);
-				const readCheck = fs.readFileSync(
-					"./counter.txt",
-					"utf8"
-				);
+				const readCount = fs.readFileSync("./counter.txt", "utf8");
+				const readCheck = fs.readFileSync("./counter.txt", "utf8");
 				let count = readCount.toString();
 				let countCheck = readCheck.toString();
 				count++;
@@ -308,7 +302,7 @@ function main() {
 		}
 	});
 
-	app.use("/", router);
+	app.use("/api", router);
 	app.listen(3000);
 }
 

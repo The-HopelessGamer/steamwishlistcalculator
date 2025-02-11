@@ -2,9 +2,10 @@ import "./wishlist_form.css";
 import { ContentBox } from "../../design_system/content_box/content_box";
 import { PrimaryButton } from "../../design_system/primary_button/primary_button";
 import { useNavigate } from "react-router";
+import { Loader } from "../../design_system/loader/loader";
 
 type WishlistFormProps = {
-	totalWishlistsCalculated: number;
+	totalWishlistsCalculated: number | undefined;
 };
 
 const FROM_INPUT_NAME = "steamIdInput";
@@ -17,7 +18,12 @@ export function WishlistForm(props: WishlistFormProps) {
 			<ContentBox color="white">
 				<span className="wishlistFormTitle">Calculate Your Wishlist</span>
 				<span className="wishlistFormTotal">
-					Total Wishlists Calculated: {props.totalWishlistsCalculated}
+					Total Wishlists Calculated:{" "}
+					{props.totalWishlistsCalculated ? (
+						props.totalWishlistsCalculated.toLocaleString("en-US")
+					) : (
+						<Loader color="black" />
+					)}
 				</span>
 				<form
 					action={(formData) => {
