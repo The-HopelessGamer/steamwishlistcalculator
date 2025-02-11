@@ -1,17 +1,17 @@
-.calculatorTitle {
+.wishlistFormTitle {
 	font-size: 2rem;
 	font-weight: bold;
 	display: block;
 	text-align: center;
 }
 
-.calculatorTotal {
+.wishlistFormTotal {
 	text-align: center;
 	display: block;
 	margin-bottom: 0.5rem;
 }
 
-.calculatorInput {
+.wishlistFormInput {
 	width: 100%;
 	box-sizing: border-box;
 	padding: 1rem;
@@ -20,7 +20,7 @@
 	background-color: #efefef;
 }
 
-.calculatorInput:focus {
+.wishlistFormInput:focus {
 	outline: 1px solid #1a75ff;
 }
 
@@ -31,11 +31,11 @@
 }
 
 @media (min-width: 600px) {
-	.calculatorTitle {
+	.wishlistFormTitle {
 		font-size: 3rem;
 	}
 
-	.wishlistCalculator {
+	.wishlistForm {
 		min-width: 50rem;
 	}
 }

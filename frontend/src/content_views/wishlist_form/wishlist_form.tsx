@@ -1,27 +1,36 @@
-import "./wishlist_calculator.css";
+import "./wishlist_form.css";
 import { ContentBox } from "../../design_system/content_box/content_box";
 import { PrimaryButton } from "../../design_system/primary_button/primary_button";
+import { useNavigate } from "react-router";
 
-type WishlistCalculatorProps = {
+type WishlistFormProps = {
 	totalWishlistsCalculated: number;
-	onClickCalculate: () => void;
 };
 
-export function WishlistCalculator(props: WishlistCalculatorProps) {
+const FROM_INPUT_NAME = "steamIdInput";
+
+export function WishlistForm(props: WishlistFormProps) {
+	const navigate = useNavigate();
+
 	return (
-		<div className="wishlistCalculator">
+		<div className="wishlistForm">
 			<ContentBox color="white">
-				<span className="calculatorTitle">Calculate Your Wishlist</span>
-				<span className="calculatorTotal">
+				<span className="wishlistFormTitle">Calculate Your Wishlist</span>
+				<span className="wishlistFormTotal">
 					Total Wishlists Calculated: {props.totalWishlistsCalculated}
 				</span>
-				<form>
+				<form
+					action={(formData) => {
+						navigate(`/wishlist/${formData.get(FROM_INPUT_NAME)}`);
+					}}
+				>
 					<input
 						type="text"
-						className="calculatorInput"
+						className="wishlistFormInput"
 						placeholder="Steam ID"
+						name={FROM_INPUT_NAME}
 						required
-					></input>
+					/>
 					<p>Supports:</p>
 					<ul className="supportedValuesList">
 						<li>Steam ID64</li>
@@ -29,7 +38,7 @@ export function WishlistCalculator(props: WishlistCalculatorProps) {
 						<li>Steam Custom URL</li>
 						<li>Steam Wishlist URL</li>
 					</ul>
-					<PrimaryButton onClick={props.onClickCalculate} text="Calculate" />
+					<PrimaryButton type="submit" text="Calculate" />
 				</form>
 			</ContentBox>
 		</div>

@@ -5,7 +5,7 @@ import { Routes, Route } from "react-router";
 import { PrivacyPolicy } from "./content_views/privacy_policy/privacy_policy";
 import { Faq } from "./content_views/faq/faq";
 import { Partners } from "./content_views/partners/partners";
-import { WishlistCalculator } from "./content_views/wishlist_calculator/wishlist_calculator";
+import { WishlistForm } from "./content_views/wishlist_form/wishlist_form";
 import { SidePanel } from "./side_panel/side_panel";
 import { useState } from "react";
 import { classNames } from "./utils";
@@ -21,12 +21,11 @@ function App() {
 						<Routes>
 							<Route
 								path="/"
-								element={
-									<WishlistCalculator
-										totalWishlistsCalculated={100}
-										onClickCalculate={() => console.log("Calculating")}
-									/>
-								}
+								element={<WishlistForm totalWishlistsCalculated={100} />}
+							/>
+							<Route
+								path="/wishlist/:wishlistId"
+								element={<span>Hello</span>}
 							/>
 							<Route path="/faq" element={<Faq />} />
 							<Route path="/partners" element={<Partners />} />
