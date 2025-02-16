@@ -47,7 +47,7 @@ async function resolveVanityUrl(vanityUrl) {
 	return response.data.response?.steamid;
 }
 
-async function getProfileInfo(steamId) {
+async function getProfileName(steamId) {
 	let response = "";
 	try {
 		response = await axios({
@@ -62,7 +62,7 @@ async function getProfileInfo(steamId) {
 	} catch {
 		return undefined;
 	}
-	return response.data.response.players[0];
+	return response.data.response?.players[0].personaname;
 }
 
 async function getWishlistItemIds(steamId) {
@@ -251,13 +251,13 @@ function main() {
 	);
 
 	router.get(
-		"/getProfileInfo",
+		"/getProfileName",
 		query("steamId").notEmpty().escape(),
 		async function (req, res) {
 			const result = validationResult(req);
 			if (result.isEmpty()) {
-				const profileInfo = await getProfileInfo(req.query.steamId);
-				return res.send(JSON.stringify(profileInfo));
+				const profileName = await getProfileName(req.query.steamId);
+				return res.send(profileName);
 			}
 			res.status(400);
 			res.send("Error: Invalid Steam ID");
@@ -269,27 +269,12 @@ function main() {
 		res.send(data);
 	});
 
-	router.get(
-		"/counterUpdate",
-		query("flag").notEmpty().escape(),
-		async function (req, res) {
-			const result = validationResult(req);
-			if (result.isEmpty() && req.query.flag === "true") {
-				const readCount = fs.readFileSync("./counter.txt", "utf8");
-				const readCheck = fs.readFileSync("./counter.txt", "utf8");
-				let count = readCount.toString();
-				let countCheck = readCheck.toString();
-				count++;
-				if (count < countCheck) {
-					count = countCheck;
-					count++;
-				}
-				fs.writeFileSync("./counter.txt", count.toString());
-				return res.send(count.toString());
-			}
-			res.status(403).end();
-		}
-	);
+	router.post("/counterUpdate", async function (req, res) {
+		const count = fs.readFileSync("./counter.txt", "utf8");
+		count++;
+		fs.writeFileSync("./counter.txt", count.toString());
+		res.send();
+	});
 
 	router.get("/ip2Country", async function (req, res) {
 		const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;

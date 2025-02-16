@@ -22,7 +22,9 @@ export function WishlistForm(props: WishlistFormProps) {
 					{props.totalWishlistsCalculated ? (
 						props.totalWishlistsCalculated.toLocaleString("en-US")
 					) : (
-						<Loader color="black" />
+						<span className="wishlistFormTotalLoader">
+							<Loader color="black" />
+						</span>
 					)}
 				</span>
 				<form
