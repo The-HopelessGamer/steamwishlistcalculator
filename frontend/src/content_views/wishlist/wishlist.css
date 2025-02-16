@@ -1,3 +1,23 @@
 .wishlistLoaderContainer {
 	font-size: 50px;
+	display: flex;
+	flex-direction: row;
+}
+
+.wishlistCalculatingTitle {
+	align-items: center;
+	font-size: 1.4rem;
+	display: flex;
+	font-weight: bold;
+	word-wrap: break-word;
+}
+
+.wishlistCalculatingTitle > span {
+	margin-left: 0.3em;
+}
+
+@media (min-width: 600px) {
+	.wishlistCalculatingTitle {
+		font-size: 2rem;
+	}
 }
