@@ -11,18 +11,24 @@ import { useState } from "react";
 import { classNames } from "./utils";
 import { Wishlist } from "./content_views/wishlist/wishlist";
 import { useEffect } from "react";
-import { counterRead } from "./backend_api";
+import { counterRead, ip2Country } from "./backend_api";
 
 function App() {
 	const [sidePanelOpen, setSidePanelOpen] = useState(false);
 	const [totalWishlistsCalculated, setTotalWishlistsCalculated] = useState<
 		number | undefined
 	>(undefined);
+	const [countryCode, setCountryCode] = useState<string>("US");
 
 	useEffect(() => {
 		counterRead().then((serviceResponse) => {
 			if (serviceResponse.ok) {
 				setTotalWishlistsCalculated(serviceResponse.data);
+			}
+		});
+		ip2Country().then((serviceResponse) => {
+			if (serviceResponse.ok) {
+				setCountryCode(serviceResponse.data);
 			}
 		});
 	});
