@@ -19,7 +19,7 @@ export async function counterRead(): Promise<ServiceResposne<number>> {
 		if (!response.ok) {
 			return {
 				ok: false,
-				text: response.status.toString(),
+				text: await response.text(),
 			};
 		}
 
@@ -44,7 +44,7 @@ export async function ip2Country(): Promise<ServiceResposne<string>> {
 		if (!response.ok) {
 			return {
 				ok: false,
-				text: response.status.toString(),
+				text: await response.text(),
 			};
 		}
 
@@ -71,7 +71,7 @@ export async function counterUpdate(): Promise<ServiceResposne<undefined>> {
 		if (!response.ok) {
 			return {
 				ok: false,
-				text: response.status.toString(),
+				text: await response.text(),
 			};
 		}
 
@@ -97,7 +97,7 @@ export async function resolveVanityUrl(vanityUrl: string): Promise<ServiceRespos
 		if (!response.ok) {
 			return {
 				ok: false,
-				text: response.status.toString(),
+				text: await response.text(),
 			};
 		}
 
@@ -124,7 +124,7 @@ export async function getProfileName(steamId: string): Promise<ServiceResposne<s
 		if (!response.ok) {
 			return {
 				ok: false,
-				text: response.status.toString(),
+				text: await response.text(),
 			};
 		}
 
@@ -152,7 +152,7 @@ export async function getWishlist(wishlist: string, countryCode: string): Promis
 		if (!response.ok) {
 			return {
 				ok: false,
-				text: response.status.toString(),
+				text: await response.text(),
 			};
 		}
 

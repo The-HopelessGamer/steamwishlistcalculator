@@ -23,11 +23,11 @@ export function Wishlist(props: WishlistProps) {
 		LoadState.Pending
 	);
 	const [steamId, setSteamId] = useState(useParams().wishlistId ?? "");
-	const [isSteamIdValid, setIsSteamIdValid] = useState(true);
+	const [error, setError] = useState<string | undefined>(undefined);
 
 	useEffect(() => {
 		if (steamId === "") {
-			setIsSteamIdValid(false);
+			setError("No steam ID Provided");
 			return;
 		}
 
@@ -38,15 +38,15 @@ export function Wishlist(props: WishlistProps) {
 					setSteamId(service_response.data);
 					setResolveVanityUrlLoading(LoadState.Loaded);
 				} else {
-					setIsSteamIdValid(false);
+					setError(service_response.text);
 					setResolveVanityUrlLoading(LoadState.Failed);
 				}
 			});
 		}
 	}, [steamId, resolveVanityUrlLoading]);
 
-	if (!isSteamIdValid) {
-		return <CalculateError text="Invalid steam ID" />;
+	if (error) {
+		return <CalculateError text={error} />;
 	}
 
 	if (

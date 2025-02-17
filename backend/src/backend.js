@@ -222,7 +222,7 @@ function main() {
 				}
 			}
 			res.status(400);
-			res.send("Error: Invalid Steam ID");
+			res.send("Invalid Steam ID");
 		}
 	);
 
@@ -243,10 +243,10 @@ function main() {
 					return res.send(JSON.stringify(wishlist));
 				}
 				res.status(400);
-				return res.send("Error: Wishlist Empty or Private");
+				return res.send("Wishlist Empty or Private");
 			}
 			res.status(400);
-			res.send("Error: Invalid Shareable Link");
+			res.send("Invalid Shareable Link");
 		}
 	);
 
@@ -260,7 +260,7 @@ function main() {
 				return res.send(profileName);
 			}
 			res.status(400);
-			res.send("Error: Invalid Steam ID");
+			res.send("Invalid Steam ID");
 		}
 	);
 
@@ -283,7 +283,7 @@ function main() {
 			res.send(location.country);
 		} else {
 			res.status(400);
-			res.send("Error: Unable to get IP Address");
+			res.send("Unable to get IP Address");
 		}
 	});
 
