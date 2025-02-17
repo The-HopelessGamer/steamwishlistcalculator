@@ -7,31 +7,49 @@ import { Faq } from "./content_views/faq/faq";
 import { Partners } from "./content_views/partners/partners";
 import { WishlistForm } from "./content_views/wishlist_form/wishlist_form";
 import { SidePanel } from "./side_panel/side_panel";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { classNames } from "./utils";
 import { Wishlist } from "./content_views/wishlist/wishlist";
-import { useEffect } from "react";
 import { counterRead, ip2Country } from "./backend_api";
+import { LoadState } from "./utils";
 
 function App() {
 	const [sidePanelOpen, setSidePanelOpen] = useState(false);
 	const [totalWishlistsCalculated, setTotalWishlistsCalculated] = useState<
 		number | undefined
 	>(undefined);
-	const [countryCode, setCountryCode] = useState<string>("US");
+	const [totalWishlistsCalculatedLoading, setTotalWishlistsCalculatedLoading] =
+		useState(LoadState.Pending);
+	const [countryCode, setCountryCode] = useState("US");
+	const [countryCodeLoading, setCountryCodeLoading] = useState(
+		LoadState.Pending
+	);
 
 	useEffect(() => {
-		counterRead().then((serviceResponse) => {
-			if (serviceResponse.ok) {
-				setTotalWishlistsCalculated(serviceResponse.data);
-			}
-		});
-		ip2Country().then((serviceResponse) => {
-			if (serviceResponse.ok) {
-				setCountryCode(serviceResponse.data);
-			}
-		});
-	});
+		if (totalWishlistsCalculatedLoading === LoadState.Pending) {
+			setTotalWishlistsCalculatedLoading(LoadState.Loading);
+			counterRead().then((serviceResponse) => {
+				if (serviceResponse.ok) {
+					setTotalWishlistsCalculated(serviceResponse.data);
+					setTotalWishlistsCalculatedLoading(LoadState.Loaded);
+				} else {
+					setTotalWishlistsCalculatedLoading(LoadState.Failed);
+				}
+			});
+		}
+
+		if (countryCodeLoading === LoadState.Pending) {
+			setCountryCodeLoading(LoadState.Loading);
+			ip2Country().then((serviceResponse) => {
+				if (serviceResponse.ok) {
+					setCountryCode(serviceResponse.data);
+					setCountryCodeLoading(LoadState.Loaded);
+				} else {
+					setCountryCodeLoading(LoadState.Failed);
+				}
+			});
+		}
+	}, [totalWishlistsCalculatedLoading, countryCodeLoading]);
 
 	return (
 		<div className={classNames(["app", sidePanelOpen && "appNoScroll"])}>
@@ -48,7 +66,15 @@ function App() {
 									/>
 								}
 							/>
-							<Route path="/wishlist/:wishlistId" element={<Wishlist />} />
+							<Route
+								path="/wishlist/:wishlistId"
+								element={
+									<Wishlist
+										countryCodeLoading={countryCodeLoading}
+										countryCode={countryCode}
+									/>
+								}
+							/>
 							<Route path="/faq" element={<Faq />} />
 							<Route path="/partners" element={<Partners />} />
 							<Route path="/privacy-policy" element={<PrivacyPolicy />} />
