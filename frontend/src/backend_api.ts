@@ -142,10 +142,10 @@ export async function getProfileName(steamId: string): Promise<ServiceResposne<s
 }
 
 
-export async function getWishlist(wishlist: string, countryCode: string): Promise<ServiceResposne<object>> {
+export async function getWishlist(steamId: string, countryCode: string): Promise<ServiceResposne<object>> {
 	try {
 		const response = await fetch(API_PATH + "/wishlist?" + new URLSearchParams({
-			wishlist,
+			steamId,
 			countryCode,
 		}));
 
@@ -158,7 +158,7 @@ export async function getWishlist(wishlist: string, countryCode: string): Promis
 
 		return {
 			ok: true,
-			data: JSON.parse(await response.json()),
+			data: await response.json(),
 		};
 
 	} catch {

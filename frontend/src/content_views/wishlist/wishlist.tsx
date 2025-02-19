@@ -2,9 +2,14 @@ import "./wishlist.css";
 import { useParams } from "react-router";
 import { Loading } from "./loading/loading";
 import { useState, useEffect } from "react";
-import { resolveVanityUrl } from "../../backend_api";
+import {
+	resolveVanityUrl,
+	getProfileName,
+	getWishlist,
+} from "../../backend_api";
 import { CalculateError } from "./calculate_error/calculate_error";
 import { LoadState } from "../../utils";
+import { Table } from "./table/table";
 
 function isSteamId(steamIdOrVanityUrl: string) {
 	return (
@@ -18,12 +23,18 @@ type WishlistProps = {
 	countryCode: string;
 };
 
-export function Wishlist(props: WishlistProps) {
+export function Wishlist({ countryCode, countryCodeLoading }: WishlistProps) {
 	const [resolveVanityUrlLoading, setResolveVanityUrlLoading] = useState(
+		LoadState.Pending
+	);
+	const [wishlistLoading, setWishlistLoading] = useState(LoadState.Pending);
+	const [profileNameLoading, setProfileNameLoading] = useState(
 		LoadState.Pending
 	);
 	const [steamId, setSteamId] = useState(useParams().wishlistId ?? "");
 	const [error, setError] = useState<string | undefined>(undefined);
+	const [profileName, setProfileName] = useState("");
+	const [wishlist, setWishlist] = useState<object>({});
 
 	useEffect(() => {
 		if (steamId === "") {
@@ -43,18 +54,57 @@ export function Wishlist(props: WishlistProps) {
 				}
 			});
 		}
-	}, [steamId, resolveVanityUrlLoading]);
+
+		if (
+			isSteamId(steamId) &&
+			profileNameLoading === LoadState.Pending &&
+			wishlistLoading === LoadState.Pending &&
+			(countryCodeLoading === LoadState.Loaded ||
+				countryCodeLoading === LoadState.Failed)
+		) {
+			setProfileNameLoading(LoadState.Loading);
+			getProfileName(steamId).then((service_response) => {
+				if (service_response.ok) {
+					setProfileName(service_response.data);
+					setProfileNameLoading(LoadState.Loaded);
+				} else {
+					setError(service_response.text);
+					setProfileNameLoading(LoadState.Failed);
+				}
+			});
+
+			setWishlistLoading(LoadState.Loading);
+			getWishlist(steamId, countryCode).then((service_response) => {
+				if (service_response.ok) {
+					setWishlist(service_response.data);
+					setWishlistLoading(LoadState.Loaded);
+				} else {
+					setError(service_response.text);
+					setWishlistLoading(LoadState.Failed);
+				}
+			});
+		}
+	}, [
+		steamId,
+		countryCode,
+		resolveVanityUrlLoading,
+		profileNameLoading,
+		wishlistLoading,
+		countryCodeLoading,
+	]);
 
 	if (error) {
 		return <CalculateError text={error} />;
 	}
 
 	if (
-		props.countryCodeLoading === LoadState.Loading ||
-		resolveVanityUrlLoading === LoadState.Loading
+		countryCodeLoading === LoadState.Loading ||
+		resolveVanityUrlLoading === LoadState.Loading ||
+		profileNameLoading === LoadState.Loading ||
+		wishlistLoading === LoadState.Loading
 	) {
 		return <Loading />;
 	}
 
-	return <span>Wishlist</span>;
+	return <Table profileName={profileName} wishlist={wishlist} />;
 }
