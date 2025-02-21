@@ -10,6 +10,16 @@ body {
 p,
 a,
 span,
+div,
 input {
 	font-size: 1.4rem;
+}
+
+a {
+	color: black;
+	transition: 0.2s;
+}
+
+a:hover {
+	color: #1a75ff;
 }

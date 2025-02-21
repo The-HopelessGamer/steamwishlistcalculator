@@ -1,4 +1,3 @@
-import "./wishlist.css";
 import { useParams } from "react-router";
 import { Loading } from "./loading/loading";
 import { useState, useEffect } from "react";
@@ -106,5 +105,7 @@ export function Wishlist({ countryCode, countryCodeLoading }: WishlistProps) {
 		return <Loading />;
 	}
 
-	return <Table profileName={profileName} wishlist={wishlist} />;
+	return (
+		<Table steamId={steamId} profileName={profileName} wishlist={wishlist} />
+	);
 }

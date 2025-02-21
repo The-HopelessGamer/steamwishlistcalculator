@@ -1,0 +1,20 @@
+.wishlistStats {
+	display: flex;
+	justify-content: space-between;
+}
+
+.wishlistStat {
+	flex-grow: 1;
+	text-align: center;
+}
+
+.wishlistStatBorder {
+	border-left: 1px solid black;
+}
+
+.tableDivider {
+	height: 2px;
+	background-color: black;
+	border: none;
+	margin: 10px 0;
+}

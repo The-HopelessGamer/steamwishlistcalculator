@@ -1,8 +1,8 @@
 import React from "react";
 
 type DelimitedProps = {
-	elements: React.ReactNode[],
-	delimiter: string
+	elements: React.ReactNode[];
+	delimiter: React.ReactNode;
 };
 
 export function Delimited({ elements, delimiter }: DelimitedProps) {
@@ -11,8 +11,8 @@ export function Delimited({ elements, delimiter }: DelimitedProps) {
 			{elements.map((element, index) => {
 				return (
 					<React.Fragment key={index}>
-						{ !!index && delimiter }
-						{ element }
+						{!!index && delimiter}
+						{element}
 					</React.Fragment>
 				);
 			})}

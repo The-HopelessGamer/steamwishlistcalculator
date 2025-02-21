@@ -1,0 +1,26 @@
+.tableHeader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.tableHeaderButton {
+	flex-shrink: 1;
+}
+
+.tableHeaderProfileLinkContainer {
+	flex-grow: 1;
+	align-items: center;
+	justify-content: center;
+	display: flex;
+}
+
+.tableHeaderProfileLink {
+	text-decoration: none;
+	font-size: 2rem;
+	font-weight: bold;
+}
+
+.tableHeaderProfileLink:hover {
+	text-decoration: underline;
+}
