@@ -1,5 +1,6 @@
 import "./wishlist_stats.css";
 import { classNames } from "../../../../utils";
+import { common } from "protos";
 
 type WishlistStat = {
 	label: string;
@@ -7,42 +8,59 @@ type WishlistStat = {
 };
 
 type WishlistStatsProps = {
-	wishlist: object;
+	wishlist: common.StoreItem[];
 };
 
 export function WishlistStats({ wishlist }: WishlistStatsProps) {
 	const stats: WishlistStat[] = [
 		{
 			label: "Total Price",
-			value: "$100",
+			value: wishlist
+				.reduce(
+					(total, item) =>
+						total + (item.bestPurchaseOption?.finalPriceInCents ?? 0),
+					0
+				)
+				.toString(),
 		},
 		{
 			label: "Total Items",
-			value: "7",
-		},
-		{
-			label: "Without Price",
-			value: "7",
-		},
-		{
-			label: "With Price",
-			value: "7",
+			value: wishlist.length.toString(),
 		},
 		{
 			label: "Free",
-			value: "7",
+			value: wishlist
+				.reduce((total, item) => total + (item.isFree ? 1 : 0), 0)
+				.toString(),
 		},
 		{
 			label: "On Sale",
-			value: "7",
+			value: wishlist
+				.reduce(
+					(total, item) =>
+						total + (item.bestPurchaseOption?.activeDiscounts ? 1 : 0),
+					0
+				)
+				.toString(),
 		},
 		{
 			label: "Pre Order",
-			value: "7",
+			value: wishlist
+				.reduce(
+					(total, item) =>
+						total +
+						(item.bestPurchaseOption?.formattedFinalPrice && item.isComingSoon
+							? 1
+							: 0),
+					0
+				)
+				.toString(),
 		},
 		{
 			label: "Unlisted",
-			value: "7",
+			value: wishlist
+				.reduce((total, item) => total + (item.visible ? 1 : 0), 0)
+				.toString(),
 		},
 	];
 	return (

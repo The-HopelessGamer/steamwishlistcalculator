@@ -1,3 +1,5 @@
+import type { common } from "protos";
+
 const API_PATH = "/api";
 
 type ServiceSuccess<T> = {
@@ -10,9 +12,9 @@ type ServiceError = {
 	text: string;
 }
 
-type ServiceResposne<T> = ServiceSuccess<T> | ServiceError;
+type ServiceResponse<T> = ServiceSuccess<T> | ServiceError;
 
-export async function counterRead(): Promise<ServiceResposne<number>> {
+export async function counterRead(): Promise<ServiceResponse<number>> {
 	try {
 		const response = await fetch(API_PATH + "/counterRead");
 
@@ -37,7 +39,7 @@ export async function counterRead(): Promise<ServiceResposne<number>> {
 }
 
 
-export async function ip2Country(): Promise<ServiceResposne<string>> {
+export async function ip2Country(): Promise<ServiceResponse<string>> {
 	try {
 		const response = await fetch(API_PATH + "/ip2Country");
 
@@ -62,7 +64,7 @@ export async function ip2Country(): Promise<ServiceResposne<string>> {
 }
 
 
-export async function counterUpdate(): Promise<ServiceResposne<undefined>> {
+export async function counterUpdate(): Promise<ServiceResponse<undefined>> {
 	try {
 		const response = await fetch(API_PATH + "/counterUpdate", {
 			method: "POST",
@@ -88,7 +90,7 @@ export async function counterUpdate(): Promise<ServiceResposne<undefined>> {
 	}
 }
 
-export async function resolveVanityUrl(vanityUrl: string): Promise<ServiceResposne<string>> {
+export async function resolveVanityUrl(vanityUrl: string): Promise<ServiceResponse<string>> {
 	try {
 		const response = await fetch(API_PATH + "/resolveVanityUrl?" + new URLSearchParams({
 			vanityUrl,
@@ -115,7 +117,7 @@ export async function resolveVanityUrl(vanityUrl: string): Promise<ServiceRespos
 }
 
 
-export async function getProfileName(steamId: string): Promise<ServiceResposne<string>> {
+export async function getProfileName(steamId: string): Promise<ServiceResponse<string>> {
 	try {
 		const response = await fetch(API_PATH + "/getProfileName?" + new URLSearchParams({
 			steamId,
@@ -142,7 +144,7 @@ export async function getProfileName(steamId: string): Promise<ServiceResposne<s
 }
 
 
-export async function getWishlist(steamId: string, countryCode: string): Promise<ServiceResposne<object>> {
+export async function getWishlist(steamId: string, countryCode: string): Promise<ServiceResponse<common.StoreItem[]>> {
 	try {
 		const response = await fetch(API_PATH + "/wishlist?" + new URLSearchParams({
 			steamId,
@@ -158,7 +160,7 @@ export async function getWishlist(steamId: string, countryCode: string): Promise
 
 		return {
 			ok: true,
-			data: await response.json(),
+			data: (await response.json()) as common.StoreItem[],
 		};
 
 	} catch {

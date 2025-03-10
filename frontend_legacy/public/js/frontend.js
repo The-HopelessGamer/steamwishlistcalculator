@@ -536,6 +536,7 @@ function generateTableStructure(saleOff) {
 		} else {
 			releaseDateFormatted = "Date Unknown";
 		}
+
 		if (data.release?.isComingSoon === true) {
 			releaseDateFormatted = "Coming Soon";
 		}
@@ -1303,7 +1304,6 @@ function tabSwitch() {
 }
 
 function ToggleSalePricing() {
-
 	if (toggle == false) {
 		toggle = true;
 		document.getElementById("priceTotal").innerHTML = formattedCurrentPrice;

@@ -7,9 +7,9 @@ import { query, validationResult } from "express-validator";
 import { lookup } from "ip-location-api";
 
 const BASE_URL = "https://api.steampowered.com/";
-const COMMON_PROTO = protobuf.loadSync("./proto/common.proto");
+const COMMON_PROTO = protobuf.loadSync("../protos/src/common.proto");
 const SERVICE_WISHLIST_PROTO = protobuf.loadSync(
-	"./proto/service_wishlist.proto"
+	"../protos/src/service_wishlist.proto"
 );
 
 const CWishlist_GetWishlist_Request = SERVICE_WISHLIST_PROTO.lookupType(
@@ -89,8 +89,10 @@ async function getWishlistItemIds(steamId) {
 	const getWishlistResponse = CWishlist_GetWishlist_Response.decode(
 		response.data
 	);
-	const getWishlistResponseObject =
-		CWishlist_GetWishlist_Response.toObject(getWishlistResponse);
+	const getWishlistResponseObject = CWishlist_GetWishlist_Response.toObject(
+		getWishlistResponse,
+		{ longs: Number }
+	);
 	return getWishlistResponseObject?.items;
 }
 
@@ -130,8 +132,10 @@ async function getItems(appIds, countryCode) {
 		const getItemsResponse = CStoreBrowse_GetItems_Response.decode(
 			response.data
 		);
-		const getItemsResponseObject =
-			CStoreBrowse_GetItems_Response.toObject(getItemsResponse);
+		const getItemsResponseObject = CStoreBrowse_GetItems_Response.toObject(
+			getItemsResponse,
+			{ longs: Number }
+		);
 
 		items = items.concat(getItemsResponseObject.storeItems);
 	}
@@ -139,9 +143,8 @@ async function getItems(appIds, countryCode) {
 	return items;
 }
 
-async function getWishlistItems(steamId, countryCode) {
-	let countryCodeCheck = "";
-	let countryCodesList = [
+function isCountryCodeValid(countryCode) {
+	const countryCodesList = [
 		"AR",
 		"AU",
 		"AZ",
@@ -171,18 +174,26 @@ async function getWishlistItems(steamId, countryCode) {
 		"US",
 		"VN",
 	];
-	countryCodeCheck = countryCodesList.includes(countryCode);
-	if (countryCodeCheck !== false) {
-		const wishlistItems = await getWishlistItemIds(steamId);
-		if (wishlistItems !== undefined) {
-			const items = await getItems(
-				wishlistItems.map((item) => item.appid),
-				countryCode
-			);
-			return items;
-		}
+	return countryCodesList.includes(countryCode);
+}
+
+async function getWishlistItems(steamId, countryCode) {
+	if (!isCountryCodeValid(countryCode)) {
+		return undefined;
 	}
-	return undefined;
+
+	const wishlistItems = await getWishlistItemIds(steamId);
+
+	if (wishlistItems === undefined) {
+		return undefined;
+	}
+
+	const items = await getItems(
+		wishlistItems.map((item) => item.appid),
+		countryCode
+	);
+
+	return items;
 }
 
 function main() {
@@ -215,14 +226,15 @@ function main() {
 		query("vanityUrl").notEmpty().escape(),
 		async function (req, res) {
 			const result = validationResult(req);
-			if (result.isEmpty()) {
-				const steamId = await resolveVanityUrl(req.query.vanityUrl);
-				if (steamId !== undefined) {
-					return res.send(steamId);
-				}
+			if (!result.isEmpty()) {
+				res.status(400);
+				res.send("Invalid Steam ID");
 			}
-			res.status(400);
-			res.send("Invalid Steam ID");
+
+			const steamId = await resolveVanityUrl(req.query.vanityUrl);
+			if (steamId !== undefined) {
+				return res.send(steamId);
+			}
 		}
 	);
 
@@ -234,19 +246,19 @@ function main() {
 		async function (req, res) {
 			const result = validationResult(req);
 
-			if (result.isEmpty()) {
-				const wishlist = await getWishlistItems(
-					req.query.steamId,
-					req.query.countryCode
-				);
-				if (wishlist !== undefined) {
-					return res.send(JSON.stringify(wishlist));
-				}
+			if (!result.isEmpty()) {
+				res.status(400);
+				return res.send("Invalid Shareable Link");
+			}
+			const wishlist = await getWishlistItems(
+				req.query.steamId,
+				req.query.countryCode
+			);
+			if (wishlist === undefined) {
 				res.status(400);
 				return res.send("Wishlist Empty or Private");
 			}
-			res.status(400);
-			res.send("Invalid Shareable Link");
+			return res.send(JSON.stringify(wishlist));
 		}
 	);
 
@@ -255,12 +267,12 @@ function main() {
 		query("steamId").notEmpty().escape(),
 		async function (req, res) {
 			const result = validationResult(req);
-			if (result.isEmpty()) {
-				const profileName = await getProfileName(req.query.steamId);
-				return res.send(profileName);
+			if (!result.isEmpty()) {
+				res.status(400);
+				res.send("Invalid Steam ID");
 			}
-			res.status(400);
-			res.send("Invalid Steam ID");
+			const profileName = await getProfileName(req.query.steamId);
+			return res.send(profileName);
 		}
 	);
 

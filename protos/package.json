@@ -1,0 +1,13 @@
+{
+    "name": "protos",
+    "main": "index.ts",
+    "scripts": {
+        "generate-protos": "bash -e generate-protos.sh"
+    },
+    "devDependencies": {
+        "ts-proto": "^2.6.1"
+    },
+    "dependencies": {
+        "@bufbuild/protobuf": "^2.2.3"
+    }
+}

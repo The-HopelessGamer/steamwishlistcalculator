@@ -2,6 +2,7 @@ import { ContentBox } from "../../../design_system/content_box/content_box";
 import "./table.css";
 import { PrimaryButton } from "../../../design_system/primary_button/primary_button";
 import { WishlistStats } from "./wishlist_stats/wishlist_stats";
+import type { common } from "protos";
 
 const STEAM_PROFILE_BASE_URL =
 	"https://store.steampowered.com/wishlist/profiles/";
@@ -9,109 +10,64 @@ const STEAM_PROFILE_BASE_URL =
 type TableProps = {
 	profileName: string;
 	steamId: string;
-	wishlist: StoreItem[];
+	wishlist: common.StoreItem[];
 };
-
-interface StoreItem {
-	itemType?: number | undefined;
-	id?: number | undefined;
-	success?: number | undefined;
-	visible?: boolean | undefined;
-	unvailableForCountryRestriction?: boolean | undefined;
-	name?: string | undefined;
-	storeUrlPath?: string | undefined;
-	appid?: number | undefined;
-	type?: number | undefined;
-	includedTypes: number[];
-	includedAppids: number[];
-	isFree?: boolean | undefined;
-	isEarlyAccess?: boolean | undefined;
-	// relatedItems?: StoreItemRelatedItems | undefined;
-	// includedItems?: StoreItemIncludedItems | undefined;
-	contentDescriptorids: number[];
-	tagids: number[];
-	// categories?: StoreItemCategories | undefined;
-	// reviews?: StoreItemReviews | undefined;
-	// basicInfo?: StoreItemBasicInfo | undefined;
-	// tags: StoreItemTag[];
-	// assets?: StoreItemAssets | undefined;
-	release?: StoreItemReleaseInfo | undefined;
-	// platforms?: StoreItemPlatforms | undefined;
-	// gameRating?: StoreGameRating | undefined;
-	isComingSoon?: boolean | undefined;
-	// bestPurchaseOption?: StoreItemPurchaseOption | undefined;
-	// purchaseOptions: StoreItemPurchaseOption[];
-	// accessories: StoreItemPurchaseOption[];
-	// selfPurchaseOption?: StoreItemPurchaseOption | undefined;
-	// screenshots?: StoreItemScreenshots | undefined;
-	// trailers?: StoreItemTrailers | undefined;
-	// supportedLanguages: StoreItemSupportedLanguage[];
-	storeUrlPathOverride?: string | undefined;
-	// freeWeekend?: StoreItemFreeWeekend | undefined;
-	unlisted?: boolean | undefined;
-	gameCount?: number | undefined;
-	internalName?: string | undefined;
-	fullDescription?: string | undefined;
-	isFreeTemporarily?: boolean | undefined;
-	// assetsWithoutOverrides?: StoreItemAssets | undefined;
-	// userFilterFailure?: StoreBrowseFilterFailure | undefined;
-	// links: StoreItemLink[];
-}
-
-interface StoreItemReleaseInfo {
-	steamReleaseDate?: number | undefined;
-	originalReleaseDate?: number | undefined;
-	originalSteamReleaseDate?: number | undefined;
-	isComingSoon?: boolean | undefined;
-	isPreload?: boolean | undefined;
-	customReleaseDateMessage?: string | undefined;
-	isAbridgedReleaseDate?: boolean | undefined;
-	comingSoonDisplay?: string | undefined;
-	isEarlyAccess?: boolean | undefined;
-	macReleaseDate?: number | undefined;
-	linuxReleaseDate?: number | undefined;
-}
 
 type TableRowProps = {
-	key: string;
-	title: string;
-	releaseDate: Date | undefined;
-	appId: string;
-	onSale: boolean;
-	preOrder: boolean;
-	price: number;
+	item: common.StoreItem;
 };
 
-function TableRow({
-	title,
-	releaseDate,
-	appId,
-	onSale,
-	preOrder,
-	price,
-}: TableRowProps) {
+function getPrice(
+	formattedPrice: string | undefined,
+	formattedOriginalPrice: string | undefined,
+	isFree: boolean | undefined
+): string {
+	if (isFree) {
+		return "Free";
+	}
+
+	if (formattedPrice) {
+		return formattedPrice;
+	}
+
+	return "N/A";
+}
+
+function TableRow({ item }: TableRowProps) {
+	const formattedPrice = item.bestPurchaseOption?.formattedFinalPrice;
+	const formattedOriginalPrice =
+		item.bestPurchaseOption?.formattedOriginalPrice;
+	const releaseDate = item.release?.originalReleaseDate
+		? new Date(item.release?.originalReleaseDate * 1000).toLocaleDateString()
+		: undefined;
+	const isPreOrder = !!(formattedPrice && item.isComingSoon);
+
 	return (
 		<tr>
-			<td>{title}</td>
-			<td>{releaseDate ? releaseDate.toLocaleDateString() : "Coming Soon"}</td>
-			<td>{appId}</td>
-			<td>{onSale}</td>
-			<td>{preOrder}</td>
-			<td>{price}</td>
+			<td>{item.name ?? "Game Unlisted on Steam"}</td>
+			<td>
+				{releaseDate ?? (item.isComingSoon ? "Coming Soon" : "Date Unknown")}
+			</td>
+			<td>{String(item.appid)}</td>
+			<td>{item.bestPurchaseOption?.activeDiscounts ? "Yes" : "No"}</td>
+			<td>{isPreOrder ? "Yes" : "No"}</td>
+			<td>{getPrice(formattedPrice, formattedOriginalPrice, item.isFree)}</td>
 		</tr>
 	);
 }
 
 function TableRowHeader() {
 	return (
-		<tr>
-			<th>Title</th>
-			<th>Release Date</th>
-			<th>AppID</th>
-			<th>On Sale</th>
-			<th>Pre Order</th>
-			<th>Price</th>
-		</tr>
+		<thead>
+			<tr>
+				<th>Title</th>
+				<th>Release Date</th>
+				<th>AppID</th>
+				<th>On Sale</th>
+				<th>Pre Order</th>
+				<th>Price</th>
+			</tr>
+		</thead>
 	);
 }
 
@@ -139,29 +95,15 @@ export function Table({ profileName, steamId, wishlist }: TableProps) {
 			<div className="tableDivider" />
 			<table>
 				<TableRowHeader />
-				{wishlist.map((item) => {
-					if (item.appid === undefined) {
-						throw new Error("no appid");
-					}
-					return (
-						<TableRow
-							key={String(item.appid)}
-							title={item.name || "Game Unlisted on Steam"}
-							releaseDate={
-								item.release?.originalReleaseDate
-									? new Date(item.release?.originalReleaseDate * 1000)
-									: undefined
-							}
-							appId={String(item.appid)}
-							onSale={item}
-							preOrder={false}
-							price={0}
-						/>
-					);
-				})}
+				<tbody>
+					{wishlist.map((item) => {
+						if (item.appid === undefined) {
+							throw new Error("no appid");
+						}
+						return <TableRow key={String(item.appid)} item={item} />;
+					})}
+				</tbody>
 			</table>
-
-			<p>{JSON.stringify(wishlist)}</p>
 		</ContentBox>
 	);
 }

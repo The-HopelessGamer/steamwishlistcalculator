@@ -6,6 +6,7 @@ import {
 	getProfileName,
 	getWishlist,
 } from "../../backend_api";
+import type { common } from "protos";
 import { CalculateError } from "./calculate_error/calculate_error";
 import { LoadState } from "../../utils";
 import { Table } from "./table/table";
@@ -33,7 +34,7 @@ export function Wishlist({ countryCode, countryCodeLoading }: WishlistProps) {
 	const [steamId, setSteamId] = useState(useParams().wishlistId ?? "");
 	const [error, setError] = useState<string | undefined>(undefined);
 	const [profileName, setProfileName] = useState("");
-	const [wishlist, setWishlist] = useState<object>({});
+	const [wishlist, setWishlist] = useState<common.StoreItem[]>([]);
 
 	useEffect(() => {
 		if (steamId === "") {
