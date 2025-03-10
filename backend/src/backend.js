@@ -228,7 +228,7 @@ function main() {
 			const result = validationResult(req);
 			if (!result.isEmpty()) {
 				res.status(400);
-				res.send("Invalid Steam ID");
+				return res.send("Invalid Steam ID");
 			}
 
 			const steamId = await resolveVanityUrl(req.query.vanityUrl);
@@ -269,7 +269,7 @@ function main() {
 			const result = validationResult(req);
 			if (!result.isEmpty()) {
 				res.status(400);
-				res.send("Invalid Steam ID");
+				return res.send("Invalid Steam ID");
 			}
 			const profileName = await getProfileName(req.query.steamId);
 			return res.send(profileName);
