@@ -1,13 +1,40 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Steam Wishlist Calculator</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta property="og:site_name" content="Steam Wishlist Calculator" />
+		<meta property="og:title" content="Steam Wishlist Calculator" />
+		<meta property="og:url" content="https://SteamWishlistCalculator.com" />
+		<meta
+			property="og:description"
+			content="Steam Wishlist Calculator allows you to calculate the total cost of your Steam wishlist!"
+		/>
+		<meta property="og:type" content="website" />
+		<meta property="og:image" content="/logo.png" />
+		<meta
+			name="google-site-verification"
+			content="sSsmTYMxwocPjXiPi-NmL9bpRmExX4XZiFngOvjHA_4"
+		/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+		<title>Steam Wishlist Calculator</title>
+		<!-- Google tag (gtag.js) -->
+		<script
+			async
+			src="https://www.googletagmanager.com/gtag/js?id=G-VFS7QXTHFN"
+		></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag("js", new Date());
+
+			gtag("config", "G-VFS7QXTHFN");
+		</script>
+	</head>
+	<body>
+		<div id="root"></div>
+		<script type="module" src="/src/main.tsx"></script>
+	</body>
 </html>

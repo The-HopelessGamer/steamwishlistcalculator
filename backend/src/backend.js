@@ -30,9 +30,8 @@ const GET_ITEMS_REQUEST_LIMIT = 700;
 const STEAM_API_KEY = process.env.STEAM_API_KEY;
 
 async function resolveVanityUrl(vanityUrl) {
-	let response = "";
 	try {
-		response = await axios({
+		const response = await axios({
 			method: "get",
 			baseURL: BASE_URL,
 			url: "ISteamUser/ResolveVanityURL/v1",
@@ -41,16 +40,15 @@ async function resolveVanityUrl(vanityUrl) {
 				vanityUrl,
 			},
 		});
+		return response.data.response?.steamid;
 	} catch {
 		return undefined;
 	}
-	return response.data.response?.steamid;
 }
 
 async function getProfileName(steamId) {
-	let response = "";
 	try {
-		response = await axios({
+		const response = await axios({
 			method: "get",
 			baseURL: BASE_URL,
 			url: "ISteamUser/GetPlayerSummaries/v2",
@@ -59,21 +57,22 @@ async function getProfileName(steamId) {
 				steamids: steamId,
 			},
 		});
+		return response.data.response?.players[0].personaname;
 	} catch {
 		return undefined;
 	}
-	return response.data.response?.players[0].personaname;
 }
 
 async function getWishlistItemIds(steamId) {
 	const getWishlistRequest = CWishlist_GetWishlist_Request.create({
 		steamid: steamId,
 	});
+
 	const getWishlistRequestBuffer =
 		CWishlist_GetWishlist_Request.encode(getWishlistRequest).finish();
-	let response = "";
+
 	try {
-		response = await axios({
+		const response = await axios({
 			method: "get",
 			baseURL: BASE_URL,
 			url: "IWishlistService/GetWishlist/v1",
@@ -82,18 +81,20 @@ async function getWishlistItemIds(steamId) {
 			},
 			responseType: "arraybuffer",
 		});
+
+		const getWishlistResponse = CWishlist_GetWishlist_Response.decode(
+			response.data
+		);
+
+		const getWishlistResponseObject = CWishlist_GetWishlist_Response.toObject(
+			getWishlistResponse,
+			{ longs: Number }
+		);
+
+		return getWishlistResponseObject?.items;
 	} catch {
 		return undefined;
 	}
-
-	const getWishlistResponse = CWishlist_GetWishlist_Response.decode(
-		response.data
-	);
-	const getWishlistResponseObject = CWishlist_GetWishlist_Response.toObject(
-		getWishlistResponse,
-		{ longs: Number }
-	);
-	return getWishlistResponseObject?.items;
 }
 
 async function getItems(appIds, countryCode) {
@@ -115,9 +116,8 @@ async function getItems(appIds, countryCode) {
 		const getItemsRequestBuffer =
 			CStoreBrowse_GetItems_Request.encode(getItemsRequest).finish();
 
-		let response = "";
 		try {
-			response = await axios({
+			const response = await axios({
 				method: "get",
 				baseURL: BASE_URL,
 				url: "IStoreBrowseService/GetItems/v1",
@@ -126,18 +126,20 @@ async function getItems(appIds, countryCode) {
 				},
 				responseType: "arraybuffer",
 			});
+
+			const getItemsResponse = CStoreBrowse_GetItems_Response.decode(
+				response.data
+			);
+
+			const getItemsResponseObject = CStoreBrowse_GetItems_Response.toObject(
+				getItemsResponse,
+				{ longs: Number }
+			);
+
+			items = items.concat(getItemsResponseObject.storeItems);
 		} catch {
 			return undefined;
 		}
-		const getItemsResponse = CStoreBrowse_GetItems_Response.decode(
-			response.data
-		);
-		const getItemsResponseObject = CStoreBrowse_GetItems_Response.toObject(
-			getItemsResponse,
-			{ longs: Number }
-		);
-
-		items = items.concat(getItemsResponseObject.storeItems);
 	}
 
 	return items;
@@ -232,9 +234,11 @@ function main() {
 			}
 
 			const steamId = await resolveVanityUrl(req.query.vanityUrl);
-			if (steamId !== undefined) {
-				return res.send(steamId);
+			if (steamId === undefined) {
+				res.status(500);
+				return res.send("Failed Fetching Steam ID");
 			}
+			return res.send(steamId);
 		}
 	);
 
@@ -291,12 +295,11 @@ function main() {
 	router.get("/ip2Country", async function (req, res) {
 		const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 		const location = lookup(ip);
-		if (location !== null) {
-			res.send(location.country);
-		} else {
+		if (location === null) {
 			res.status(400);
-			res.send("Unable to get IP Address");
+			return res.send("Unable to get IP Address");
 		}
+		return res.send(location.country);
 	});
 
 	app.use("/api", router);
