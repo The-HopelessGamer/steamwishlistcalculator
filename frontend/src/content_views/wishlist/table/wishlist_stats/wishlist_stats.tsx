@@ -12,16 +12,22 @@ type WishlistStatsProps = {
 };
 
 export function WishlistStats({ wishlist }: WishlistStatsProps) {
+	const totalPriceInCents = wishlist.reduce(
+		(total, item) => total + (item.bestPurchaseOption?.finalPriceInCents ?? 0),
+		0
+	);
+
+	const totalPriceFormatted = (totalPriceInCents / 100).toLocaleString(
+		"de-DE",
+		{
+			style: "currency",
+			currency: "EUR",
+		}
+	);
 	const stats: WishlistStat[] = [
 		{
 			label: "Total Price",
-			value: wishlist
-				.reduce(
-					(total, item) =>
-						total + (item.bestPurchaseOption?.finalPriceInCents ?? 0),
-					0
-				)
-				.toString(),
+			value: totalPriceFormatted,
 		},
 		{
 			label: "Total Items",

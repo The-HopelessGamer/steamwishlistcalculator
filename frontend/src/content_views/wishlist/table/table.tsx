@@ -17,9 +17,8 @@ type TableRowProps = {
 	item: common.StoreItem;
 };
 
-function getPrice(
+function getCurrentPrice(
 	formattedPrice: string | undefined,
-	formattedOriginalPrice: string | undefined,
 	isFree: boolean | undefined
 ): string {
 	if (isFree) {
@@ -37,21 +36,34 @@ function TableRow({ item }: TableRowProps) {
 	const formattedPrice = item.bestPurchaseOption?.formattedFinalPrice;
 	const formattedOriginalPrice =
 		item.bestPurchaseOption?.formattedOriginalPrice;
-	const releaseDate = item.release?.originalReleaseDate
-		? new Date(item.release?.originalReleaseDate * 1000).toLocaleDateString()
-		: undefined;
+	const releaseDate =
+		item.release?.steamReleaseDate && !item.isComingSoon
+			? new Date(item.release?.steamReleaseDate * 1000).toLocaleDateString()
+			: undefined;
 	const isPreOrder = !!(formattedPrice && item.isComingSoon);
+	const gameTitle = (
+		<a href={`http://store.steampowered.com/app/${item.appid}`} target="_blank">
+			{item.name}
+		</a>
+	);
+	const unlistedTitle = (
+		<a href={`http://https://steamdb.info/app/${item.appid}`} target="_blank">
+			Game Unlisted on Steam
+		</a>
+	);
 
 	return (
 		<tr>
-			<td>{item.name ?? "Game Unlisted on Steam"}</td>
+			<td>{item.visible ? gameTitle : unlistedTitle}</td>
 			<td>
 				{releaseDate ?? (item.isComingSoon ? "Coming Soon" : "Date Unknown")}
 			</td>
 			<td>{String(item.appid)}</td>
 			<td>{item.bestPurchaseOption?.activeDiscounts ? "Yes" : "No"}</td>
 			<td>{isPreOrder ? "Yes" : "No"}</td>
-			<td>{getPrice(formattedPrice, formattedOriginalPrice, item.isFree)}</td>
+			<td>
+				{getCurrentPrice(formattedPrice, item.isFree)} {formattedOriginalPrice}
+			</td>
 		</tr>
 	);
 }
