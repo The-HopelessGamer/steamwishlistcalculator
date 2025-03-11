@@ -18,12 +18,13 @@ export function WishlistStats({ wishlist }: WishlistStatsProps) {
 	);
 
 	const totalPriceFormatted = (totalPriceInCents / 100).toLocaleString(
-		"de-DE",
+		"en-US",
 		{
 			style: "currency",
-			currency: "EUR",
+			currency: "USD",
 		}
 	);
+
 	const stats: WishlistStat[] = [
 		{
 			label: "Total Price",

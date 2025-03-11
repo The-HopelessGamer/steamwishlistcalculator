@@ -34,18 +34,23 @@ function getCurrentPrice(
 
 function TableRow({ item }: TableRowProps) {
 	const formattedPrice = item.bestPurchaseOption?.formattedFinalPrice;
+
 	const formattedOriginalPrice =
 		item.bestPurchaseOption?.formattedOriginalPrice;
+
 	const releaseDate =
 		item.release?.steamReleaseDate && !item.isComingSoon
 			? new Date(item.release?.steamReleaseDate * 1000).toLocaleDateString()
 			: undefined;
+
 	const isPreOrder = !!(formattedPrice && item.isComingSoon);
+
 	const gameTitle = (
 		<a href={`http://store.steampowered.com/app/${item.appid}`} target="_blank">
 			{item.name}
 		</a>
 	);
+
 	const unlistedTitle = (
 		<a href={`http://https://steamdb.info/app/${item.appid}`} target="_blank">
 			Game Unlisted on Steam
