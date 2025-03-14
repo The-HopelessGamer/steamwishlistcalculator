@@ -24,7 +24,6 @@ export function sortedByTitle(wishlist: WishlistItem[], reverse: boolean): Wishl
 	});
 }
 
-
 export function sortedByDate(wishlist: WishlistItem[], reverse: boolean): WishlistItem[] {
 	const reverseScale = reverse ? -1 : 1;
 
