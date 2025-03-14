@@ -3,10 +3,12 @@ import "./table.css";
 import { PrimaryButton } from "../../../design_system/primary_button/primary_button";
 import { WishlistStats } from "./wishlist_stats/wishlist_stats";
 import {
-	sortedByTitle,
-	sortedByDate,
-	sortedByAppid,
-	sortedByPrice,
+	sortByTitle,
+	sortByDate,
+	sortByAppid,
+	sortByPrice,
+	sortBySale,
+	sortByPreOrder,
 } from "./sorting/sorting";
 import { WishlistItem } from "../../../wishlist_item";
 
@@ -82,7 +84,7 @@ export function Table({ profileName, steamId, wishlist }: TableProps) {
 			<table>
 				<TableRowHeader />
 				<tbody>
-					{sortedByPrice(wishlist, true).map((item) => {
+					{sortByTitle(wishlist, false).map((item) => {
 						return <TableRow key={String(item.appid())} item={item} />;
 					})}
 				</tbody>

@@ -55,7 +55,7 @@ export function WishlistStats({ wishlist }: WishlistStatsProps) {
 		{
 			label: "Unlisted",
 			value: wishlist
-				.reduce((total, item) => total + (item.isUnlisted() ? 0 : 1), 0)
+				.reduce((total, item) => total + (item.isUnlisted() ? 1 : 0), 0)
 				.toString(),
 		},
 	];

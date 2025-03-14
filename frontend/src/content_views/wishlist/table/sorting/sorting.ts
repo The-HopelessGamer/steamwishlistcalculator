@@ -1,17 +1,27 @@
 import { WishlistItem } from "../../../../wishlist_item";
 
-
-export function sortedByTitle(wishlist: WishlistItem[], reverse: boolean): WishlistItem[] {
+export function sortByTitle(wishlist: WishlistItem[], reverse: boolean): WishlistItem[] {
 	const reverseScale = reverse ? -1 : 1;
 
 	return wishlist.sort((a, b) => {
+
+		if (a.isUnlisted() && !b.isUnlisted()) {
+			return 1 * reverseScale; 
+		}
+		if (!a.isUnlisted() && b.isUnlisted()) {
+			return -1 * reverseScale;
+		}
+		if (a.isUnlisted() && b.isUnlisted()) {
+			return 0;
+		}
+
 		const aTitle = a.title();
 		const bTitle = b.title();
 
 		if (aTitle === bTitle) {
 			return 0;
 		}
-		
+        
 		if (aTitle === undefined) {
 			return 1 * reverseScale;
 		}
@@ -24,42 +34,40 @@ export function sortedByTitle(wishlist: WishlistItem[], reverse: boolean): Wishl
 	});
 }
 
-export function sortedByDate(wishlist: WishlistItem[], reverse: boolean): WishlistItem[] {
+export function sortByDate(wishlist: WishlistItem[], reverse: boolean): WishlistItem[] {
 	const reverseScale = reverse ? -1 : 1;
 
 	return wishlist.sort((a, b) => {
 		const aReleaseDate = a.releaseDate();
 		const bReleaseDate = b.releaseDate();
 
-		// If both items have actual release dates, compare them
+
 		if (aReleaseDate && bReleaseDate) {
 			return (aReleaseDate.getTime() - bReleaseDate.getTime()) * reverseScale;
 		}
 
-		// Handle Coming Soon items
 		if (a.isComingSoon() && !b.isComingSoon()) {
-			return 1 * reverseScale; // Coming Soon appears after released dates
+			return 1 * reverseScale; 
 		}
 		if (!a.isComingSoon() && b.isComingSoon()) {
 			return -1 * reverseScale;
 		}
 		if (a.isComingSoon() && b.isComingSoon()) {
-			return 0; // Both Coming Soon, keep original order
+			return 0;
 		}
 
-		// Handle Date Unknown items (no release date and not Coming Soon)
 		if (!aReleaseDate && !a.isComingSoon() && bReleaseDate) {
-			return 1 * reverseScale; // Unknown dates appear last
+			return 1 * reverseScale; 
 		}
 		if (aReleaseDate && !bReleaseDate && !b.isComingSoon()) {
 			return -1 * reverseScale;
 		}
 
-		return 0; // Both unknown dates, keep original order
+		return 0;
 	});
 }
 
-export function sortedByAppid(wishlist: WishlistItem[], reverse: boolean): WishlistItem[] {
+export function sortByAppid(wishlist: WishlistItem[], reverse: boolean): WishlistItem[] {
 	const reverseScale = reverse ? -1 : 1;
 
 	return wishlist.sort((a, b) => {
@@ -82,37 +90,78 @@ export function sortedByAppid(wishlist: WishlistItem[], reverse: boolean): Wishl
 	});
 }
 
-export function sortedByPrice(wishlist: WishlistItem[], reverse: boolean): WishlistItem[] {
+export function sortByPrice(wishlist: WishlistItem[], reverse: boolean): WishlistItem[] {
 	const reverseScale = reverse ? -1 : 1;
 
 	return wishlist.sort((a, b) => {
 		const aPrice = a.price();
 		const bPrice = b.price();
 
-		// Handle N/A prices (undefined prices and not free)
+		if (aPrice !== undefined && bPrice !== undefined) {
+			return (bPrice - aPrice) * reverseScale;
+		}
+
+		if (a.isFree() && !b.isFree()) {
+			if (bPrice !== undefined) {
+				return 1 * reverseScale;
+			}
+			return -1 * reverseScale;
+		}
+		if (!a.isFree() && b.isFree()) {
+			if (aPrice !== undefined) {
+				return -1 * reverseScale;
+			}
+			return 1 * reverseScale;
+		}
+		if (a.isFree() && b.isFree()) {
+			return 0;
+		}
+
 		if (!aPrice && !a.isFree() && (bPrice || b.isFree())) {
-			return 1 * reverseScale; // N/A appears last
+			return 1 * reverseScale;
 		}
 		if ((aPrice || a.isFree()) && !bPrice && !b.isFree()) {
 			return -1 * reverseScale;
 		}
 
-		// Handle Free items
-		if (a.isFree() && !b.isFree() && bPrice !== undefined) {
-			return 1 * reverseScale; // Free appears after priced items
+		return 0;
+	});
+}
+
+export function sortBySale(wishlist: WishlistItem[], reverse: boolean): WishlistItem[] {
+	const reverseScale = reverse ? -1 : 1;
+
+	return wishlist.sort((a, b) => {
+		const aSale = a.onSale();
+		const bSale = b.onSale();
+		
+		if (aSale && !bSale) {
+			return 1 * reverseScale;
 		}
-		if (!a.isFree() && b.isFree() && aPrice !== undefined) {
+
+		if (bSale && !aSale) {
 			return -1 * reverseScale;
 		}
-		if (a.isFree() && b.isFree()) {
-			return 0; // Both free, keep original order
+
+		return 0;
+	});
+}
+
+export function sortByPreOrder(wishlist: WishlistItem[], reverse: boolean): WishlistItem[] {
+	const reverseScale = reverse ? -1 : 1;
+
+	return wishlist.sort((a, b) => {
+		const aPreOrder = a.isPreOrder();
+		const bPreOrder = b.isPreOrder();
+		
+		if (aPreOrder && !bPreOrder) {
+			return 1 * reverseScale;
 		}
 
-		// If both items have prices, compare them
-		if (aPrice !== undefined && bPrice !== undefined) {
-			return (aPrice - bPrice) * reverseScale;
+		if (bPreOrder && !aPreOrder) {
+			return -1 * reverseScale;
 		}
 
-		return 0; // Both N/A, keep original order
+		return 0;
 	});
 }
