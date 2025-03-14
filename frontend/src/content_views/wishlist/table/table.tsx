@@ -2,7 +2,13 @@ import { ContentBox } from "../../../design_system/content_box/content_box";
 import "./table.css";
 import { PrimaryButton } from "../../../design_system/primary_button/primary_button";
 import { WishlistStats } from "./wishlist_stats/wishlist_stats";
-import type { common } from "protos";
+import {
+	sortedByTitle,
+	sortedByDate,
+	sortedByAppid,
+	sortedByPrice,
+} from "./sorting/sorting";
+import { WishlistItem } from "../../../wishlist_item";
 
 const STEAM_PROFILE_BASE_URL =
 	"https://store.steampowered.com/wishlist/profiles/";
@@ -10,64 +16,27 @@ const STEAM_PROFILE_BASE_URL =
 type TableProps = {
 	profileName: string;
 	steamId: string;
-	wishlist: common.StoreItem[];
+	wishlist: WishlistItem[];
 };
 
 type TableRowProps = {
-	item: common.StoreItem;
+	item: WishlistItem;
 };
 
-function getCurrentPrice(
-	formattedPrice: string | undefined,
-	isFree: boolean | undefined
-): string {
-	if (isFree) {
-		return "Free";
-	}
-
-	if (formattedPrice) {
-		return formattedPrice;
-	}
-
-	return "N/A";
-}
-
 function TableRow({ item }: TableRowProps) {
-	const formattedPrice = item.bestPurchaseOption?.formattedFinalPrice;
-
-	const formattedOriginalPrice =
-		item.bestPurchaseOption?.formattedOriginalPrice;
-
-	const releaseDate =
-		item.release?.steamReleaseDate && !item.isComingSoon
-			? new Date(item.release?.steamReleaseDate * 1000).toLocaleDateString()
-			: undefined;
-
-	const isPreOrder = !!(formattedPrice && item.isComingSoon);
-
-	const gameTitle = (
-		<a href={`http://store.steampowered.com/app/${item.appid}`} target="_blank">
-			{item.name}
-		</a>
-	);
-
-	const unlistedTitle = (
-		<a href={`http://https://steamdb.info/app/${item.appid}`} target="_blank">
-			Game Unlisted on Steam
-		</a>
-	);
-
 	return (
 		<tr>
-			<td>{item.visible ? gameTitle : unlistedTitle}</td>
 			<td>
-				{releaseDate ?? (item.isComingSoon ? "Coming Soon" : "Date Unknown")}
+				<a href={item.link()} target="_blank">
+					{item.formattedTitle()}
+				</a>
 			</td>
-			<td>{String(item.appid)}</td>
-			<td>{item.bestPurchaseOption?.activeDiscounts ? "Yes" : "No"}</td>
-			<td>{isPreOrder ? "Yes" : "No"}</td>
+			<td>{item.formattedReleaseDate()}</td>
+			<td>{String(item.appid())}</td>
+			<td>{item.onSale() ? "Yes" : "No"}</td>
+			<td>{item.isPreOrder() ? "Yes" : "No"}</td>
 			<td>
-				{getCurrentPrice(formattedPrice, item.isFree)} {formattedOriginalPrice}
+				{item.formattedPrice()} {item.formattedOriginalPrice()}
 			</td>
 		</tr>
 	);
@@ -113,11 +82,8 @@ export function Table({ profileName, steamId, wishlist }: TableProps) {
 			<table>
 				<TableRowHeader />
 				<tbody>
-					{wishlist.map((item) => {
-						if (item.appid === undefined) {
-							throw new Error("no appid");
-						}
-						return <TableRow key={String(item.appid)} item={item} />;
+					{sortedByPrice(wishlist, true).map((item) => {
+						return <TableRow key={String(item.appid())} item={item} />;
 					})}
 				</tbody>
 			</table>

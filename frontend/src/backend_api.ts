@@ -1,4 +1,5 @@
 import type { common } from "protos";
+import { WishlistItem } from "./wishlist_item";
 
 const API_PATH = "/api";
 
@@ -144,7 +145,7 @@ export async function getProfileName(steamId: string): Promise<ServiceResponse<s
 }
 
 
-export async function getWishlist(steamId: string, countryCode: string): Promise<ServiceResponse<common.StoreItem[]>> {
+export async function getWishlist(steamId: string, countryCode: string): Promise<ServiceResponse<WishlistItem[]>> {
 	try {
 		const response = await fetch(API_PATH + "/wishlist?" + new URLSearchParams({
 			steamId,
@@ -160,7 +161,7 @@ export async function getWishlist(steamId: string, countryCode: string): Promise
 
 		return {
 			ok: true,
-			data: (await response.json()) as common.StoreItem[],
+			data: ((await response.json()) as common.StoreItem[]).map(storeItem => new WishlistItem(storeItem)),
 		};
 
 	} catch {
