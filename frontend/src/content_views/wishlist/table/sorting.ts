@@ -5,14 +5,14 @@ export type SortingFunction = (
 	reverse: boolean,
 ) => WishlistItem[];
 
-export const sortingFunctions: Record<string, SortingFunction> = {
+export const sortingFunctions = {
 	sortByTitle,
 	sortByDate,
 	sortByAppid,
 	sortByPrice,
 	sortBySale,
 	sortByPreOrder,
-};
+} satisfies Record<string, SortingFunction>;
 
 function sortByTitle(wishlist: WishlistItem[], reverse: boolean): WishlistItem[] {
 	const reverseScale = reverse ? -1 : 1;

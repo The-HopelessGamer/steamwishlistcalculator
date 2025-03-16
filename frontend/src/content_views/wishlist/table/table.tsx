@@ -40,11 +40,8 @@ function TableRow({ item }: TableRowProps) {
 }
 
 export function Table({ profileName, steamId, wishlist }: TableProps) {
-	console.log(wishlist);
-
-	const [sortingFunction, setSortingFunction] = useState<SortingFunction>(
-		sortingFunctions.sortByDate
-	);
+	const [sortingFunctionKey, setSortingFunctionKey] =
+		useState<keyof typeof sortingFunctions>("sortByTitle");
 
 	return (
 		<ContentBox color="white">
@@ -79,7 +76,7 @@ export function Table({ profileName, steamId, wishlist }: TableProps) {
 					</tr>
 				</thead>
 				<tbody>
-					{sortingFunctions.sortByDate(wishlist, false).map((item) => {
+					{sortingFunctions[sortingFunctionKey](wishlist, false).map((item) => {
 						return <TableRow key={String(item.appid())} item={item} />;
 					})}
 				</tbody>
