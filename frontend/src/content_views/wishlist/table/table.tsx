@@ -2,15 +2,10 @@ import { ContentBox } from "../../../design_system/content_box/content_box";
 import "./table.css";
 import { PrimaryButton } from "../../../design_system/primary_button/primary_button";
 import { WishlistStats } from "./wishlist_stats/wishlist_stats";
-import {
-	sortByTitle,
-	sortByDate,
-	sortByAppid,
-	sortByPrice,
-	sortBySale,
-	sortByPreOrder,
-} from "./sorting/sorting";
+import { sortingFunctions } from "./sorting";
+import type { SortingFunction } from "./sorting";
 import { WishlistItem } from "../../../wishlist_item";
+import { useState } from "react";
 
 const STEAM_PROFILE_BASE_URL =
 	"https://store.steampowered.com/wishlist/profiles/";
@@ -44,22 +39,13 @@ function TableRow({ item }: TableRowProps) {
 	);
 }
 
-function TableRowHeader() {
-	return (
-		<thead>
-			<tr>
-				<th>Title</th>
-				<th>Release Date</th>
-				<th>AppID</th>
-				<th>On Sale</th>
-				<th>Pre Order</th>
-				<th>Price</th>
-			</tr>
-		</thead>
-	);
-}
-
 export function Table({ profileName, steamId, wishlist }: TableProps) {
+	console.log(wishlist);
+
+	const [sortingFunction, setSortingFunction] = useState<SortingFunction>(
+		sortingFunctions.sortByDate
+	);
+
 	return (
 		<ContentBox color="white">
 			<div className="tableHeader">
@@ -82,9 +68,18 @@ export function Table({ profileName, steamId, wishlist }: TableProps) {
 			<WishlistStats wishlist={wishlist} />
 			<div className="tableDivider" />
 			<table>
-				<TableRowHeader />
+				<thead>
+					<tr>
+						<th>Title</th>
+						<th>Release Date</th>
+						<th>AppID</th>
+						<th>On Sale</th>
+						<th>Pre Order</th>
+						<th>Price</th>
+					</tr>
+				</thead>
 				<tbody>
-					{sortByTitle(wishlist, false).map((item) => {
+					{sortingFunctions.sortByDate(wishlist, false).map((item) => {
 						return <TableRow key={String(item.appid())} item={item} />;
 					})}
 				</tbody>

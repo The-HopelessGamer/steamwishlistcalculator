@@ -45,8 +45,14 @@ export class WishlistItem {
 	}
 
 	releaseDate() {
-		return this.storeItem.release?.steamReleaseDate && !this.storeItem.isComingSoon
-			? new Date(this.storeItem.release?.steamReleaseDate * 1000)
+		const mostRecentReleaseDate = Math.max(
+			this.storeItem.release?.steamReleaseDate ?? 0, 
+			this.storeItem.release?.originalSteamReleaseDate ?? 0, 
+			this.storeItem.release?.originalReleaseDate ?? 0,
+		);
+
+		return mostRecentReleaseDate > 0 && !this.storeItem.isComingSoon
+			? new Date(mostRecentReleaseDate * 1000)
 			: undefined;
 	}
 

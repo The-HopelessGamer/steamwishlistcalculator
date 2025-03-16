@@ -1,6 +1,20 @@
-import { WishlistItem } from "../../../../wishlist_item";
+import { WishlistItem } from "../../../wishlist_item";
 
-export function sortByTitle(wishlist: WishlistItem[], reverse: boolean): WishlistItem[] {
+export type SortingFunction = (
+	wishlist: WishlistItem[],
+	reverse: boolean,
+) => WishlistItem[];
+
+export const sortingFunctions: Record<string, SortingFunction> = {
+	sortByTitle,
+	sortByDate,
+	sortByAppid,
+	sortByPrice,
+	sortBySale,
+	sortByPreOrder,
+};
+
+function sortByTitle(wishlist: WishlistItem[], reverse: boolean): WishlistItem[] {
 	const reverseScale = reverse ? -1 : 1;
 
 	return wishlist.sort((a, b) => {
@@ -34,7 +48,7 @@ export function sortByTitle(wishlist: WishlistItem[], reverse: boolean): Wishlis
 	});
 }
 
-export function sortByDate(wishlist: WishlistItem[], reverse: boolean): WishlistItem[] {
+function sortByDate(wishlist: WishlistItem[], reverse: boolean): WishlistItem[] {
 	const reverseScale = reverse ? -1 : 1;
 
 	return wishlist.sort((a, b) => {
@@ -67,7 +81,7 @@ export function sortByDate(wishlist: WishlistItem[], reverse: boolean): Wishlist
 	});
 }
 
-export function sortByAppid(wishlist: WishlistItem[], reverse: boolean): WishlistItem[] {
+function sortByAppid(wishlist: WishlistItem[], reverse: boolean): WishlistItem[] {
 	const reverseScale = reverse ? -1 : 1;
 
 	return wishlist.sort((a, b) => {
@@ -90,7 +104,7 @@ export function sortByAppid(wishlist: WishlistItem[], reverse: boolean): Wishlis
 	});
 }
 
-export function sortByPrice(wishlist: WishlistItem[], reverse: boolean): WishlistItem[] {
+function sortByPrice(wishlist: WishlistItem[], reverse: boolean): WishlistItem[] {
 	const reverseScale = reverse ? -1 : 1;
 
 	return wishlist.sort((a, b) => {
@@ -128,7 +142,7 @@ export function sortByPrice(wishlist: WishlistItem[], reverse: boolean): Wishlis
 	});
 }
 
-export function sortBySale(wishlist: WishlistItem[], reverse: boolean): WishlistItem[] {
+function sortBySale(wishlist: WishlistItem[], reverse: boolean): WishlistItem[] {
 	const reverseScale = reverse ? -1 : 1;
 
 	return wishlist.sort((a, b) => {
@@ -147,7 +161,7 @@ export function sortBySale(wishlist: WishlistItem[], reverse: boolean): Wishlist
 	});
 }
 
-export function sortByPreOrder(wishlist: WishlistItem[], reverse: boolean): WishlistItem[] {
+function sortByPreOrder(wishlist: WishlistItem[], reverse: boolean): WishlistItem[] {
 	const reverseScale = reverse ? -1 : 1;
 
 	return wishlist.sort((a, b) => {
