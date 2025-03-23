@@ -3,18 +3,11 @@ import "./table.css";
 import { PrimaryButton } from "../../../design_system/primary_button/primary_button";
 import { WishlistStats } from "./wishlist_stats/wishlist_stats";
 import { sortingFunctions } from "./sorting";
-import type { SortingFunction } from "./sorting";
 import { WishlistItem } from "../../../wishlist_item";
 import { useState } from "react";
 
 const STEAM_PROFILE_BASE_URL =
 	"https://store.steampowered.com/wishlist/profiles/";
-
-type TableProps = {
-	profileName: string;
-	steamId: string;
-	wishlist: WishlistItem[];
-};
 
 type TableRowProps = {
 	item: WishlistItem;
@@ -39,9 +32,40 @@ function TableRow({ item }: TableRowProps) {
 	);
 }
 
+type SortButtonProps = {
+	text: string;
+	sortKey: keyof typeof sortingFunctions;
+	onClick: (key: keyof typeof sortingFunctions) => void;
+};
+
+function SortButton({ text, sortKey, onClick }: SortButtonProps) {
+	return (
+		<button onClick={() => onClick(sortKey)}>
+			{text}
+			<span>▼</span>
+		</button>
+	);
+}
+
+type TableProps = {
+	profileName: string;
+	steamId: string;
+	wishlist: WishlistItem[];
+};
+
 export function Table({ profileName, steamId, wishlist }: TableProps) {
 	const [sortingFunctionKey, setSortingFunctionKey] =
 		useState<keyof typeof sortingFunctions>("sortByTitle");
+	const [isReversed, setIsReversed] = useState(false);
+
+	const handleSort = (key: keyof typeof sortingFunctions) => {
+		if (key === sortingFunctionKey) {
+			setIsReversed(!isReversed);
+		} else {
+			setSortingFunctionKey(key);
+			setIsReversed(false);
+		}
+	};
 
 	return (
 		<ContentBox color="white">
@@ -67,18 +91,56 @@ export function Table({ profileName, steamId, wishlist }: TableProps) {
 			<table>
 				<thead>
 					<tr>
-						<th>Title</th>
-						<th>Release Date</th>
-						<th>AppID</th>
-						<th>On Sale</th>
-						<th>Pre Order</th>
-						<th>Price</th>
+						<th>
+							<SortButton
+								text="Title"
+								sortKey="sortByTitle"
+								onClick={handleSort}
+							/>
+						</th>
+						<th>
+							<SortButton
+								text="Release Date"
+								sortKey="sortByDate"
+								onClick={handleSort}
+							/>
+						</th>
+						<th>
+							<SortButton
+								text="AppID"
+								sortKey="sortByAppid"
+								onClick={handleSort}
+							/>
+						</th>
+						<th>
+							<SortButton
+								text="On Sale"
+								sortKey="sortBySale"
+								onClick={handleSort}
+							/>
+						</th>
+						<th>
+							<SortButton
+								text="Pre Order"
+								sortKey="sortByPreOrder"
+								onClick={handleSort}
+							/>
+						</th>
+						<th>
+							<SortButton
+								text="Price"
+								sortKey="sortByPrice"
+								onClick={handleSort}
+							/>
+						</th>
 					</tr>
 				</thead>
 				<tbody>
-					{sortingFunctions[sortingFunctionKey](wishlist, false).map((item) => {
-						return <TableRow key={String(item.appid())} item={item} />;
-					})}
+					{sortingFunctions[sortingFunctionKey](wishlist, isReversed).map(
+						(item) => {
+							return <TableRow key={String(item.appid())} item={item} />;
+						}
+					)}
 				</tbody>
 			</table>
 		</ContentBox>
