@@ -13,7 +13,7 @@ type HeaderProps = {
 	onClickSidePanel: () => void;
 };
 
-export function Header(props: HeaderProps) {
+export function Header({ onClickSidePanel }: HeaderProps) {
 	return (
 		<div className="header">
 			<Link to="/">
@@ -46,7 +46,7 @@ export function Header(props: HeaderProps) {
 				</a>
 			</div>
 			<div className="headerSidebarButtonContainer">
-				<BaseButton onClick={props.onClickSidePanel}>
+				<BaseButton onClick={onClickSidePanel}>
 					<HamburgerIcon className="headerIcon" />
 				</BaseButton>
 			</div>

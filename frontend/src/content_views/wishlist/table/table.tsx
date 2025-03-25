@@ -1,5 +1,5 @@
-import { ContentBox } from "../../../design_system/content_box/content_box";
 import "./table.css";
+import { ContentBox } from "../../../design_system/content_box/content_box";
 import { PrimaryButton } from "../../../design_system/primary_button/primary_button";
 import { WishlistStats } from "./wishlist_stats/wishlist_stats";
 import { sortingFunctions } from "./sorting";
@@ -74,7 +74,7 @@ type TableProps = {
 	wishlist: WishlistItem[];
 };
 
-export function Table({ profileName, steamId, wishlist }: TableProps) {
+export function Table(props: TableProps) {
 	const [sortingFunctionKey, setSortingFunctionKey] =
 		useState<keyof typeof sortingFunctions>("sortByTitle");
 	const [isReversed, setIsReversed] = useState(false);
@@ -96,10 +96,10 @@ export function Table({ profileName, steamId, wishlist }: TableProps) {
 				</div>
 				<div className="tableHeaderProfileLinkContainer">
 					<a
-						href={STEAM_PROFILE_BASE_URL + steamId}
+						href={STEAM_PROFILE_BASE_URL + props.steamId}
 						className="tableHeaderProfileLink"
 					>
-						{profileName}
+						{props.profileName}
 					</a>
 				</div>
 
@@ -107,7 +107,7 @@ export function Table({ profileName, steamId, wishlist }: TableProps) {
 					<PrimaryButton text="Export Wishlist" />
 				</div>
 			</div>
-			<WishlistStats wishlist={wishlist} />
+			<WishlistStats wishlist={props.wishlist} />
 			<div className="tableDivider" />
 			<table>
 				<thead>
@@ -169,7 +169,7 @@ export function Table({ profileName, steamId, wishlist }: TableProps) {
 					</tr>
 				</thead>
 				<tbody>
-					{sortingFunctions[sortingFunctionKey](wishlist, isReversed).map(
+					{sortingFunctions[sortingFunctionKey](props.wishlist, isReversed).map(
 						(item) => {
 							return <TableRow key={String(item.appid())} item={item} />;
 						}

@@ -5,13 +5,13 @@ type DelimitedProps = {
 	delimiter: React.ReactNode;
 };
 
-export function Delimited({ elements, delimiter }: DelimitedProps) {
+export function Delimited(props: DelimitedProps) {
 	return (
 		<>
-			{elements.map((element, index) => {
+			{props.elements.map((element, index) => {
 				return (
 					<React.Fragment key={index}>
-						{!!index && delimiter}
+						{!!index && props.delimiter}
 						{element}
 					</React.Fragment>
 				);

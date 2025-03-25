@@ -5,15 +5,15 @@ type ContentBoxProps = {
 	children: React.ReactNode;
 };
 
-export function ContentBox({ color, children }: ContentBoxProps) {
+export function ContentBox(props: ContentBoxProps) {
 	return (
 		<div
 			className={[
 				"contentBox",
-				color === "white" ? "contentBoxWhite" : "contentBoxGrey",
+				props.color === "white" ? "contentBoxWhite" : "contentBoxGrey",
 			].join(" ")}
 		>
-			{children}
+			{props.children}
 		</div>
 	);
 }
