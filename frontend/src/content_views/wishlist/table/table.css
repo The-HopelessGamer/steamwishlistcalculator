@@ -24,3 +24,29 @@
 .tableHeaderProfileLink:hover {
 	text-decoration: underline;
 }
+
+.tableRowPropertyContainer {
+	text-align: center;
+}
+
+.titleContainer {
+	text-align: left;
+}
+
+.sortButton {
+	display: flex;
+	align-items: center;
+}
+
+.sortButtonIcon {
+	height: 2rem;
+	margin-left: 0.5rem;
+}
+
+.sortButtonReversed {
+	transform: rotate(180deg);
+}
+
+.sortButtonInactive {
+	opacity: 0.5;
+}

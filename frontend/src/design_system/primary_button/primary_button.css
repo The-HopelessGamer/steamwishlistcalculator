@@ -2,6 +2,7 @@
 	color: white;
 	background-color: #0066cc;
 	width: 100%;
+	padding: 1rem;
 	border-radius: 3px;
 	font-size: 2rem;
 	transition: background-color 0.1s linear;

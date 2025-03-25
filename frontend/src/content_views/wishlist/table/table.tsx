@@ -5,6 +5,9 @@ import { WishlistStats } from "./wishlist_stats/wishlist_stats";
 import { sortingFunctions } from "./sorting";
 import { WishlistItem } from "../../../wishlist_item";
 import { useState } from "react";
+import { BaseButton } from "../../../design_system/base_button/base_button";
+import CaretIcon from "./icons/caret-down-solid.svg?react";
+import { classNames } from "../../../utils";
 
 const STEAM_PROFILE_BASE_URL =
 	"https://store.steampowered.com/wishlist/profiles/";
@@ -21,11 +24,17 @@ function TableRow({ item }: TableRowProps) {
 					{item.formattedTitle()}
 				</a>
 			</td>
-			<td>{item.formattedReleaseDate()}</td>
-			<td>{String(item.appid())}</td>
-			<td>{item.onSale() ? "Yes" : "No"}</td>
-			<td>{item.isPreOrder() ? "Yes" : "No"}</td>
-			<td>
+			<td className="tableRowPropertyContainer">
+				{item.formattedReleaseDate()}
+			</td>
+			<td className="tableRowPropertyContainer">{String(item.appid())}</td>
+			<td className="tableRowPropertyContainer">
+				{item.onSale() ? "Yes" : "No"}
+			</td>
+			<td className="tableRowPropertyContainer">
+				{item.isPreOrder() ? "Yes" : "No"}
+			</td>
+			<td className="tableRowPropertyContainer">
 				{item.formattedPrice()} {item.formattedOriginalPrice()}
 			</td>
 		</tr>
@@ -36,14 +45,26 @@ type SortButtonProps = {
 	text: string;
 	sortKey: keyof typeof sortingFunctions;
 	onClick: (key: keyof typeof sortingFunctions) => void;
+	currentSortKey: keyof typeof sortingFunctions;
+	isReversed: boolean;
 };
 
-function SortButton({ text, sortKey, onClick }: SortButtonProps) {
+function SortButton(props: SortButtonProps) {
+	const isActive = props.sortKey === props.currentSortKey;
+
 	return (
-		<button onClick={() => onClick(sortKey)}>
-			{text}
-			<span>▼</span>
-		</button>
+		<BaseButton
+			className={classNames(["sortButton", !isActive && "sortButtonInactive"])}
+			onClick={() => props.onClick(props.sortKey)}
+		>
+			{props.text}
+			<CaretIcon
+				className={classNames([
+					"sortButtonIcon",
+					props.isReversed && isActive && "sortButtonReversed",
+				])}
+			/>
+		</BaseButton>
 	);
 }
 
@@ -91,11 +112,13 @@ export function Table({ profileName, steamId, wishlist }: TableProps) {
 			<table>
 				<thead>
 					<tr>
-						<th>
+						<th className="titleContainer">
 							<SortButton
 								text="Title"
 								sortKey="sortByTitle"
 								onClick={handleSort}
+								currentSortKey={sortingFunctionKey}
+								isReversed={isReversed}
 							/>
 						</th>
 						<th>
@@ -103,6 +126,8 @@ export function Table({ profileName, steamId, wishlist }: TableProps) {
 								text="Release Date"
 								sortKey="sortByDate"
 								onClick={handleSort}
+								currentSortKey={sortingFunctionKey}
+								isReversed={isReversed}
 							/>
 						</th>
 						<th>
@@ -110,6 +135,8 @@ export function Table({ profileName, steamId, wishlist }: TableProps) {
 								text="AppID"
 								sortKey="sortByAppid"
 								onClick={handleSort}
+								currentSortKey={sortingFunctionKey}
+								isReversed={isReversed}
 							/>
 						</th>
 						<th>
@@ -117,6 +144,8 @@ export function Table({ profileName, steamId, wishlist }: TableProps) {
 								text="On Sale"
 								sortKey="sortBySale"
 								onClick={handleSort}
+								currentSortKey={sortingFunctionKey}
+								isReversed={isReversed}
 							/>
 						</th>
 						<th>
@@ -124,6 +153,8 @@ export function Table({ profileName, steamId, wishlist }: TableProps) {
 								text="Pre Order"
 								sortKey="sortByPreOrder"
 								onClick={handleSort}
+								currentSortKey={sortingFunctionKey}
+								isReversed={isReversed}
 							/>
 						</th>
 						<th>
@@ -131,6 +162,8 @@ export function Table({ profileName, steamId, wishlist }: TableProps) {
 								text="Price"
 								sortKey="sortByPrice"
 								onClick={handleSort}
+								currentSortKey={sortingFunctionKey}
+								isReversed={isReversed}
 							/>
 						</th>
 					</tr>
