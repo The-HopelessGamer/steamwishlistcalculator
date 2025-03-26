@@ -18,9 +18,13 @@ type TableRowProps = {
 
 function TableRow({ item }: TableRowProps) {
 	return (
-		<tr>
+		<tr className="tableRow">
 			<td>
-				<a href={item.link()} target="_blank">
+				<a
+					href={item.link()}
+					className="tableRowTitleContainer"
+					target="_blank"
+				>
 					{item.formattedTitle()}
 				</a>
 			</td>
@@ -109,7 +113,7 @@ export function Table(props: TableProps) {
 			</div>
 			<WishlistStats wishlist={props.wishlist} />
 			<div className="tableDivider" />
-			<table>
+			<table className="wishlistTable">
 				<thead>
 					<tr>
 						<th className="titleContainer">

@@ -7,4 +7,4 @@ export const enum LoadState {
 	Loading,
 	Loaded,
 	Failed,
-};
+}

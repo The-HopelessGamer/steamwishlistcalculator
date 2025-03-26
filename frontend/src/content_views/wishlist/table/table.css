@@ -1,3 +1,7 @@
+.wishlistTable {
+	border-spacing: 1rem;
+}
+
 .tableHeader {
 	display: flex;
 	justify-content: space-between;
@@ -27,6 +31,19 @@
 
 .tableRowPropertyContainer {
 	text-align: center;
+	font-size: 1.4rem;
+	padding: 1em;
+}
+
+.tableRowTitleContainer {
+	font-size: 1.4rem;
+	padding: 1em;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.tableRow {
+	box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.3);
 }
 
 .titleContainer {
