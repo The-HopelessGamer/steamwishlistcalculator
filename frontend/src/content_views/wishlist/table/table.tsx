@@ -14,32 +14,53 @@ const STEAM_PROFILE_BASE_URL =
 
 type TableRowProps = {
 	item: WishlistItem;
+	isSalePricing: boolean;
 };
 
-function TableRow({ item }: TableRowProps) {
+function TableRow(props: TableRowProps) {
 	return (
 		<tr className="tableRow">
 			<td>
 				<a
-					href={item.link()}
+					href={props.item.link()}
 					className="tableRowTitleContainer"
 					target="_blank"
 				>
-					{item.formattedTitle()}
+					{props.item.formattedTitle()}
 				</a>
 			</td>
 			<td className="tableRowPropertyContainer">
-				{item.formattedReleaseDate()}
-			</td>
-			<td className="tableRowPropertyContainer">{String(item.appid())}</td>
-			<td className="tableRowPropertyContainer">
-				{item.onSale() ? "Yes" : "No"}
+				{props.item.formattedReleaseDate()}
 			</td>
 			<td className="tableRowPropertyContainer">
-				{item.isPreOrder() ? "Yes" : "No"}
+				{String(props.item.appid())}
+			</td>
+			<td
+				className={classNames([
+					"tableRowPropertyContainer",
+					!props.isSalePricing && props.item.onSale() && "disabledTableText",
+				])}
+			>
+				{props.item.onSale() ? `${props.item.discountPercentage()}%` : "No"}
 			</td>
 			<td className="tableRowPropertyContainer">
-				{item.formattedPrice()} {item.formattedOriginalPrice()}
+				{props.item.isPreOrder() ? "Yes" : "No"}
+			</td>
+			<td className="tableRowPropertyContainer">
+				{props.isSalePricing ? (
+					<>
+						<span className="tableRowPriceText disabledTableText tableRowSalePriceTextSmall">
+							{props.item.formattedOriginalPrice()}
+						</span>
+						<span className="tableRowPriceText">
+							{props.item.formattedPrice()}
+						</span>
+					</>
+				) : (
+					<span className="tableRowPriceText">
+						{props.item.formattedOriginalPrice() ?? props.item.formattedPrice()}
+					</span>
+				)}
 			</td>
 		</tr>
 	);
@@ -82,6 +103,7 @@ export function Table(props: TableProps) {
 	const [sortingFunctionKey, setSortingFunctionKey] =
 		useState<keyof typeof sortingFunctions>("sortByTitle");
 	const [isReversed, setIsReversed] = useState(false);
+	const [isSalePricing, setSalePricing] = useState(true);
 
 	const handleSort = (key: keyof typeof sortingFunctions) => {
 		if (key === sortingFunctionKey) {
@@ -96,7 +118,12 @@ export function Table(props: TableProps) {
 		<ContentBox color="white">
 			<div className="tableHeader">
 				<div className="tableHeaderButton">
-					<PrimaryButton text="Disable Sale Pricing" />
+					<PrimaryButton
+						onClick={() => setSalePricing(!isSalePricing)}
+						text={
+							isSalePricing ? "Disable Sale Pricing" : "Enable Sale Pricing"
+						}
+					/>
 				</div>
 				<div className="tableHeaderProfileLinkContainer">
 					<a
@@ -111,12 +138,12 @@ export function Table(props: TableProps) {
 					<PrimaryButton text="Export Wishlist" />
 				</div>
 			</div>
-			<WishlistStats wishlist={props.wishlist} />
+			<WishlistStats wishlist={props.wishlist} isSalePricing={isSalePricing} />
 			<div className="tableDivider" />
 			<table className="wishlistTable">
 				<thead>
 					<tr>
-						<th className="titleContainer">
+						<th className="theadBorderLeft theadBorderVertical titleContainer sortButtonContainer">
 							<SortButton
 								text="Title"
 								sortKey="sortByTitle"
@@ -125,7 +152,7 @@ export function Table(props: TableProps) {
 								isReversed={isReversed}
 							/>
 						</th>
-						<th>
+						<th className="theadBorderVertical sortButtonContainer">
 							<SortButton
 								text="Release Date"
 								sortKey="sortByDate"
@@ -134,7 +161,7 @@ export function Table(props: TableProps) {
 								isReversed={isReversed}
 							/>
 						</th>
-						<th>
+						<th className="theadBorderVertical sortButtonContainer">
 							<SortButton
 								text="AppID"
 								sortKey="sortByAppid"
@@ -143,7 +170,7 @@ export function Table(props: TableProps) {
 								isReversed={isReversed}
 							/>
 						</th>
-						<th>
+						<th className="theadBorderVertical sortButtonContainer">
 							<SortButton
 								text="On Sale"
 								sortKey="sortBySale"
@@ -152,7 +179,7 @@ export function Table(props: TableProps) {
 								isReversed={isReversed}
 							/>
 						</th>
-						<th>
+						<th className="theadBorderVertical sortButtonContainer">
 							<SortButton
 								text="Pre Order"
 								sortKey="sortByPreOrder"
@@ -161,7 +188,7 @@ export function Table(props: TableProps) {
 								isReversed={isReversed}
 							/>
 						</th>
-						<th>
+						<th className="theadBorderRight theadBorderVertical sortButtonContainer">
 							<SortButton
 								text="Price"
 								sortKey="sortByPrice"
@@ -175,7 +202,13 @@ export function Table(props: TableProps) {
 				<tbody>
 					{sortingFunctions[sortingFunctionKey](props.wishlist, isReversed).map(
 						(item) => {
-							return <TableRow key={String(item.appid())} item={item} />;
+							return (
+								<TableRow
+									key={String(item.appid())}
+									item={item}
+									isSalePricing={isSalePricing}
+								/>
+							);
 						}
 					)}
 				</tbody>

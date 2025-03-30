@@ -9,11 +9,16 @@ type WishlistStat = {
 
 type WishlistStatsProps = {
 	wishlist: WishlistItem[];
+	isSalePricing: boolean;
 };
 
-export function WishlistStats({ wishlist }: WishlistStatsProps) {
-	const totalPriceInCents = wishlist.reduce(
-		(total, item) => total + (item.price() ?? 0),
+export function WishlistStats(props: WishlistStatsProps) {
+	const totalPriceInCents = props.wishlist.reduce(
+		(total, item) =>
+			total +
+			((props.isSalePricing
+				? item.price()
+				: item.originalPrice() ?? item.price()) ?? 0),
 		0
 	);
 
@@ -32,29 +37,29 @@ export function WishlistStats({ wishlist }: WishlistStatsProps) {
 		},
 		{
 			label: "Total Items",
-			value: wishlist.length.toString(),
+			value: props.wishlist.length.toString(),
 		},
 		{
 			label: "Free",
-			value: wishlist
+			value: props.wishlist
 				.reduce((total, item) => total + (item.isFree() ? 1 : 0), 0)
 				.toString(),
 		},
 		{
 			label: "On Sale",
-			value: wishlist
+			value: props.wishlist
 				.reduce((total, item) => total + (item.onSale() ? 1 : 0), 0)
 				.toString(),
 		},
 		{
 			label: "Pre Order",
-			value: wishlist
+			value: props.wishlist
 				.reduce((total, item) => total + (item.isPreOrder() ? 1 : 0), 0)
 				.toString(),
 		},
 		{
 			label: "Unlisted",
-			value: wishlist
+			value: props.wishlist
 				.reduce((total, item) => total + (item.isUnlisted() ? 1 : 0), 0)
 				.toString(),
 		},

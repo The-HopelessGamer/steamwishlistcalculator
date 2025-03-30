@@ -5,7 +5,7 @@ const STEAM_DB_BASE_URL = "https://steamdb.info/app/";
 
 export class WishlistItem {
 	private readonly storeItem: StoreItem;
-	
+
 	constructor(storeItem: StoreItem) {
 		if (storeItem.appid === undefined) {
 			throw new Error("Undefined AppID");
@@ -18,7 +18,7 @@ export class WishlistItem {
 		if (this.isUnlisted()) {
 			return STEAM_DB_BASE_URL + this.appid();
 		}
-		
+
 		return STEAM_STORE_BASE_URL + this.appid();
 	}
 
@@ -46,9 +46,9 @@ export class WishlistItem {
 
 	releaseDate() {
 		const mostRecentReleaseDate = Math.max(
-			this.storeItem.release?.steamReleaseDate ?? 0, 
-			this.storeItem.release?.originalSteamReleaseDate ?? 0, 
-			this.storeItem.release?.originalReleaseDate ?? 0,
+			this.storeItem.release?.steamReleaseDate ?? 0,
+			this.storeItem.release?.originalSteamReleaseDate ?? 0,
+			this.storeItem.release?.originalReleaseDate ?? 0
 		);
 
 		return mostRecentReleaseDate > 0 && !this.storeItem.isComingSoon
@@ -64,11 +64,15 @@ export class WishlistItem {
 		return this.storeItem.bestPurchaseOption?.activeDiscounts !== undefined;
 	}
 
+	discountPercentage() {
+		return this.storeItem.bestPurchaseOption?.discountPct ?? 0;
+	}
+
 	formattedPrice() {
 		if (this.storeItem.isFree) {
 			return "Free";
 		}
-	
+
 		return this.storeItem.bestPurchaseOption?.formattedFinalPrice ?? "N/A";
 	}
 
@@ -80,20 +84,26 @@ export class WishlistItem {
 		return this.storeItem.bestPurchaseOption?.finalPriceInCents;
 	}
 
+	originalPrice() {
+		return this.storeItem.bestPurchaseOption?.originalPriceInCents;
+	}
+
 	isFree() {
 		return this.storeItem.isFree ?? false;
 	}
 
 	isPreOrder() {
-		return !!(this.storeItem.bestPurchaseOption?.formattedFinalPrice && this.storeItem.isComingSoon);
+		return !!(
+			this.storeItem.bestPurchaseOption?.formattedFinalPrice &&
+			this.storeItem.isComingSoon
+		);
 	}
 
 	isUnlisted() {
-		return !(this.storeItem.visible ?? false);		
+		return !(this.storeItem.visible ?? false);
 	}
 
 	isComingSoon() {
 		return this.storeItem.isComingSoon ?? false;
 	}
-
 }

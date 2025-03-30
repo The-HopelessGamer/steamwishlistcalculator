@@ -1,8 +1,10 @@
 .wishlistTable {
-	border-spacing: 1rem;
+	border-collapse: separate;
+	border-spacing: 0 1rem;
 }
 
 .tableHeader {
+	padding-bottom: 1.5rem;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -42,8 +44,29 @@
 	white-space: nowrap;
 }
 
+.tableRowPriceText {
+	display: block;
+}
+
+.tableRowSalePriceTextSmall {
+	font-size: 1.2rem;
+}
+
 .tableRow {
 	box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.3);
+}
+
+.theadBorderLeft {
+	border-left: 1px solid black;
+}
+
+.theadBorderRight {
+	border-right: 1px solid black;
+}
+
+.theadBorderVertical {
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
 }
 
 .titleContainer {
@@ -51,11 +74,14 @@
 }
 
 .sortButton {
+	padding: 0.5rem 1rem;
+	width: 100%;
 	display: flex;
 	align-items: center;
 }
 
 .sortButtonIcon {
+	width: 2rem;
 	height: 2rem;
 	margin-left: 0.5rem;
 }
@@ -66,4 +92,16 @@
 
 .sortButtonInactive {
 	opacity: 0.5;
+}
+
+.sortButtonContainer {
+	padding: 0;
+	background-color: white;
+	position: sticky;
+	top: 0;
+}
+
+.disabledTableText {
+	opacity: 0.5;
+	text-decoration: line-through;
 }
