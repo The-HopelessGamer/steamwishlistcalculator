@@ -3,6 +3,15 @@
 	border-spacing: 0 1rem;
 }
 
+.wishlistDisabledTableText {
+	color: grey;
+	text-decoration: line-through;
+}
+
+.tableTitleContainer {
+	text-align: left;
+}
+
 .tableHeader {
 	padding-bottom: 1.5rem;
 	display: flex;
@@ -31,6 +40,41 @@
 	text-decoration: underline;
 }
 
+.tableHeaderSortingContainer {
+	background-color: initial;
+	position: sticky;
+	border-radius: 3px;
+	top: 0;
+	box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.3);
+}
+
+.tableHeaderSortButton {
+	border-radius: 3px;
+	padding: 0;
+	background-color: white;
+}
+
+.tableHeaderSortButtonActive {
+	padding: 0.5rem 1rem;
+	width: 100%;
+	display: flex;
+	align-items: center;
+}
+
+.tableHeaderSortButtonIcon {
+	width: 2rem;
+	height: 2rem;
+	margin-left: 0.5rem;
+}
+
+.tableHeaderSortButtonReversed {
+	transform: rotate(180deg);
+}
+
+.tableHeaderSortButtonInactive {
+	color: grey;
+}
+
 .tableRowPropertyContainer {
 	text-align: center;
 	font-size: 1.4rem;
@@ -53,47 +97,6 @@
 }
 
 .tableRow {
+	border-radius: 3px;
 	box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.3);
-}
-
-.titleContainer {
-	text-align: left;
-}
-
-.sortButton {
-	padding: 0.5rem 1rem;
-	width: 100%;
-	display: flex;
-	align-items: center;
-}
-
-.sortButtonIcon {
-	width: 2rem;
-	height: 2rem;
-	margin-left: 0.5rem;
-}
-
-.sortButtonReversed {
-	transform: rotate(180deg);
-}
-
-.sortButtonInactive {
-	opacity: 0.5;
-}
-
-.sortButtonContainer {
-	position: sticky;
-	top: 0;
-	background-color: white;
-	border-radius: 4px;
-	box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.3);
-}
-
-.sortButtonContainer th {
-	padding: 0;
-}
-
-.disabledTableText {
-	opacity: 0.5;
-	text-decoration: line-through;
 }

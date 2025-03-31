@@ -38,7 +38,9 @@ function TableRow(props: TableRowProps) {
 			<td
 				className={classNames([
 					"tableRowPropertyContainer",
-					!props.isSalePricing && props.item.onSale() && "disabledTableText",
+					!props.isSalePricing &&
+						props.item.onSale() &&
+						"wishlistDisabledTableText",
 				])}
 			>
 				{props.item.onSale() ? `${props.item.discountPercentage()}%` : "No"}
@@ -49,7 +51,7 @@ function TableRow(props: TableRowProps) {
 			<td className="tableRowPropertyContainer">
 				{props.isSalePricing ? (
 					<>
-						<span className="tableRowPriceText disabledTableText tableRowSalePriceTextSmall">
+						<span className="tableRowPriceText wishlistDisabledTableText tableRowSalePriceTextSmall">
 							{props.item.formattedOriginalPrice()}
 						</span>
 						<span className="tableRowPriceText">
@@ -79,14 +81,17 @@ function SortButton(props: SortButtonProps) {
 
 	return (
 		<BaseButton
-			className={classNames(["sortButton", !isActive && "sortButtonInactive"])}
+			className={classNames([
+				"tableHeaderSortButtonActive",
+				!isActive && "tableHeaderSortButtonInactive",
+			])}
 			onClick={() => props.onClick(props.sortKey)}
 		>
 			{props.text}
 			<CaretIcon
 				className={classNames([
-					"sortButtonIcon",
-					props.isReversed && isActive && "sortButtonReversed",
+					"tableHeaderSortButtonIcon",
+					props.isReversed && isActive && "tableHeaderSortButtonReversed",
 				])}
 			/>
 		</BaseButton>
@@ -117,7 +122,7 @@ export function Table(props: TableProps) {
 	return (
 		<ContentBox color="white">
 			<div className="tableHeader">
-				<div className="tableHeaderButton">
+				<div>
 					<PrimaryButton
 						onClick={() => setSalePricing(!isSalePricing)}
 						text={
@@ -134,16 +139,16 @@ export function Table(props: TableProps) {
 					</a>
 				</div>
 
-				<div className="tableHeaderButton">
+				<div>
 					<PrimaryButton text="Export Wishlist" />
 				</div>
 			</div>
 			<WishlistStats wishlist={props.wishlist} isSalePricing={isSalePricing} />
 			<div className="tableDivider" />
 			<table className="wishlistTable">
-				<thead className="sortButtonContainer">
+				<thead className="tableHeaderSortingContainer">
 					<tr>
-						<th className="titleContainer">
+						<th className="tableTitleContainer tableHeaderSortButton">
 							<SortButton
 								text="Title"
 								sortKey="sortByTitle"
@@ -152,7 +157,7 @@ export function Table(props: TableProps) {
 								isReversed={isReversed}
 							/>
 						</th>
-						<th>
+						<th className="tableHeaderSortButton">
 							<SortButton
 								text="Release Date"
 								sortKey="sortByDate"
@@ -161,7 +166,7 @@ export function Table(props: TableProps) {
 								isReversed={isReversed}
 							/>
 						</th>
-						<th>
+						<th className="tableHeaderSortButton">
 							<SortButton
 								text="AppID"
 								sortKey="sortByAppid"
@@ -170,7 +175,7 @@ export function Table(props: TableProps) {
 								isReversed={isReversed}
 							/>
 						</th>
-						<th>
+						<th className="tableHeaderSortButton">
 							<SortButton
 								text="On Sale"
 								sortKey="sortBySale"
@@ -179,7 +184,7 @@ export function Table(props: TableProps) {
 								isReversed={isReversed}
 							/>
 						</th>
-						<th>
+						<th className="tableHeaderSortButton">
 							<SortButton
 								text="Pre Order"
 								sortKey="sortByPreOrder"
@@ -188,7 +193,7 @@ export function Table(props: TableProps) {
 								isReversed={isReversed}
 							/>
 						</th>
-						<th>
+						<th className="tableHeaderSortButton">
 							<SortButton
 								text="Price"
 								sortKey="sortByPrice"
