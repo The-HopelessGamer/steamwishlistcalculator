@@ -52,6 +52,7 @@
 }
 
 .tableHeaderSortButton {
+	white-space: nowrap;
 	padding: 0;
 	background-color: white;
 }
@@ -84,8 +85,13 @@
 }
 
 .tableRowTitleContainer {
+	margin: 1em;
 	font-size: 1.4rem;
-	padding: 1em;
+	display: -webkit-box;
+	line-clamp: 1;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
 	text-overflow: ellipsis;
 }
 
