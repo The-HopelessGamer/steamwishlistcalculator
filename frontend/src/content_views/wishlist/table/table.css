@@ -56,19 +56,6 @@
 	box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.3);
 }
 
-.theadBorderLeft {
-	border-left: 1px solid black;
-}
-
-.theadBorderRight {
-	border-right: 1px solid black;
-}
-
-.theadBorderVertical {
-	border-top: 1px solid black;
-	border-bottom: 1px solid black;
-}
-
 .titleContainer {
 	text-align: left;
 }
@@ -95,10 +82,15 @@
 }
 
 .sortButtonContainer {
-	padding: 0;
-	background-color: white;
 	position: sticky;
 	top: 0;
+	background-color: white;
+	border-radius: 4px;
+	box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.3);
+}
+
+.sortButtonContainer th {
+	padding: 0;
 }
 
 .disabledTableText {

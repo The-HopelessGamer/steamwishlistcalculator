@@ -141,9 +141,9 @@ export function Table(props: TableProps) {
 			<WishlistStats wishlist={props.wishlist} isSalePricing={isSalePricing} />
 			<div className="tableDivider" />
 			<table className="wishlistTable">
-				<thead>
+				<thead className="sortButtonContainer">
 					<tr>
-						<th className="theadBorderLeft theadBorderVertical titleContainer sortButtonContainer">
+						<th className="titleContainer">
 							<SortButton
 								text="Title"
 								sortKey="sortByTitle"
@@ -152,7 +152,7 @@ export function Table(props: TableProps) {
 								isReversed={isReversed}
 							/>
 						</th>
-						<th className="theadBorderVertical sortButtonContainer">
+						<th>
 							<SortButton
 								text="Release Date"
 								sortKey="sortByDate"
@@ -161,7 +161,7 @@ export function Table(props: TableProps) {
 								isReversed={isReversed}
 							/>
 						</th>
-						<th className="theadBorderVertical sortButtonContainer">
+						<th>
 							<SortButton
 								text="AppID"
 								sortKey="sortByAppid"
@@ -170,7 +170,7 @@ export function Table(props: TableProps) {
 								isReversed={isReversed}
 							/>
 						</th>
-						<th className="theadBorderVertical sortButtonContainer">
+						<th>
 							<SortButton
 								text="On Sale"
 								sortKey="sortBySale"
@@ -179,7 +179,7 @@ export function Table(props: TableProps) {
 								isReversed={isReversed}
 							/>
 						</th>
-						<th className="theadBorderVertical sortButtonContainer">
+						<th>
 							<SortButton
 								text="Pre Order"
 								sortKey="sortByPreOrder"
@@ -188,7 +188,7 @@ export function Table(props: TableProps) {
 								isReversed={isReversed}
 							/>
 						</th>
-						<th className="theadBorderRight theadBorderVertical sortButtonContainer">
+						<th>
 							<SortButton
 								text="Price"
 								sortKey="sortByPrice"
