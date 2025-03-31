@@ -122,7 +122,7 @@ export function Table(props: TableProps) {
 	return (
 		<ContentBox color="white">
 			<div className="tableHeader">
-				<div>
+				<div className="tableHeaderButton">
 					<PrimaryButton
 						onClick={() => setSalePricing(!isSalePricing)}
 						text={
@@ -139,7 +139,7 @@ export function Table(props: TableProps) {
 					</a>
 				</div>
 
-				<div>
+				<div className="tableHeaderButton">
 					<PrimaryButton text="Export Wishlist" />
 				</div>
 			</div>

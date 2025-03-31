@@ -8,8 +8,8 @@
 	text-decoration: line-through;
 }
 
-.tableTitleContainer {
-	text-align: left;
+.wishlistHeaderButton {
+	flex-shrink: 1;
 }
 
 .tableHeader {
@@ -17,10 +17,6 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-}
-
-.tableHeaderButton {
-	flex-shrink: 1;
 }
 
 .tableHeaderProfileLinkContainer {
@@ -41,15 +37,21 @@
 }
 
 .tableHeaderSortingContainer {
-	background-color: initial;
 	position: sticky;
 	border-radius: 3px;
 	top: 0;
 	box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.3);
 }
 
+.tableHeaderSortingContainer th:first-child {
+	border-radius: 3px 0px 0px 3px;
+}
+
+.tableHeaderSortingContainer th:last-child {
+	border-radius: 0px 3px 3px 0px;
+}
+
 .tableHeaderSortButton {
-	border-radius: 3px;
 	padding: 0;
 	background-color: white;
 }
@@ -78,14 +80,13 @@
 .tableRowPropertyContainer {
 	text-align: center;
 	font-size: 1.4rem;
-	padding: 1em;
+	padding: 0.5em;
 }
 
 .tableRowTitleContainer {
 	font-size: 1.4rem;
 	padding: 1em;
 	text-overflow: ellipsis;
-	white-space: nowrap;
 }
 
 .tableRowPriceText {
@@ -97,6 +98,11 @@
 }
 
 .tableRow {
+	height: 4em;
 	border-radius: 3px;
 	box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.3);
+}
+
+.tableTitleContainer {
+	text-align: left;
 }
