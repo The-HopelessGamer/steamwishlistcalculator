@@ -24,6 +24,7 @@ function TableRow(props: TableRowProps) {
 				<a
 					href={props.item.link()}
 					className="tableRowTitleContainer"
+					title={props.item.formattedTitle()}
 					target="_blank"
 				>
 					{props.item.formattedTitle()}
