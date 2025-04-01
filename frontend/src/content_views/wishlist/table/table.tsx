@@ -129,6 +129,7 @@ export function Table(props: TableProps) {
 							text={
 								isSalePricing ? "Disable Sale Pricing" : "Enable Sale Pricing"
 							}
+							disabled={props.wishlist.every((item) => !item.onSale())}
 						/>
 					</div>
 					<div className="tableHeaderProfileLinkContainer">

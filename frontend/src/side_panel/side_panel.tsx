@@ -10,8 +10,8 @@ type SidePanelProps = {
 export function SidePanel(props: SidePanelProps) {
 	return (
 		<div className="sidePanel">
-			<BaseButton onClick={props.onClickClose}>
-				<CrossIcon className="sidePanelCloseButton" />
+			<BaseButton className="sidePanelCloseButton" onClick={props.onClickClose}>
+				<CrossIcon className="sidePanelCloseButtonIcon" />
 			</BaseButton>
 			<Link to="/" className="sidePanelLink" onClick={props.onClickClose}>
 				Home

@@ -17,7 +17,7 @@ export function Header({ onClickSidePanel }: HeaderProps) {
 	return (
 		<div className="header">
 			<Link to="/">
-				<span className="headerTitle">Steam Wishlist Calculator</span>
+				<h1 className="headerTitle">Steam Wishlist Calculator</h1>
 			</Link>
 			<div className="headerIcons">
 				<Link to="/">

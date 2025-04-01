@@ -7,6 +7,7 @@ export type BaseButtonProps = {
 	onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 	className?: string;
 	type?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
+	disabled?: boolean;
 };
 
 export function BaseButton(props: BaseButtonProps) {
@@ -15,6 +16,7 @@ export function BaseButton(props: BaseButtonProps) {
 			className={classNames(["baseButton", props.className])}
 			onClick={props.onClick}
 			type={props.type}
+			disabled={props.disabled}
 		>
 			{props.children}
 		</button>

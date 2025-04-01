@@ -1,12 +1,19 @@
 .primaryButton {
 	color: white;
-	background-color: #0066cc;
 	width: 100%;
 	padding: 1rem;
 	border-radius: 3px;
 	transition: background-color 0.1s linear;
 }
 
-.primaryButton:hover {
+.primaryButtonDisabled {
+	background-color: gray;
+}
+
+.primaryButtonEnabled {
+	background-color: #0066cc;
+}
+
+.primaryButtonEnabled:hover {
 	background-color: #3399ff;
 }

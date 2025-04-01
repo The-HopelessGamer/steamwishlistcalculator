@@ -7,3 +7,7 @@
 	cursor: pointer;
 	outline: inherit;
 }
+
+.baseButton:disabled {
+	cursor: not-allowed;
+}
