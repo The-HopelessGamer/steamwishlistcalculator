@@ -1,4 +1,10 @@
+.tableContainer {
+	flex-grow: 1;
+}
+
 .wishlistTable {
+	overflow-anchor: none;
+	width: 100%;
 	border-collapse: separate;
 	border-spacing: 0 1rem;
 }
@@ -45,6 +51,7 @@
 
 .tableHeaderSortingContainer th:first-child {
 	border-radius: 3px 0px 0px 3px;
+	width: 100%;
 }
 
 .tableHeaderSortingContainer th:last-child {
@@ -76,6 +83,10 @@
 
 .tableHeaderSortButtonInactive {
 	color: grey;
+}
+
+.tableHeaderSortButtonInactive:hover {
+	color: black;
 }
 
 .tableRowPropertyContainer {

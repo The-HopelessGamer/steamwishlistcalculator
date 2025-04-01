@@ -1,4 +1,5 @@
 import "./table.css";
+import CaretIcon from "./icons/caret-down-solid.svg?react";
 import { ContentBox } from "../../../design_system/content_box/content_box";
 import { PrimaryButton } from "../../../design_system/primary_button/primary_button";
 import { WishlistStats } from "./wishlist_stats/wishlist_stats";
@@ -6,7 +7,6 @@ import { sortingFunctions } from "./sorting";
 import { WishlistItem } from "../../../wishlist_item";
 import { useState } from "react";
 import { BaseButton } from "../../../design_system/base_button/base_button";
-import CaretIcon from "./icons/caret-down-solid.svg?react";
 import { classNames } from "../../../utils";
 
 const STEAM_PROFILE_BASE_URL =
@@ -120,104 +120,110 @@ export function Table(props: TableProps) {
 	};
 
 	return (
-		<ContentBox color="white">
-			<div className="tableHeader">
-				<div className="tableHeaderButton">
-					<PrimaryButton
-						onClick={() => setSalePricing(!isSalePricing)}
-						text={
-							isSalePricing ? "Disable Sale Pricing" : "Enable Sale Pricing"
-						}
-					/>
-				</div>
-				<div className="tableHeaderProfileLinkContainer">
-					<a
-						href={STEAM_PROFILE_BASE_URL + props.steamId}
-						className="tableHeaderProfileLink"
-					>
-						{props.profileName}
-					</a>
-				</div>
+		<div className="tableContainer">
+			<ContentBox color="white">
+				<div className="tableHeader">
+					<div className="tableHeaderButton">
+						<PrimaryButton
+							onClick={() => setSalePricing(!isSalePricing)}
+							text={
+								isSalePricing ? "Disable Sale Pricing" : "Enable Sale Pricing"
+							}
+						/>
+					</div>
+					<div className="tableHeaderProfileLinkContainer">
+						<a
+							href={STEAM_PROFILE_BASE_URL + props.steamId}
+							className="tableHeaderProfileLink"
+						>
+							{props.profileName}
+						</a>
+					</div>
 
-				<div className="tableHeaderButton">
-					<PrimaryButton text="Export Wishlist" />
+					<div className="tableHeaderButton">
+						<PrimaryButton text="Export Wishlist" />
+					</div>
 				</div>
-			</div>
-			<WishlistStats wishlist={props.wishlist} isSalePricing={isSalePricing} />
-			<div className="tableDivider" />
-			<table className="wishlistTable">
-				<thead className="tableHeaderSortingContainer">
-					<tr>
-						<th className="tableTitleContainer tableHeaderSortButton">
-							<SortButton
-								text="Title"
-								sortKey="sortByTitle"
-								onClick={handleSort}
-								currentSortKey={sortingFunctionKey}
-								isReversed={isReversed}
-							/>
-						</th>
-						<th className="tableHeaderSortButton">
-							<SortButton
-								text="Release Date"
-								sortKey="sortByDate"
-								onClick={handleSort}
-								currentSortKey={sortingFunctionKey}
-								isReversed={isReversed}
-							/>
-						</th>
-						<th className="tableHeaderSortButton">
-							<SortButton
-								text="AppID"
-								sortKey="sortByAppid"
-								onClick={handleSort}
-								currentSortKey={sortingFunctionKey}
-								isReversed={isReversed}
-							/>
-						</th>
-						<th className="tableHeaderSortButton">
-							<SortButton
-								text="On Sale"
-								sortKey="sortBySale"
-								onClick={handleSort}
-								currentSortKey={sortingFunctionKey}
-								isReversed={isReversed}
-							/>
-						</th>
-						<th className="tableHeaderSortButton">
-							<SortButton
-								text="Pre Order"
-								sortKey="sortByPreOrder"
-								onClick={handleSort}
-								currentSortKey={sortingFunctionKey}
-								isReversed={isReversed}
-							/>
-						</th>
-						<th className="tableHeaderSortButton">
-							<SortButton
-								text="Price"
-								sortKey="sortByPrice"
-								onClick={handleSort}
-								currentSortKey={sortingFunctionKey}
-								isReversed={isReversed}
-							/>
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					{sortingFunctions[sortingFunctionKey](props.wishlist, isReversed).map(
-						(item) => {
+				<WishlistStats
+					wishlist={props.wishlist}
+					isSalePricing={isSalePricing}
+				/>
+				<div className="tableDivider" />
+				<table className="wishlistTable">
+					<thead className="tableHeaderSortingContainer">
+						<tr>
+							<th className="tableTitleContainer tableHeaderSortButton">
+								<SortButton
+									text="Title"
+									sortKey="sortByTitle"
+									onClick={handleSort}
+									currentSortKey={sortingFunctionKey}
+									isReversed={isReversed}
+								/>
+							</th>
+							<th className="tableHeaderSortButton">
+								<SortButton
+									text="Release Date"
+									sortKey="sortByDate"
+									onClick={handleSort}
+									currentSortKey={sortingFunctionKey}
+									isReversed={isReversed}
+								/>
+							</th>
+							<th className="tableHeaderSortButton">
+								<SortButton
+									text="AppID"
+									sortKey="sortByAppid"
+									onClick={handleSort}
+									currentSortKey={sortingFunctionKey}
+									isReversed={isReversed}
+								/>
+							</th>
+							<th className="tableHeaderSortButton">
+								<SortButton
+									text="On Sale"
+									sortKey="sortBySale"
+									onClick={handleSort}
+									currentSortKey={sortingFunctionKey}
+									isReversed={isReversed}
+								/>
+							</th>
+							<th className="tableHeaderSortButton">
+								<SortButton
+									text="Pre Order"
+									sortKey="sortByPreOrder"
+									onClick={handleSort}
+									currentSortKey={sortingFunctionKey}
+									isReversed={isReversed}
+								/>
+							</th>
+							<th className="tableHeaderSortButton">
+								<SortButton
+									text="Price"
+									sortKey="sortByPrice"
+									onClick={handleSort}
+									currentSortKey={sortingFunctionKey}
+									isReversed={isReversed}
+								/>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{sortingFunctions[sortingFunctionKey](
+							props.wishlist,
+							isReversed
+						).map((item) => {
 							return (
 								<TableRow
-									key={String(item.appid())}
+									key={item.appid()}
 									item={item}
 									isSalePricing={isSalePricing}
 								/>
 							);
-						}
-					)}
-				</tbody>
-			</table>
-		</ContentBox>
+						})}
+					</tbody>
+				</table>
+			</ContentBox>
+		</div>
 	);
 }

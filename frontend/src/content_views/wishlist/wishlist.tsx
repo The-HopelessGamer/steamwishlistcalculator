@@ -98,10 +98,8 @@ export function Wishlist({ countryCode, countryCodeLoading }: WishlistProps) {
 	}
 
 	if (
-		countryCodeLoading === LoadState.Loading ||
-		resolveVanityUrlLoading === LoadState.Loading ||
-		profileNameLoading === LoadState.Loading ||
-		wishlistLoading === LoadState.Loading
+		profileNameLoading !== LoadState.Loaded ||
+		wishlistLoading !== LoadState.Loaded
 	) {
 		return <Loading />;
 	}
