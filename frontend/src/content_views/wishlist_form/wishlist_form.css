@@ -37,12 +37,18 @@
 	align-items: center;
 }
 
+.wishlistForm {
+	width: 100%;
+	max-width: 40rem;
+}
+
 @media (min-width: 600px) {
 	.wishlistFormTitle {
 		font-size: 3rem;
 	}
 
 	.wishlistForm {
-		min-width: 50rem;
+		width: 100%;
+		max-width: 50rem;
 	}
 }
