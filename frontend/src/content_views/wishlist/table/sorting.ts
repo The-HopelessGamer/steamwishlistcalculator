@@ -161,15 +161,23 @@ function sortBySale(
 		const aSale = a.onSale();
 		const bSale = b.onSale();
 
+		// If neither is on sale, keep original order
+		if (!aSale && !bSale) {
+			return 0;
+		}
+
+		// If only one is on sale, the one on sale goes first
 		if (aSale && !bSale) {
+			return -1 * reverseScale;
+		}
+		if (!aSale && bSale) {
 			return 1 * reverseScale;
 		}
 
-		if (bSale && !aSale) {
-			return -1 * reverseScale;
-		}
-
-		return 0;
+		// Both are on sale, compare discount percentages
+		const aDiscount = a.discountPercentage() ?? 0;
+		const bDiscount = b.discountPercentage() ?? 0;
+		return (bDiscount - aDiscount) * reverseScale;
 	});
 }
 
