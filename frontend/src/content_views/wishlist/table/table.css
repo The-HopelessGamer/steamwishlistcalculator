@@ -158,6 +158,10 @@
 		text-align: center;
 	}
 
+	.tableHeaderProfileLink {
+		font-size: 1.8rem;
+	}
+
 	.tableDivider {
 		display: none;
 	}
@@ -166,7 +170,6 @@
 		display: block;
 		margin-top: 3rem;
 		text-align: center;
-		font-size: 1.8rem;
 	}
 	.wishlistTable {
 		border-spacing: 0;
