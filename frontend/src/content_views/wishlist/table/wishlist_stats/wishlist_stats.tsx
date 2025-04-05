@@ -74,8 +74,8 @@ export function WishlistStats(props: WishlistStatsProps) {
 					])}
 					key={index}
 				>
-					<div className="wishlistStatLabel">{stat.label}</div>
-					<div className="wishlistStatValue">{stat.value}</div>
+					<div>{stat.label}</div>
+					<div>{stat.value}</div>
 				</div>
 			))}
 		</div>

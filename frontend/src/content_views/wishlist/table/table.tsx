@@ -20,7 +20,7 @@ type TableRowProps = {
 function TableRow(props: TableRowProps) {
 	return (
 		<tr className="tableRow">
-			<td data-label="Title">
+			<td>
 				<a
 					href={props.item.link()}
 					className="tableRowTitleContainer"
@@ -30,14 +30,13 @@ function TableRow(props: TableRowProps) {
 					{props.item.formattedTitle()}
 				</a>
 			</td>
-			<td data-label="Release Date" className="tableRowPropertyContainer">
+			<td className="tableRowPropertyContainer">
 				{props.item.formattedReleaseDate()}
 			</td>
-			<td data-label="AppID" className="tableRowPropertyContainer">
+			<td className="tableRowPropertyContainer">
 				{String(props.item.appid())}
 			</td>
 			<td
-				data-label="On Sale"
 				className={classNames([
 					"tableRowPropertyContainer",
 					!props.isSalePricing &&
@@ -47,26 +46,23 @@ function TableRow(props: TableRowProps) {
 			>
 				{props.item.onSale() ? `${props.item.discountPercentage()}%` : "No"}
 			</td>
-			<td data-label="Pre Order" className="tableRowPropertyContainer">
+			<td className="tableRowPropertyContainer">
 				{props.item.isPreOrder() ? "Yes" : "No"}
 			</td>
-			<td data-label="Price" className="tableRowPropertyContainer">
+			<td className="tableRowPropertyContainer">
 				{props.isSalePricing ? (
-					<div>
+					<>
 						<span className="tableRowPriceText wishlistDisabledTableText tableRowSalePriceTextSmall">
 							{props.item.formattedOriginalPrice()}
 						</span>
 						<span className="tableRowPriceText">
 							{props.item.formattedPrice()}
 						</span>
-					</div>
+					</>
 				) : (
-					<div>
-						<span className="tableRowPriceText">
-							{props.item.formattedOriginalPrice() ??
-								props.item.formattedPrice()}
-						</span>
-					</div>
+					<span className="tableRowPriceText">
+						{props.item.formattedOriginalPrice() ?? props.item.formattedPrice()}
+					</span>
 				)}
 			</td>
 		</tr>
@@ -155,7 +151,6 @@ export function Table(props: TableProps) {
 					isSalePricing={isSalePricing}
 				/>
 				<div className="tableDivider" />
-				<h2 className="wishlistItemsHeading">Wishlist Items</h2>
 				<table className="wishlistTable">
 					<thead className="tableHeaderSortingContainer">
 						<tr>

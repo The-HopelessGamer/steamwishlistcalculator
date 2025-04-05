@@ -12,41 +12,9 @@
 	border-left: 1px solid black;
 }
 
-@media screen and (max-width: 750px) {
-	.wishlistStats {
-		display: block;
-		margin-bottom: 1.5rem;
-		border-radius: 3px;
-		box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.3);
-		padding: 0 1rem 0 1rem;
-		background-color: white;
-	}
-
-	.wishlistStat {
-		display: grid;
-		grid-template-columns: 40% 60%;
-		align-items: center;
-		padding: 0.8rem 0;
-		font-size: 1.2rem;
-		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-	}
-
-	.wishlistStat:last-child {
-		border-bottom: none;
-	}
-
-	.wishlistStatLabel {
-		justify-self: start;
-		padding-right: 1rem;
-	}
-
-	.wishlistStatValue {
-		justify-self: end;
-		text-align: right;
-		padding-right: 0.5rem;
-	}
-
-	.wishlistStatBorder {
-		border-left: none;
-	}
+.tableDivider {
+	height: 2px;
+	background-color: black;
+	border: none;
+	margin: 10px 0;
 }
