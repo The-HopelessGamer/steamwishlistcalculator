@@ -1,18 +1,18 @@
-import "./wishlist_stats.css";
+import "./stats.css";
 import { classNames } from "../../../../utils";
 import { WishlistItem } from "../../../../wishlist_item";
 
-type WishlistStat = {
+type Stat = {
 	label: string;
 	value: string;
 };
 
-type WishlistStatsProps = {
+type StatsProps = {
 	wishlist: WishlistItem[];
 	isSalePricing: boolean;
 };
 
-export function WishlistStats(props: WishlistStatsProps) {
+export function Stats(props: StatsProps) {
 	const totalPriceInCents = props.wishlist.reduce(
 		(total, item) =>
 			total +
@@ -30,7 +30,7 @@ export function WishlistStats(props: WishlistStatsProps) {
 		}
 	);
 
-	const stats: WishlistStat[] = [
+	const stats: Stat[] = [
 		{
 			label: "Total Price",
 			value: totalPriceFormatted,

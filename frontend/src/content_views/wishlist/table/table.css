@@ -2,20 +2,22 @@
 	flex-grow: 1;
 }
 
-.wishlistTable {
+.tableTitleSortButton {
+	text-align: left;
+}
+
+.table {
 	overflow-anchor: none;
 	width: 100%;
 	border-collapse: separate;
 	border-spacing: 0 1rem;
 }
 
-.wishlistDisabledTableText {
-	color: grey;
-	text-decoration: line-through;
-}
-
-.wishlistHeaderButton {
-	flex-shrink: 1;
+.tableDivider {
+	height: 2px;
+	background-color: black;
+	border: none;
+	margin: 10px 0;
 }
 
 .tableHeader {
@@ -63,65 +65,4 @@
 	white-space: nowrap;
 	padding: 0;
 	background-color: white;
-}
-
-.tableHeaderSortButtonActive {
-	padding: 0.5rem 1rem;
-	width: 100%;
-	display: flex;
-	align-items: center;
-}
-
-.tableHeaderSortButtonIcon {
-	width: 2rem;
-	height: 2rem;
-	margin-left: 0.5rem;
-}
-
-.tableHeaderSortButtonReversed {
-	transform: rotate(180deg);
-}
-
-.tableHeaderSortButtonInactive {
-	transition: 0.1s;
-	color: grey;
-}
-
-.tableHeaderSortButtonInactive:hover {
-	color: black;
-}
-
-.tableRowPropertyContainer {
-	text-align: center;
-	font-size: 1.4rem;
-	padding: 0.5em;
-}
-
-.tableRowTitleContainer {
-	margin: 1em;
-	font-size: 1.4rem;
-	display: -webkit-box;
-	line-clamp: 1;
-	-webkit-line-clamp: 1;
-	-webkit-box-orient: vertical;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-.tableRowPriceText {
-	display: block;
-}
-
-.tableRowSalePriceTextSmall {
-	font-size: 1.2rem;
-}
-
-.tableRow {
-	height: 4em;
-	border-radius: 3px;
-	box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.3);
-}
-
-.tableTitleContainer {
-	text-align: left;
 }

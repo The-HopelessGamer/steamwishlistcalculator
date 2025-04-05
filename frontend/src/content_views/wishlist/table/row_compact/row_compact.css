@@ -1,0 +1,36 @@
+.tableRowCompact {
+	background-color: red;
+	height: 4em;
+	border-radius: 3px;
+	box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.3);
+}
+
+.tableRowCompactTitleContainer {
+	margin: 1em;
+	font-size: 1.4rem;
+	display: -webkit-box;
+	line-clamp: 1;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.tableRowCompactPropertyContainer {
+	text-align: center;
+	font-size: 1.4rem;
+	padding: 0.5em;
+}
+
+.tableRowCompactPriceText {
+	display: block;
+}
+
+.tableRowCompactSalePriceTextSmall {
+	font-size: 1.2rem;
+}
+
+.tableRowDCompactisabledTableText {
+	color: grey;
+	text-decoration: line-through;
+}

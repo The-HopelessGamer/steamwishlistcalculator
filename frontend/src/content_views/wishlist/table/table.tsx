@@ -1,103 +1,17 @@
 import "./table.css";
-import CaretIcon from "./icons/caret-down-solid.svg?react";
 import { ContentBox } from "../../../design_system/content_box/content_box";
 import { PrimaryButton } from "../../../design_system/primary_button/primary_button";
-import { WishlistStats } from "./wishlist_stats/wishlist_stats";
+import { Stats } from "./stats/stats";
 import { sortingFunctions } from "./sorting";
 import { WishlistItem } from "../../../wishlist_item";
 import { useState } from "react";
-import { BaseButton } from "../../../design_system/base_button/base_button";
-import { classNames } from "../../../utils";
+import { Row } from "./row/row";
+import { SortButton } from "./sort_button/sort_button";
+import { RowCompact } from "./row_compact/row_compact";
+import { useMediaQuery } from "../../../utils";
 
 const STEAM_PROFILE_BASE_URL =
 	"https://store.steampowered.com/wishlist/profiles/";
-
-type TableRowProps = {
-	item: WishlistItem;
-	isSalePricing: boolean;
-};
-
-function TableRow(props: TableRowProps) {
-	return (
-		<tr className="tableRow">
-			<td>
-				<a
-					href={props.item.link()}
-					className="tableRowTitleContainer"
-					title={props.item.formattedTitle()}
-					target="_blank"
-				>
-					{props.item.formattedTitle()}
-				</a>
-			</td>
-			<td className="tableRowPropertyContainer">
-				{props.item.formattedReleaseDate()}
-			</td>
-			<td className="tableRowPropertyContainer">
-				{String(props.item.appid())}
-			</td>
-			<td
-				className={classNames([
-					"tableRowPropertyContainer",
-					!props.isSalePricing &&
-						props.item.onSale() &&
-						"wishlistDisabledTableText",
-				])}
-			>
-				{props.item.onSale() ? `${props.item.discountPercentage()}%` : "No"}
-			</td>
-			<td className="tableRowPropertyContainer">
-				{props.item.isPreOrder() ? "Yes" : "No"}
-			</td>
-			<td className="tableRowPropertyContainer">
-				{props.isSalePricing ? (
-					<>
-						<span className="tableRowPriceText wishlistDisabledTableText tableRowSalePriceTextSmall">
-							{props.item.formattedOriginalPrice()}
-						</span>
-						<span className="tableRowPriceText">
-							{props.item.formattedPrice()}
-						</span>
-					</>
-				) : (
-					<span className="tableRowPriceText">
-						{props.item.formattedOriginalPrice() ?? props.item.formattedPrice()}
-					</span>
-				)}
-			</td>
-		</tr>
-	);
-}
-
-type SortButtonProps = {
-	text: string;
-	sortKey: keyof typeof sortingFunctions;
-	onClick: (key: keyof typeof sortingFunctions) => void;
-	currentSortKey: keyof typeof sortingFunctions;
-	isReversed: boolean;
-};
-
-function SortButton(props: SortButtonProps) {
-	const isActive = props.sortKey === props.currentSortKey;
-
-	return (
-		<BaseButton
-			className={classNames([
-				"tableHeaderSortButtonActive",
-				!isActive && "tableHeaderSortButtonInactive",
-			])}
-			onClick={() => props.onClick(props.sortKey)}
-		>
-			{props.text}
-			<CaretIcon
-				className={classNames([
-					"tableHeaderSortButtonIcon",
-					props.isReversed && isActive && "tableHeaderSortButtonReversed",
-				])}
-			/>
-		</BaseButton>
-	);
-}
 
 type TableProps = {
 	profileName: string;
@@ -110,6 +24,8 @@ export function Table(props: TableProps) {
 		useState<keyof typeof sortingFunctions>("sortByTitle");
 	const [isReversed, setIsReversed] = useState(false);
 	const [isSalePricing, setSalePricing] = useState(true);
+
+	const isLargeScreen = useMediaQuery("(min-width: 750px)");
 
 	const handleSort = (key: keyof typeof sortingFunctions) => {
 		if (key === sortingFunctionKey) {
@@ -146,15 +62,12 @@ export function Table(props: TableProps) {
 						<PrimaryButton text="Export Wishlist" />
 					</div>
 				</div>
-				<WishlistStats
-					wishlist={props.wishlist}
-					isSalePricing={isSalePricing}
-				/>
+				<Stats wishlist={props.wishlist} isSalePricing={isSalePricing} />
 				<div className="tableDivider" />
-				<table className="wishlistTable">
+				<table className="table">
 					<thead className="tableHeaderSortingContainer">
 						<tr>
-							<th className="tableTitleContainer tableHeaderSortButton">
+							<th className="tableTitleSortButton tableHeaderSortButton">
 								<SortButton
 									text="Title"
 									sortKey="sortByTitle"
@@ -215,13 +128,23 @@ export function Table(props: TableProps) {
 							props.wishlist,
 							isReversed
 						).map((item) => {
-							return (
-								<TableRow
-									key={item.appid()}
-									item={item}
-									isSalePricing={isSalePricing}
-								/>
-							);
+							if (isLargeScreen) {
+								return (
+									<Row
+										key={item.appid()}
+										item={item}
+										isSalePricing={isSalePricing}
+									/>
+								);
+							} else {
+								return (
+									<RowCompact
+										key={item.appid()}
+										item={item}
+										isSalePricing={isSalePricing}
+									/>
+								);
+							}
 						})}
 					</tbody>
 				</table>
