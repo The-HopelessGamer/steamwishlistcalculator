@@ -12,7 +12,7 @@ export const enum LoadState {
 }
 
 export function useMediaQuery(query: string) {
-	const [matches, setMatches] = useState(false);
+	const [matches, setMatches] = useState(window.matchMedia(query).matches);
 
 	useEffect(() => {
 		const mediaQuery = window.matchMedia(query);

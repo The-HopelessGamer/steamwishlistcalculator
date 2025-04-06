@@ -14,7 +14,7 @@ import { useMediaQuery } from "../../../utils";
 const STEAM_PROFILE_BASE_URL =
 	"https://store.steampowered.com/wishlist/profiles/";
 
-export type TableProps = {
+type TableProps = {
 	profileName: string;
 	steamId: string;
 	wishlist: WishlistItem[];
