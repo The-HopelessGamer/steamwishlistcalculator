@@ -2,6 +2,7 @@ import "./table.css";
 import { ContentBox } from "../../../design_system/content_box/content_box";
 import { PrimaryButton } from "../../../design_system/primary_button/primary_button";
 import { Stats } from "./stats/stats";
+import { StatsCompact } from "./stats_compact/stats_compact";
 import { sortingFunctions } from "./sorting";
 import { WishlistItem } from "../../../wishlist_item";
 import { useState } from "react";
@@ -13,7 +14,7 @@ import { useMediaQuery } from "../../../utils";
 const STEAM_PROFILE_BASE_URL =
 	"https://store.steampowered.com/wishlist/profiles/";
 
-type TableProps = {
+export type TableProps = {
 	profileName: string;
 	steamId: string;
 	wishlist: WishlistItem[];
@@ -36,116 +37,141 @@ export function Table(props: TableProps) {
 		}
 	};
 
+	const profileHeader = (
+		<div className="tableHeaderProfileLinkContainer">
+			<a
+				href={STEAM_PROFILE_BASE_URL + props.steamId}
+				className="tableHeaderProfileLink"
+			>
+				{props.profileName}
+			</a>
+		</div>
+	);
+
+	const toggleSalePricingButton = (
+		<PrimaryButton
+			onClick={() => setSalePricing(!isSalePricing)}
+			text={isSalePricing ? "Disable Sale Pricing" : "Enable Sale Pricing"}
+			disabled={props.wishlist.every((item) => !item.onSale())}
+		/>
+	);
+
+	const exportButton = <PrimaryButton text="Export Wishlist" />;
+
 	return (
 		<div className="tableContainer">
 			<ContentBox color="white">
-				<div className="tableHeader">
-					<div className="tableHeaderButton">
-						<PrimaryButton
-							onClick={() => setSalePricing(!isSalePricing)}
-							text={
-								isSalePricing ? "Disable Sale Pricing" : "Enable Sale Pricing"
-							}
-							disabled={props.wishlist.every((item) => !item.onSale())}
+				{isLargeScreen ? (
+					<div className="tableHeaderProfileContainer">
+						<div>{toggleSalePricingButton}</div>
+						{profileHeader}
+						<div>{exportButton}</div>
+					</div>
+				) : (
+					<div className="tableHeaderCompactProfileContainer">
+						{profileHeader}
+						<div className="tableHeaderCompactProfileButton">
+							{toggleSalePricingButton}
+						</div>
+						<div className="tableHeaderCompactProfileButton">
+							{exportButton}
+						</div>
+					</div>
+				)}
+				{isLargeScreen ? (
+					<>
+						<Stats wishlist={props.wishlist} isSalePricing={isSalePricing} />
+						<div className="tableHeaderDivider" />
+					</>
+				) : (
+					<>
+						<StatsCompact
+							wishlist={props.wishlist}
+							isSalePricing={isSalePricing}
 						/>
-					</div>
-					<div className="tableHeaderProfileLinkContainer">
-						<a
-							href={STEAM_PROFILE_BASE_URL + props.steamId}
-							className="tableHeaderProfileLink"
-						>
-							{props.profileName}
-						</a>
-					</div>
-
-					<div className="tableHeaderButton">
-						<PrimaryButton text="Export Wishlist" />
-					</div>
-				</div>
-				<Stats wishlist={props.wishlist} isSalePricing={isSalePricing} />
-				<div className="tableDivider" />
+						<span className="tableHeaderCompactDivider">Wishlist Items</span>
+					</>
+				)}
 				<table className="table">
-					<thead className="tableHeaderSortingContainer">
-						<tr>
-							<th className="tableTitleSortButton tableHeaderSortButton">
-								<SortButton
-									text="Title"
-									sortKey="sortByTitle"
-									onClick={handleSort}
-									currentSortKey={sortingFunctionKey}
-									isReversed={isReversed}
-								/>
-							</th>
-							<th className="tableHeaderSortButton">
-								<SortButton
-									text="Release Date"
-									sortKey="sortByDate"
-									onClick={handleSort}
-									currentSortKey={sortingFunctionKey}
-									isReversed={isReversed}
-								/>
-							</th>
-							<th className="tableHeaderSortButton">
-								<SortButton
-									text="AppID"
-									sortKey="sortByAppid"
-									onClick={handleSort}
-									currentSortKey={sortingFunctionKey}
-									isReversed={isReversed}
-								/>
-							</th>
-							<th className="tableHeaderSortButton">
-								<SortButton
-									text="On Sale"
-									sortKey="sortBySale"
-									onClick={handleSort}
-									currentSortKey={sortingFunctionKey}
-									isReversed={isReversed}
-								/>
-							</th>
-							<th className="tableHeaderSortButton">
-								<SortButton
-									text="Pre Order"
-									sortKey="sortByPreOrder"
-									onClick={handleSort}
-									currentSortKey={sortingFunctionKey}
-									isReversed={isReversed}
-								/>
-							</th>
-							<th className="tableHeaderSortButton">
-								<SortButton
-									text="Price"
-									sortKey="sortByPrice"
-									onClick={handleSort}
-									currentSortKey={sortingFunctionKey}
-									isReversed={isReversed}
-								/>
-							</th>
-						</tr>
-					</thead>
+					{isLargeScreen && (
+						<thead className="tableHeaderSortingContainer">
+							<tr>
+								<th className="tableTitleSortButton tableHeaderSortButton">
+									<SortButton
+										text="Title"
+										sortKey="sortByTitle"
+										onClick={handleSort}
+										currentSortKey={sortingFunctionKey}
+										isReversed={isReversed}
+									/>
+								</th>
+								<th className="tableHeaderSortButton">
+									<SortButton
+										text="Release Date"
+										sortKey="sortByDate"
+										onClick={handleSort}
+										currentSortKey={sortingFunctionKey}
+										isReversed={isReversed}
+									/>
+								</th>
+								<th className="tableHeaderSortButton">
+									<SortButton
+										text="AppID"
+										sortKey="sortByAppid"
+										onClick={handleSort}
+										currentSortKey={sortingFunctionKey}
+										isReversed={isReversed}
+									/>
+								</th>
+								<th className="tableHeaderSortButton">
+									<SortButton
+										text="On Sale"
+										sortKey="sortBySale"
+										onClick={handleSort}
+										currentSortKey={sortingFunctionKey}
+										isReversed={isReversed}
+									/>
+								</th>
+								<th className="tableHeaderSortButton">
+									<SortButton
+										text="Pre Order"
+										sortKey="sortByPreOrder"
+										onClick={handleSort}
+										currentSortKey={sortingFunctionKey}
+										isReversed={isReversed}
+									/>
+								</th>
+								<th className="tableHeaderSortButton">
+									<SortButton
+										text="Price"
+										sortKey="sortByPrice"
+										onClick={handleSort}
+										currentSortKey={sortingFunctionKey}
+										isReversed={isReversed}
+									/>
+								</th>
+							</tr>
+						</thead>
+					)}
 					<tbody>
 						{sortingFunctions[sortingFunctionKey](
 							props.wishlist,
 							isReversed
-						).map((item) => {
-							if (isLargeScreen) {
-								return (
-									<Row
-										key={item.appid()}
-										item={item}
-										isSalePricing={isSalePricing}
-									/>
-								);
-							} else {
-								return (
-									<RowCompact
-										key={item.appid()}
-										item={item}
-										isSalePricing={isSalePricing}
-									/>
-								);
-							}
-						})}
+						).map((item) =>
+							isLargeScreen ? (
+								<Row
+									key={item.appid()}
+									item={item}
+									isSalePricing={isSalePricing}
+								/>
+							) : (
+								<RowCompact
+									key={item.appid()}
+									item={item}
+									isSalePricing={isSalePricing}
+								/>
+							)
+						)}
 					</tbody>
 				</table>
 			</ContentBox>

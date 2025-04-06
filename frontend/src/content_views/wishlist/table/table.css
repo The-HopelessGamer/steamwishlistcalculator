@@ -13,18 +13,35 @@
 	border-spacing: 0 1rem;
 }
 
-.tableDivider {
+.tableHeaderDivider {
 	height: 2px;
 	background-color: black;
 	border: none;
 	margin: 10px 0;
 }
 
-.tableHeader {
+.tableHeaderCompactDivider {
+	font-size: 1.8rem;
+	font-weight: bold;
+	display: block;
+	text-align: center;
+}
+
+.tableHeaderProfileContainer {
 	padding-bottom: 1.5rem;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+}
+
+.tableHeaderCompactProfileContainer {
+	flex-direction: column;
+	gap: 1rem;
+	align-items: stretch;
+}
+
+.tableHeaderCompactProfileButton {
+	margin: 1rem 0;
 }
 
 .tableHeaderProfileLinkContainer {

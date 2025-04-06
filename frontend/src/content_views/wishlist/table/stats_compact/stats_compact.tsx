@@ -1,26 +1,26 @@
-import "./stats.css";
+import "./stats_compact.css";
 import { classNames } from "../../../../utils";
 import { WishlistItem } from "../../../../wishlist_item";
 import { getStats } from "../stats_utils";
 
-type StatsProps = {
+type StatsCompactProps = {
 	wishlist: WishlistItem[];
 	isSalePricing: boolean;
 };
 
-export function Stats(props: StatsProps) {
+export function StatsCompact(props: StatsCompactProps) {
 	return (
-		<div className="wishlistStats">
+		<div className="wishlistStatsCompact">
 			{getStats(props.wishlist, props.isSalePricing).map((stat, index) => (
 				<div
 					className={classNames([
-						"wishlistStat",
-						!!index && "wishlistStatBorder",
+						"wishlistStatCompact",
+						!!index && "wishlistStatCompactBorder",
 					])}
 					key={index}
 				>
-					<div>{stat.label}</div>
-					<div>{stat.value}</div>
+					<div className="wishlistStatCompactLabel">{stat.label}</div>
+					<div className="wishlistStatCompactValue">{stat.value}</div>
 				</div>
 			))}
 		</div>
