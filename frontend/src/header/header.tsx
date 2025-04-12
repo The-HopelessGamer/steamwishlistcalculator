@@ -1,12 +1,12 @@
 import "./header.css";
 import { Link } from "react-router";
-import HomeIcon from "./icons/home-solid.svg?react";
-import FaqIcon from "./icons/question-circle-regular.svg?react";
-import PartnerIcon from "./icons/handshake-solid.svg?react";
-import SteamIcon from "./icons/steam-brands-solid.svg?react";
-import DiscordIcon from "./icons/discord-brands-solid.svg?react";
-import GithubIcon from "./icons/github-brands-solid.svg?react";
-import HamburgerIcon from "./icons/bars-solid.svg?react";
+import HomeIcon from "../design_system/icons/home-solid.svg?react";
+import FaqIcon from "../design_system/icons/question-circle-regular.svg?react";
+import PartnerIcon from "../design_system/icons/handshake-solid.svg?react";
+import SteamIcon from "../design_system/icons/steam-brands-solid.svg?react";
+import DiscordIcon from "../design_system/icons/discord-brands-solid.svg?react";
+import GithubIcon from "../design_system/icons/github-brands-solid.svg?react";
+import HamburgerIcon from "../design_system/icons/bars-solid.svg?react";
 import { BaseButton } from "../design_system/base_button/base_button";
 
 type HeaderProps = {

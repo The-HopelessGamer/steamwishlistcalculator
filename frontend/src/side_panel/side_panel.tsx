@@ -1,5 +1,5 @@
 import "./side_panel.css";
-import CrossIcon from "./icons/times-solid.svg?react";
+import CrossIcon from "../design_system/icons/times-solid.svg?react";
 import { BaseButton } from "../design_system/base_button/base_button";
 import { Link } from "react-router";
 

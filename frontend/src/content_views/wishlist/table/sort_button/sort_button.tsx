@@ -1,7 +1,7 @@
 import { BaseButton } from "../../../../design_system/base_button/base_button";
 import { classNames } from "../../../../utils";
 import { sortingFunctions } from "../sorting";
-import CaretIcon from "./icons/caret-down-solid.svg?react";
+import CaretIcon from "../../../../design_system/icons/caret-down-solid.svg?react";
 import "./sort_button.css";
 
 type SortButtonProps = {

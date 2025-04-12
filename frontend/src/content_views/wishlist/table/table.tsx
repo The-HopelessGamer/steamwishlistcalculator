@@ -5,11 +5,12 @@ import { Stats } from "./stats/stats";
 import { StatsCompact } from "./stats_compact/stats_compact";
 import { sortingFunctions } from "./sorting";
 import { WishlistItem } from "../../../wishlist_item";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Row } from "./row/row";
 import { SortButton } from "./sort_button/sort_button";
 import { RowCompact } from "./row_compact/row_compact";
 import { useMediaQuery } from "../../../utils";
+import { Modal } from "../../../design_system/modal/modal";
 
 const STEAM_PROFILE_BASE_URL =
 	"https://store.steampowered.com/wishlist/profiles/";
@@ -25,6 +26,7 @@ export function Table(props: TableProps) {
 		useState<keyof typeof sortingFunctions>("sortByTitle");
 	const [isReversed, setIsReversed] = useState(false);
 	const [isSalePricing, setSalePricing] = useState(true);
+	const dialogRef = useRef<HTMLDialogElement | null>(null);
 
 	const isLargeScreen = useMediaQuery("(min-width: 750px)");
 
@@ -56,10 +58,22 @@ export function Table(props: TableProps) {
 		/>
 	);
 
-	const exportButton = <PrimaryButton text="Export Wishlist" />;
+	const openModal = () => {
+		dialogRef.current?.showModal();
+	};
+
+	const closeModal = () => {
+		dialogRef.current?.close();
+	};
+
+	const exportButton = (
+		<PrimaryButton text="Export Wishlist" onClick={() => openModal()} />
+	);
 
 	return (
 		<div className="tableContainer">
+			<Modal ref={dialogRef} onClickClose={closeModal} />
+
 			<ContentBox color="white">
 				{isLargeScreen ? (
 					<div className="tableHeaderProfileContainer">
