@@ -1,8 +1,64 @@
+.exportModalDialog {
+	border: none;
+	max-width: 101rem;
+	background-color: transparent;
+}
+
+.exportModalDialog::backdrop {
+	background-color: black;
+	opacity: 50%;
+}
+
+.exportModal {
+	background-color: white;
+	border-radius: 3px;
+	margin: 0.6rem;
+	padding: 1rem;
+}
+
+.exportModalContent {
+}
+
+.exportModalTitle {
+	text-align: center;
+	margin: 0;
+}
+
+.exportModalHeader {
+	display: flex;
+}
+
+.exportModalHeaderContainer {
+	margin-bottom: 1rem;
+	display: flex;
+	flex-grow: 1;
+	align-items: center;
+	justify-content: space-between;
+}
+
 .exportModalCloseButton {
-	padding: 1.5rem;
 }
 
 .exportModalCloseButtonIcon {
 	color: red;
-	height: 4rem;
+	height: 3rem;
+}
+
+.exportModalButtonHeader {
+	justify-content: center;
+	display: flex;
+}
+
+.exportModalButton {
+	margin: 0 0.2rem;
+}
+
+.exportModalWishlist {
+	border: 1px solid #c3c3c3;
+	border-radius: 3px;
+	background-color: #e6e6e6;
+	min-height: 15rem;
+	text-align: left;
+	margin: 1rem 0;
+	padding: 1rem;
 }
