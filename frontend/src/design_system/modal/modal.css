@@ -1,7 +1,8 @@
 .exportModalDialog {
 	border: none;
-	max-width: 101rem;
+	max-width: 80rem;
 	background-color: transparent;
+	overflow: hidden;
 }
 
 .exportModalDialog::backdrop {
@@ -45,20 +46,23 @@
 }
 
 .exportModalButtonHeader {
-	justify-content: center;
-	display: flex;
+	text-align: center;
 }
 
 .exportModalButton {
-	margin: 0 0.2rem;
+	white-space: nowrap;
+	display: inline-block;
+	padding: 0.3rem;
 }
 
 .exportModalWishlist {
 	border: 1px solid #c3c3c3;
 	border-radius: 3px;
 	background-color: #e6e6e6;
-	min-height: 15rem;
 	text-align: left;
 	margin: 1rem 0;
 	padding: 1rem;
+	min-height: 15rem;
+	max-height: 100vh;
+	overflow: auto;
 }

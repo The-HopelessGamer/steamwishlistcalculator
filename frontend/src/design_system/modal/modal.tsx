@@ -46,6 +46,9 @@ export function Modal(props: ModalProps) {
 								<PrimaryButton text="Pre Order" />
 							</div>
 							<div className="exportModalButton">
+								<PrimaryButton text="Appids" />
+							</div>
+							<div className="exportModalButton">
 								<PrimaryButton text="Unlisted" />
 							</div>
 						</div>
