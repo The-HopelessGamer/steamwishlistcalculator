@@ -19,6 +19,7 @@ type TableProps = {
 	profileName: string;
 	steamId: string;
 	wishlist: WishlistItem[];
+	setIsAppScrollable: (value: boolean) => void;
 };
 
 export function Table(props: TableProps) {
@@ -60,20 +61,31 @@ export function Table(props: TableProps) {
 
 	const openModal = () => {
 		dialogRef.current?.showModal();
+		props.setIsAppScrollable(false);
 	};
 
 	const closeModal = () => {
 		dialogRef.current?.close();
+		props.setIsAppScrollable(true);
 	};
 
 	const exportButton = (
-		<PrimaryButton text="Export Wishlist" onClick={() => openModal()} />
+		<PrimaryButton text="Export Wishlist" onClick={openModal} />
 	);
 
 	return (
 		<div className="tableContainer">
-			<Modal ref={dialogRef} onClickClose={closeModal} />
-
+			<Modal title="Export Wishlist" ref={dialogRef} onClickClose={closeModal}>
+				<div className="exportFilterButtons">
+					<PrimaryButton text="Title" />
+					<PrimaryButton text="Free" />
+					<PrimaryButton text="On Sale" />
+					<PrimaryButton text="Pre Order" />
+					<PrimaryButton text="App ID" />
+					<PrimaryButton text="Unlisted" />
+				</div>
+				<div></div>
+			</Modal>
 			<ContentBox color="white">
 				{isLargeScreen ? (
 					<div className="tableHeaderProfileContainer">

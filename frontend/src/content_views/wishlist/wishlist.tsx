@@ -21,9 +21,10 @@ function isSteamId(steamIdOrVanityUrl: string) {
 type WishlistProps = {
 	countryCodeLoading: LoadState;
 	countryCode: string;
+	setIsAppScrollable: (value: boolean) => void;
 };
 
-export function Wishlist({ countryCode, countryCodeLoading }: WishlistProps) {
+export function Wishlist(props: WishlistProps) {
 	const [resolveVanityUrlLoading, setResolveVanityUrlLoading] = useState(
 		LoadState.Pending
 	);
@@ -59,8 +60,8 @@ export function Wishlist({ countryCode, countryCodeLoading }: WishlistProps) {
 			isSteamId(steamId) &&
 			profileNameLoading === LoadState.Pending &&
 			wishlistLoading === LoadState.Pending &&
-			(countryCodeLoading === LoadState.Loaded ||
-				countryCodeLoading === LoadState.Failed)
+			(props.countryCodeLoading === LoadState.Loaded ||
+				props.countryCodeLoading === LoadState.Failed)
 		) {
 			setProfileNameLoading(LoadState.Loading);
 			getProfileName(steamId).then((service_response) => {
@@ -74,7 +75,7 @@ export function Wishlist({ countryCode, countryCodeLoading }: WishlistProps) {
 			});
 
 			setWishlistLoading(LoadState.Loading);
-			getWishlist(steamId, countryCode).then((service_response) => {
+			getWishlist(steamId, props.countryCode).then((service_response) => {
 				if (service_response.ok) {
 					setWishlist(service_response.data);
 					setWishlistLoading(LoadState.Loaded);
@@ -86,11 +87,11 @@ export function Wishlist({ countryCode, countryCodeLoading }: WishlistProps) {
 		}
 	}, [
 		steamId,
-		countryCode,
+		props.countryCode,
 		resolveVanityUrlLoading,
 		profileNameLoading,
 		wishlistLoading,
-		countryCodeLoading,
+		props.countryCodeLoading,
 	]);
 
 	if (error) {
@@ -105,6 +106,11 @@ export function Wishlist({ countryCode, countryCodeLoading }: WishlistProps) {
 	}
 
 	return (
-		<Table steamId={steamId} profileName={profileName} wishlist={wishlist} />
+		<Table
+			steamId={steamId}
+			profileName={profileName}
+			wishlist={wishlist}
+			setIsAppScrollable={props.setIsAppScrollable}
+		/>
 	);
 }

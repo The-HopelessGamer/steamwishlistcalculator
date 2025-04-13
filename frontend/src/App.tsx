@@ -15,6 +15,7 @@ import { LoadState } from "./utils";
 
 function App() {
 	const [sidePanelOpen, setSidePanelOpen] = useState(false);
+	const [isAppScrollable, setIsAppScrollable] = useState(true);
 	const [totalWishlistsCalculated, setTotalWishlistsCalculated] = useState<
 		number | undefined
 	>(undefined);
@@ -52,9 +53,14 @@ function App() {
 	}, [totalWishlistsCalculatedLoading, countryCodeLoading]);
 
 	return (
-		<div className={classNames(["app", sidePanelOpen && "appNoScroll"])}>
+		<div className={classNames(["app", !isAppScrollable && "appNoScroll"])}>
 			<div className="mobileView">
-				<Header onClickSidePanel={() => setSidePanelOpen(true)} />
+				<Header
+					onClickSidePanel={() => {
+						setSidePanelOpen(true);
+						setIsAppScrollable(false);
+					}}
+				/>
 				<div className="contentContainer">
 					<div className="fixedWidthContainer">
 						<Routes>
@@ -72,6 +78,9 @@ function App() {
 									<Wishlist
 										countryCodeLoading={countryCodeLoading}
 										countryCode={countryCode}
+										setIsAppScrollable={(value: boolean) =>
+											setIsAppScrollable(value)
+										}
 									/>
 								}
 							/>
@@ -89,7 +98,12 @@ function App() {
 					!sidePanelOpen && "sidePanelContainerHidden",
 				])}
 			>
-				<SidePanel onClickClose={() => setSidePanelOpen(false)} />
+				<SidePanel
+					onClickClose={() => {
+						setSidePanelOpen(false);
+						setIsAppScrollable(true);
+					}}
+				/>
 			</div>
 		</div>
 	);
