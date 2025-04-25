@@ -8,6 +8,7 @@
 	border: none;
 	padding: 1rem;
 	overflow-y: auto;
+	resize: vertical;
 }
 
 .exportModeDivider {

@@ -69,11 +69,11 @@ export function ExportModal(props: ExportModalProps) {
 					</div>
 				</>
 			)}
-			<div className="exportData">
+			<textarea className="exportData" readOnly>
 				{props.wishlist
 					.map((wishlistItem) => wishlistItem.formattedTitle())
 					.join(", ")}
-			</div>
+			</textarea>
 		</Modal>
 	);
 }
