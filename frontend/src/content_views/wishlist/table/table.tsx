@@ -10,7 +10,7 @@ import { Row } from "./row/row";
 import { SortButton } from "./sort_button/sort_button";
 import { RowCompact } from "./row_compact/row_compact";
 import { useMediaQuery } from "../../../utils";
-import { Modal } from "../../../design_system/modal/modal";
+import { ExportModal } from "./export_modal/export_modal";
 
 const STEAM_PROFILE_BASE_URL =
 	"https://store.steampowered.com/wishlist/profiles/";
@@ -75,17 +75,12 @@ export function Table(props: TableProps) {
 
 	return (
 		<div className="tableContainer">
-			<Modal title="Export Wishlist" ref={dialogRef} onClickClose={closeModal}>
-				<div className="exportFilterButtons">
-					<PrimaryButton text="Title" />
-					<PrimaryButton text="Free" />
-					<PrimaryButton text="On Sale" />
-					<PrimaryButton text="Pre Order" />
-					<PrimaryButton text="App ID" />
-					<PrimaryButton text="Unlisted" />
-				</div>
-				<div></div>
-			</Modal>
+			<ExportModal
+				dialogRef={dialogRef}
+				closeModal={closeModal}
+				wishlist={props.wishlist}
+				isLargeScreen={isLargeScreen}
+			/>
 			<ContentBox color="white">
 				{isLargeScreen ? (
 					<div className="tableHeaderProfileContainer">

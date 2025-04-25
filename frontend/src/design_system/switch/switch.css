@@ -1,0 +1,22 @@
+.switch {
+	transition: 0.1s;
+	padding: 1rem;
+	border-radius: 3px;
+	flex-grow: 1;
+	box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.3);
+}
+
+.switch:hover {
+	background-color: #1a75ff;
+	color: white;
+}
+
+.switchOn {
+	background-color: #1a75ff;
+	color: white;
+}
+
+.switchOff {
+	background-color: white;
+	color: black;
+}

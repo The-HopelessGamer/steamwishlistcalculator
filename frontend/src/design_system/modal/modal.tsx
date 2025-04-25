@@ -23,7 +23,7 @@ export function Modal(props: ModalProps) {
 					<div onClick={(event) => event.stopPropagation()}>
 						<ContentBox color="white">
 							<div className="modalDialogHeader">
-								<h1 id="modalDialogTitle">{props.title}</h1>
+								<h2 id="modalDialogTitle">{props.title}</h2>
 								<BaseButton
 									className="modalDialogCloseButton"
 									onClick={props.onClickClose}
