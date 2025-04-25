@@ -23,7 +23,7 @@ export function ExportModal(props: ExportModalProps) {
 		</>
 	);
 
-	const filterOptions = (
+	const exportFilterOptions = (
 		<>
 			<Switch on={true} onChange={true}>
 				All
@@ -36,9 +36,6 @@ export function ExportModal(props: ExportModalProps) {
 			</Switch>
 			<Switch on={false} onChange={false}>
 				Pre Order
-			</Switch>
-			<Switch on={false} onChange={false}>
-				App ID
 			</Switch>
 			<Switch on={false} onChange={false}>
 				Unlisted
@@ -57,7 +54,7 @@ export function ExportModal(props: ExportModalProps) {
 					<div className="exportRow">
 						{exportModes}
 						<div className="exportModeDivider" />
-						{filterOptions}
+						{exportFilterOptions}
 					</div>
 				</>
 			) : (
@@ -65,7 +62,7 @@ export function ExportModal(props: ExportModalProps) {
 					<div className="exportRowCompact">
 						<div className="exportModesCompact">{exportModes}</div>
 						<div className="exportModeDividerCompact" />
-						<div className="exportFiltersCompact">{filterOptions}</div>
+						<div className="exportFiltersCompact">{exportFilterOptions}</div>
 					</div>
 				</>
 			)}
