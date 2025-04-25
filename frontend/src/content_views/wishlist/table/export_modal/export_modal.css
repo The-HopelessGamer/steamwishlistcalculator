@@ -1,8 +1,9 @@
 .exportData {
 	box-sizing: border-box;
 	width: 100%;
-	min-height: none;
+	min-height: 5rem;
 	max-height: calc(100vh - 40rem);
+	height: 10rem;
 	box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.3);
 	border-radius: 3px;
 	border: none;
