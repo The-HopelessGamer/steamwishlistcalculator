@@ -4,7 +4,7 @@ import { classNames } from "../../utils";
 
 type SwitchProps = {
 	on: boolean;
-	onChange: boolean; //(value: boolean) => void; //Need to update with functioning logic.
+	onChange: (value: boolean) => void;
 	children: React.ReactNode;
 };
 
@@ -12,7 +12,7 @@ export function Switch(props: SwitchProps) {
 	return (
 		<BaseButton
 			onClick={() => {
-				//props.onChange(!props.on); //Need to update with functioning logic.
+				props.onChange(!props.on);
 			}}
 			className={classNames(["switch", props.on ? "switchOn" : "switchOff"])}
 		>

@@ -13,27 +13,26 @@
 }
 
 .exportModeDivider {
-	height: 2.5rem;
-	width: 0.2rem;
 	background-color: black;
+	width: 0.2rem;
 }
 
 .exportModeDividerCompact {
 	height: 0.2rem;
 	background-color: black;
-	margin: 1rem 0;
+	margin: 1rem 0 1.5rem 0;
 }
 
 .exportRow {
 	display: flex;
-	align-items: center;
+	align-items: stretch;
 	margin-bottom: 1rem;
 	padding: 0.5rem 0 0.5rem 0;
 	gap: 1rem;
 }
 
 .exportRowCompact {
-	flex-grow: 1;
+	width: 100%;
 }
 
 .exportModesCompact {
@@ -41,6 +40,7 @@
 	display: flex;
 	padding: 0.5rem 0 0.5rem 0;
 	gap: 1rem;
+	margin-top: 1rem;
 }
 
 .exportFiltersCompact {
@@ -50,4 +50,28 @@
 	display: flex;
 	flex-wrap: wrap;
 	margin-bottom: 1rem;
+	margin-top: 1rem;
+}
+
+.exportOptionsContainer {
+	white-space: nowrap;
+	flex-grow: 1;
+}
+
+.exportModesContainer {
+	display: flex;
+	gap: 1rem;
+	flex-grow: 1;
+	margin-top: 1rem;
+}
+
+.exportFiltersContainer {
+	display: flex;
+	flex-grow: 1;
+	gap: 1rem;
+	margin-top: 1rem;
+}
+
+.exportControlGroup {
+	flex-grow: 1;
 }
