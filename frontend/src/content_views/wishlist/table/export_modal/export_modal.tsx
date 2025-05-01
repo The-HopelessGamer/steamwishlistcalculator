@@ -112,8 +112,7 @@ export function ExportModal(props: ExportModalProps) {
 							Mode:
 							<div className="exportModesCompact">{exportModes}</div>
 						</div>
-						<div className="exportModeDividerCompact" />
-						<div className="exportControlGroup">
+						<div className="exportControlGroupCompact">
 							Filter:
 							<div className="exportFiltersCompact">{exportFilterOptions}</div>
 						</div>

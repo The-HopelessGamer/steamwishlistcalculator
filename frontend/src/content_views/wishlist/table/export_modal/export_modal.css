@@ -17,10 +17,8 @@
 	width: 0.2rem;
 }
 
-.exportModeDividerCompact {
-	height: 0.2rem;
-	background-color: black;
-	margin: 1rem 0 1.5rem 0;
+.exportControlGroupCompact {
+	margin-top: 1rem;
 }
 
 .exportRow {
