@@ -20,10 +20,17 @@ export function ExportModal(props: ExportModalProps) {
 	const [filterUnlisted, setFilterUnlisted] = useState(false);
 
 	const exportOutput = props.wishlist
-		.filter((wishlistItem) => !filterFree || wishlistItem.isFree())
-		.filter((wishlistItem) => !filterOnSale || wishlistItem.onSale())
-		.filter((wishlistItem) => !filterPreOrder || wishlistItem.isPreOrder())
-		.filter((wishlistItem) => !filterUnlisted || wishlistItem.isUnlisted())
+		.filter((item) => {
+			if (!filterFree && !filterOnSale && !filterPreOrder && !filterUnlisted) {
+				return true;
+			}
+			return (
+				(filterFree && item.isFree()) ||
+				(filterOnSale && item.onSale()) ||
+				(filterPreOrder && item.isPreOrder()) ||
+				(filterUnlisted && item.isUnlisted())
+			);
+		})
 		.map((wishlistItem) =>
 			exportMode === "title"
 				? wishlistItem.formattedTitle()
@@ -98,7 +105,7 @@ export function ExportModal(props: ExportModalProps) {
 						</div>
 						<div className="exportModeDivider" />
 						<div className="exportControlGroup">
-							Filter:
+							Filter By:
 							<div className="exportFiltersContainer">
 								{exportFilterOptions}
 							</div>
@@ -113,7 +120,7 @@ export function ExportModal(props: ExportModalProps) {
 							<div className="exportModesCompact">{exportModes}</div>
 						</div>
 						<div className="exportControlGroupCompact">
-							Filter:
+							Filter By:
 							<div className="exportFiltersCompact">{exportFilterOptions}</div>
 						</div>
 					</div>
