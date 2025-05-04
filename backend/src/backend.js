@@ -296,7 +296,7 @@ function main() {
 	});
 
 	router.post("/counterUpdate", async function (req, res) {
-		const count = fs.readFileSync("./counter.txt", "utf8");
+		let count = fs.readFileSync("./counter.txt", "utf8");
 		count++;
 		fs.writeFileSync("./counter.txt", count.toString());
 		res.send();

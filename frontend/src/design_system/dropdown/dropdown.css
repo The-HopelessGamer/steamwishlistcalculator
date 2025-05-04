@@ -14,6 +14,10 @@ select:focus {
 	color: white;
 }
 
+select::picker-icon {
+	color: white;
+}
+
 option {
 	color: white;
 	background-color: #1a75ff;

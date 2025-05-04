@@ -3,15 +3,23 @@ import { ContentBox } from "../../design_system/content_box/content_box";
 import { PrimaryButton } from "../../design_system/primary_button/primary_button";
 import { useNavigate } from "react-router";
 import { Loader } from "../../design_system/loader/loader";
+import { useState } from "react";
+import { extractSteamId } from "../../utils";
 
 type WishlistFormProps = {
 	totalWishlistsCalculated: number | undefined;
 };
 
-const FROM_INPUT_NAME = "steamIdInput";
-
-export function WishlistForm(props: WishlistFormProps) {
+export function WishlistForm({ totalWishlistsCalculated }: WishlistFormProps) {
 	const navigate = useNavigate();
+	const [steamId, setSteamId] = useState("");
+
+	const handleSubmit = (e: React.FormEvent) => {
+		e.preventDefault();
+		// Extract the ID before navigation
+		const processedId = extractSteamId(steamId);
+		navigate(`/wishlist/${processedId}`);
+	};
 
 	return (
 		<div className="wishlistForm">
@@ -19,24 +27,21 @@ export function WishlistForm(props: WishlistFormProps) {
 				<span className="wishlistFormTitle">Calculate Your Wishlist</span>
 				<span className="wishlistFormTotal">
 					Total Wishlists Calculated:{" "}
-					{props.totalWishlistsCalculated ? (
-						props.totalWishlistsCalculated.toLocaleString("en-US")
+					{totalWishlistsCalculated ? (
+						totalWishlistsCalculated.toLocaleString("en-US")
 					) : (
 						<span className="wishlistFormTotalLoader">
 							<Loader color="black" />
 						</span>
 					)}
 				</span>
-				<form
-					action={(formData) => {
-						navigate(`/wishlist/${formData.get(FROM_INPUT_NAME)}`);
-					}}
-				>
+				<form onSubmit={handleSubmit}>
 					<input
 						type="text"
+						value={steamId}
+						onChange={(e) => setSteamId(e.target.value)}
 						className="wishlistFormInput"
 						placeholder="Steam ID"
-						name={FROM_INPUT_NAME}
 						required
 					/>
 					<p>Supports:</p>

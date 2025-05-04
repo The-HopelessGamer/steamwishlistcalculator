@@ -12,6 +12,7 @@ import { classNames } from "./utils";
 import { Wishlist } from "./content_views/wishlist/wishlist";
 import { counterRead, ip2Country } from "./backend_api";
 import { LoadState } from "./utils";
+import { CalculateError } from "./content_views/wishlist/calculate_error/calculate_error";
 
 function App() {
 	const [sidePanelOpen, setSidePanelOpen] = useState(false);
@@ -89,6 +90,7 @@ function App() {
 							<Route path="/faq" element={<Faq />} />
 							<Route path="/partners" element={<Partners />} />
 							<Route path="/privacy-policy" element={<PrivacyPolicy />} />
+							<Route path="*" element={<CalculateError text="404" />} />
 						</Routes>
 					</div>
 				</div>

@@ -120,3 +120,34 @@ export const COUNTRY_MAPPINGS = new Map<string, CountryDetails>([
 	["UY", { currency: "UYU", locale: "es-UY", currencyName: "Uruguayan Peso" }],
 	["VN", { currency: "VND", locale: "vi-VN", currencyName: "Vietnamese Dong" }],
 ]);
+
+export function extractSteamId(input: string): string {
+	if (
+		input.includes("steamcommunity.com") ||
+		input.includes("store.steampowered.com")
+	) {
+		// Remove any trailing slashes and query parameters
+		const cleanUrl = input.replace(/\/+$/, "").split("?")[0];
+
+		// Split by slashes and get segments
+		const segments = cleanUrl.split("/").filter((part) => part !== "");
+
+		// Find the index of 'id', 'profiles', or 'wishlist/profiles'
+		const idIndex = segments.findIndex(
+			(part) =>
+				part === "id" ||
+				part === "profiles" ||
+				(part === "wishlist" &&
+					segments[segments.indexOf(part) + 1] === "profiles")
+		);
+
+		// If we found a matching pattern, return the next segment or the one after 'profiles'
+		if (idIndex !== -1 && idIndex + 1 < segments.length) {
+			if (segments[idIndex] === "wishlist") {
+				return segments[idIndex + 2]; // Skip 'profiles' segment
+			}
+			return segments[idIndex + 1];
+		}
+	}
+	return input;
+}
