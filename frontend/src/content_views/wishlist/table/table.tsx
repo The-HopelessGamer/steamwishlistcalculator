@@ -20,6 +20,7 @@ type TableProps = {
 	steamId: string;
 	wishlist: WishlistItem[];
 	setIsAppScrollable: (value: boolean) => void;
+	countryCode: string;
 };
 
 export function Table(props: TableProps) {
@@ -79,7 +80,6 @@ export function Table(props: TableProps) {
 				dialogRef={dialogRef}
 				closeModal={closeModal}
 				wishlist={props.wishlist}
-				isLargeScreen={isLargeScreen}
 			/>
 			<ContentBox color="white">
 				{isLargeScreen ? (
@@ -101,7 +101,11 @@ export function Table(props: TableProps) {
 				)}
 				{isLargeScreen ? (
 					<>
-						<Stats wishlist={props.wishlist} isSalePricing={isSalePricing} />
+						<Stats
+							wishlist={props.wishlist}
+							isSalePricing={isSalePricing}
+							countryCode={props.countryCode}
+						/>
 						<div className="tableHeaderDivider" />
 					</>
 				) : (
@@ -109,6 +113,7 @@ export function Table(props: TableProps) {
 						<StatsCompact
 							wishlist={props.wishlist}
 							isSalePricing={isSalePricing}
+							countryCode={props.countryCode}
 						/>
 						<span className="tableHeaderCompactDivider">Wishlist Items</span>
 					</>

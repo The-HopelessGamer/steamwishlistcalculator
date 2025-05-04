@@ -26,9 +26,11 @@
 }
 
 .supportedValuesList {
-	columns: 2;
 	font-size: 1.4rem;
 	padding: 0 2rem;
+	display: grid;
+	grid-template-columns: auto auto;
+	white-space: nowrap;
 }
 
 .wishlistFormTotalLoader {
@@ -52,5 +54,11 @@
 		width: 100%;
 		max-width: 50rem;
 		margin-bottom: 0;
+	}
+}
+
+@media (max-width: 400px) {
+	.supportedValuesList {
+		grid-template-columns: auto;
 	}
 }

@@ -111,6 +111,7 @@ export function Wishlist(props: WishlistProps) {
 			profileName={profileName}
 			wishlist={wishlist}
 			setIsAppScrollable={props.setIsAppScrollable}
+			countryCode={props.countryCode}
 		/>
 	);
 }
