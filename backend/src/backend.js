@@ -233,8 +233,6 @@ function main() {
 		})
 	);
 
-	app.use(express.static("../frontend/dist"));
-
 	router.get(
 		"/resolveVanityUrl",
 		query("vanityUrl").notEmpty().escape(),
@@ -315,6 +313,10 @@ function main() {
 	});
 
 	app.use("/api", router);
+	app.use(express.static("../frontend/dist"));
+	app.get("*", (req, res) => {
+		res.sendFile("index.html", { root: "../frontend/dist" });
+	});
 	app.listen(3000);
 }
 

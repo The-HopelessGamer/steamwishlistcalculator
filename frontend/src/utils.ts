@@ -80,7 +80,7 @@ export const COUNTRY_MAPPINGS = new Map<string, CountryDetails>([
 		"KR",
 		{ currency: "KRW", locale: "ko-KR", currencyName: "South Korean Won" },
 	],
-	["KW", { currency: "KWD", locale: "ar-KW", currencyName: "Kuwaiti Dinar" }],
+	["KW", { currency: "KWD", locale: "en-US", currencyName: "Kuwaiti Dinar" }],
 	[
 		"MY",
 		{ currency: "MYR", locale: "ms-MY", currencyName: "Malaysian Ringgit" },

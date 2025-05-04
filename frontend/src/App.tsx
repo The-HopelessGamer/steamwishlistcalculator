@@ -21,7 +21,7 @@ function App() {
 	>(undefined);
 	const [totalWishlistsCalculatedLoading, setTotalWishlistsCalculatedLoading] =
 		useState(LoadState.Pending);
-	const [countryCode, setCountryCode] = useState("CN");
+	const [countryCode, setCountryCode] = useState("US");
 	const [countryCodeLoading, setCountryCodeLoading] = useState(
 		LoadState.Pending
 	);
