@@ -2,6 +2,7 @@
 	font-size: 50px;
 	display: flex;
 	flex-direction: row;
+	margin-bottom: 6.8rem;
 }
 
 .wishlistCalculatingTitle {
@@ -19,6 +20,10 @@
 }
 
 @media (min-width: 600px) {
+	.wishlistLoaderContainer {
+		margin-top: 0;
+	}
+
 	.wishlistCalculatingTitle {
 		font-size: 2rem;
 	}

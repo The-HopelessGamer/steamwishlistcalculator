@@ -15,6 +15,7 @@
 .appNoScroll {
 	height: 100vh;
 	overflow-y: hidden;
+	min-height: 0;
 }
 
 .mobileView {
