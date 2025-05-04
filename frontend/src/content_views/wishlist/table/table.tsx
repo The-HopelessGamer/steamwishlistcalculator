@@ -30,7 +30,7 @@ export function Table(props: TableProps) {
 	const [isSalePricing, setSalePricing] = useState(true);
 	const dialogRef = useRef<HTMLDialogElement | null>(null);
 
-	const isLargeScreen = useMediaQuery("(min-width: 750px)");
+	const isLargeScreen = useMediaQuery("(min-width: 850px)");
 
 	const handleSort = (key: keyof typeof sortingFunctions) => {
 		if (key === sortingFunctionKey) {

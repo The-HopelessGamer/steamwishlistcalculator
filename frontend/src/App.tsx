@@ -21,7 +21,7 @@ function App() {
 	>(undefined);
 	const [totalWishlistsCalculatedLoading, setTotalWishlistsCalculatedLoading] =
 		useState(LoadState.Pending);
-	const [countryCode, setCountryCode] = useState("US");
+	const [countryCode, setCountryCode] = useState("CN");
 	const [countryCodeLoading, setCountryCodeLoading] = useState(
 		LoadState.Pending
 	);
@@ -60,6 +60,8 @@ function App() {
 						setSidePanelOpen(true);
 						setIsAppScrollable(false);
 					}}
+					setCountryCode={setCountryCode}
+					countryCode={countryCode}
 				/>
 				<div className="contentContainer">
 					<div className="fixedWidthContainer">
@@ -103,6 +105,8 @@ function App() {
 						setSidePanelOpen(false);
 						setIsAppScrollable(true);
 					}}
+					setCountryCode={setCountryCode}
+					countryCode={countryCode}
 				/>
 			</div>
 		</div>

@@ -31,7 +31,7 @@
 	align-items: center;
 }
 
-@media (min-width: 750px) {
+@media (min-width: 850px) {
 	.headerIcons {
 		display: flex;
 		justify-content: space-between;

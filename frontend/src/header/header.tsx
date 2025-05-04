@@ -8,18 +8,32 @@ import DiscordIcon from "../design_system/icons/discord-brands-solid.svg?react";
 import GithubIcon from "../design_system/icons/github-brands-solid.svg?react";
 import HamburgerIcon from "../design_system/icons/bars-solid.svg?react";
 import { BaseButton } from "../design_system/base_button/base_button";
+import { Dropdown } from "../design_system/dropdown/dropdown";
+import { COUNTRY_MAPPINGS } from "../utils";
 
 type HeaderProps = {
 	onClickSidePanel: () => void;
+	setCountryCode: (countryCode: string) => void;
+	countryCode: string;
 };
 
-export function Header({ onClickSidePanel }: HeaderProps) {
+export function Header(props: HeaderProps) {
 	return (
 		<div className="header">
 			<Link to="/">
 				<h1 className="headerTitle">Steam Wishlist Calculator</h1>
 			</Link>
 			<div className="headerIcons">
+				<Dropdown
+					onChange={props.setCountryCode}
+					options={[...COUNTRY_MAPPINGS.entries()].map(
+						([countryCode, countryDetails]) => ({
+							value: countryCode,
+							label: `${countryDetails.currencyName} (${countryDetails.currency})`,
+						})
+					)}
+					value={props.countryCode}
+				/>
 				<Link to="/">
 					<HomeIcon className="headerIcon" />
 				</Link>
@@ -46,7 +60,7 @@ export function Header({ onClickSidePanel }: HeaderProps) {
 				</a>
 			</div>
 			<div className="headerSidebarButtonContainer">
-				<BaseButton onClick={onClickSidePanel}>
+				<BaseButton onClick={props.onClickSidePanel}>
 					<HamburgerIcon className="headerIcon" />
 				</BaseButton>
 			</div>

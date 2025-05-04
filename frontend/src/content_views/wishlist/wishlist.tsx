@@ -56,13 +56,7 @@ export function Wishlist(props: WishlistProps) {
 			});
 		}
 
-		if (
-			isSteamId(steamId) &&
-			profileNameLoading === LoadState.Pending &&
-			wishlistLoading === LoadState.Pending &&
-			(props.countryCodeLoading === LoadState.Loaded ||
-				props.countryCodeLoading === LoadState.Failed)
-		) {
+		if (isSteamId(steamId) && profileNameLoading === LoadState.Pending) {
 			setProfileNameLoading(LoadState.Loading);
 			getProfileName(steamId).then((service_response) => {
 				if (service_response.ok) {
@@ -73,7 +67,15 @@ export function Wishlist(props: WishlistProps) {
 					setProfileNameLoading(LoadState.Failed);
 				}
 			});
+		}
+	}, [steamId, resolveVanityUrlLoading, profileNameLoading]);
 
+	useEffect(() => {
+		if (
+			isSteamId(steamId) &&
+			(props.countryCodeLoading === LoadState.Loaded ||
+				props.countryCodeLoading === LoadState.Failed)
+		) {
 			setWishlistLoading(LoadState.Loading);
 			getWishlist(steamId, props.countryCode).then((service_response) => {
 				if (service_response.ok) {
@@ -85,14 +87,7 @@ export function Wishlist(props: WishlistProps) {
 				}
 			});
 		}
-	}, [
-		steamId,
-		props.countryCode,
-		resolveVanityUrlLoading,
-		profileNameLoading,
-		wishlistLoading,
-		props.countryCodeLoading,
-	]);
+	}, [steamId, props.countryCode, props.countryCodeLoading]);
 
 	if (error) {
 		return <CalculateError text={error} />;

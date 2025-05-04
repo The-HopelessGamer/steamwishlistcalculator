@@ -12,7 +12,7 @@ type ExportModalProps = {
 };
 
 export function ExportModal(props: ExportModalProps) {
-	const isLargeScreen = useMediaQuery("(min-width: 750px)");
+	const isLargeScreen = useMediaQuery("(min-width: 850px)");
 	const [exportMode, setExportMode] = useState<"title" | "appid">("title");
 	const [filterFree, setFilterFree] = useState(false);
 	const [filterOnSale, setFilterOnSale] = useState(false);

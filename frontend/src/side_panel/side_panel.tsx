@@ -2,9 +2,13 @@ import "./side_panel.css";
 import CrossIcon from "../design_system/icons/times-solid.svg?react";
 import { BaseButton } from "../design_system/base_button/base_button";
 import { Link } from "react-router";
+import { Dropdown } from "../design_system/dropdown/dropdown";
+import { COUNTRY_MAPPINGS } from "../utils";
 
 type SidePanelProps = {
 	onClickClose: () => void;
+	setCountryCode: (countryCode: string) => void;
+	countryCode: string;
 };
 
 export function SidePanel(props: SidePanelProps) {
@@ -50,6 +54,21 @@ export function SidePanel(props: SidePanelProps) {
 			>
 				Github
 			</a>
+			<div className="sidePanelDropdownContainer">
+				<Dropdown
+					onChange={(value) => {
+						props.setCountryCode(value);
+						props.onClickClose();
+					}}
+					options={[...COUNTRY_MAPPINGS.entries()].map(
+						([countryCode, countryDetails]) => ({
+							value: countryCode,
+							label: `${countryDetails.currencyName} (${countryDetails.currency})`,
+						})
+					)}
+					value={props.countryCode}
+				/>
+			</div>
 		</div>
 	);
 }
