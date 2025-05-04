@@ -1,0 +1,64 @@
+.wishlistFormTitle {
+	font-size: 2.3rem;
+	font-weight: bold;
+	display: block;
+	text-align: center;
+}
+
+.wishlistFormTotal {
+	text-align: center;
+	justify-content: center;
+	display: flex;
+	margin-bottom: 0.5rem;
+}
+
+.wishlistFormInput {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 1rem;
+	border-radius: 3px;
+	border: 1px solid #c3c3c3;
+	background-color: #efefef;
+}
+
+.wishlistFormInput:focus {
+	outline: 1px solid #1a75ff;
+}
+
+.supportedValuesList {
+	font-size: 1.4rem;
+	padding: 0 2rem;
+	display: grid;
+	grid-template-columns: auto auto;
+	white-space: nowrap;
+}
+
+.wishlistFormTotalLoader {
+	margin-left: 0.3em;
+	display: flex;
+	align-items: center;
+}
+
+.wishlistForm {
+	width: 100%;
+	max-width: 40rem;
+	margin-bottom: 6.8rem;
+}
+
+@media (min-width: 850px) {
+	.wishlistFormTitle {
+		font-size: 3rem;
+	}
+
+	.wishlistForm {
+		width: 100%;
+		max-width: 50rem;
+		margin-bottom: 0;
+	}
+}
+
+@media (max-width: 400px) {
+	.supportedValuesList {
+		grid-template-columns: auto;
+	}
+}

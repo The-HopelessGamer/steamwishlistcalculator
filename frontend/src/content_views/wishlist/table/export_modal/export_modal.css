@@ -1,0 +1,75 @@
+.exportData {
+	box-sizing: border-box;
+	width: 100%;
+	min-height: 5rem;
+	max-height: calc(100vh - 40rem);
+	height: 10rem;
+	box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.3);
+	border-radius: 3px;
+	border: none;
+	padding: 1rem;
+	overflow-y: auto;
+	resize: vertical;
+}
+
+.exportModeDivider {
+	background-color: black;
+	width: 0.2rem;
+}
+
+.exportControlGroupCompact {
+	margin-top: 1rem;
+}
+
+.exportRow {
+	display: flex;
+	align-items: stretch;
+	margin-bottom: 1rem;
+	padding: 0.5rem 0 0.5rem 0;
+	gap: 1rem;
+}
+
+.exportRowCompact {
+	width: 100%;
+}
+
+.exportModesCompact {
+	border-radius: 3px;
+	display: flex;
+	padding: 0.5rem 0 0.5rem 0;
+	gap: 1rem;
+	margin-top: 1rem;
+}
+
+.exportFiltersCompact {
+	gap: 1rem;
+	padding: 0.5rem 0 0.5rem 0;
+	border-radius: 3px;
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: 1rem;
+	margin-top: 1rem;
+}
+
+.exportOptionsContainer {
+	white-space: nowrap;
+	flex-grow: 1;
+}
+
+.exportModesContainer {
+	display: flex;
+	gap: 1rem;
+	flex-grow: 1;
+	margin-top: 1rem;
+}
+
+.exportFiltersContainer {
+	display: flex;
+	flex-grow: 1;
+	gap: 1rem;
+	margin-top: 1rem;
+}
+
+.exportControlGroup {
+	flex-grow: 1;
+}

@@ -1,0 +1,85 @@
+.tableContainer {
+	flex-grow: 1;
+}
+
+.tableTitleSortButton {
+	text-align: left;
+}
+
+.table {
+	overflow-anchor: none;
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0 1rem;
+}
+
+.tableHeaderDivider {
+	height: 2px;
+	background-color: black;
+	border: none;
+	margin: 10px 0;
+}
+
+.tableHeaderCompactDivider {
+	font-size: 1.8rem;
+	font-weight: bold;
+	display: block;
+	text-align: center;
+}
+
+.tableHeaderProfileContainer {
+	padding-bottom: 1.5rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.tableHeaderCompactProfileContainer {
+	flex-direction: column;
+	gap: 1rem;
+	align-items: stretch;
+}
+
+.tableHeaderCompactProfileButton {
+	margin: 1rem 0;
+}
+
+.tableHeaderProfileLinkContainer {
+	flex-grow: 1;
+	align-items: center;
+	justify-content: center;
+	display: flex;
+}
+
+.tableHeaderProfileLink {
+	transition: 0.3s;
+	text-decoration: none;
+	font-size: 2rem;
+	font-weight: bold;
+}
+
+.tableHeaderProfileLink:hover {
+	text-decoration: underline;
+}
+
+.tableHeaderSortingContainer {
+	position: sticky;
+	border-radius: 3px;
+	top: 0;
+	box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.3);
+}
+
+.tableHeaderSortingContainer th:first-child {
+	border-radius: 3px 0px 0px 3px;
+	width: 100%;
+}
+
+.tableHeaderSortingContainer th:last-child {
+	border-radius: 0px 3px 3px 0px;
+}
+
+.tableHeaderSortButton {
+	white-space: nowrap;
+	padding: 0;
+	background-color: white;
+}

@@ -1,0 +1,13 @@
+.wishlistStats {
+	display: flex;
+	justify-content: space-between;
+}
+
+.wishlistStat {
+	flex-grow: 1;
+	text-align: center;
+}
+
+.wishlistStatBorder {
+	border-left: 1px solid black;
+}

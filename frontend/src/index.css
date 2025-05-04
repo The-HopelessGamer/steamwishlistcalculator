@@ -1,0 +1,25 @@
+html {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 62.5%; /* 10px */
+}
+
+body {
+	margin: 0;
+}
+
+p,
+a,
+span,
+div,
+input {
+	font-size: 1.4rem;
+}
+
+a {
+	color: black;
+	transition: 0.2s;
+}
+
+a:hover {
+	color: #1a75ff;
+}

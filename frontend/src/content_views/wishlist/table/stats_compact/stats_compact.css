@@ -1,0 +1,36 @@
+.wishlistStatsCompact {
+	display: block;
+	margin-bottom: 1.5rem;
+	padding: 0 1rem 0 1rem;
+	border-radius: 3px;
+	box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.3);
+	background-color: white;
+}
+
+.wishlistStatCompact {
+	display: grid;
+	grid-template-columns: 40% 60%;
+	align-items: center;
+	padding: 0.8rem 0;
+	font-size: 1.2rem;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.wishlistStatCompact:last-child {
+	border-bottom: none;
+}
+
+.wishlistStatCompactLabel {
+	justify-self: start;
+	padding-right: 1rem;
+}
+
+.wishlistStatCompactValue {
+	justify-self: end;
+	text-align: right;
+	padding-right: 0.5rem;
+}
+
+.wishlistStatCompactBorder {
+	border-left: none;
+}

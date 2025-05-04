@@ -1,0 +1,13 @@
+{
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit",
+    },
+    "editor.insertSpaces": false,
+    "github.copilot.enable": {
+        "*": false,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false
+    },
+}

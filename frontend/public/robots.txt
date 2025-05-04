@@ -1,7 +1,0 @@
-Sitemap: https://www.steamwishlistcalculator.com/sitemap.xml
-User-agent: *
-Disallow: /
-Disallow: /counter.txt
-Disallow: /counterUpdate
-Disallow: /counterRead
-Disallow: /*?*

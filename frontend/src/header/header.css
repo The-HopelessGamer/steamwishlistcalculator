@@ -1,0 +1,44 @@
+.header {
+	background-color: #1a75ff;
+	padding: 1.5rem;
+	align-items: center;
+	display: flex;
+	justify-content: space-between;
+}
+
+.headerTitle {
+	color: white;
+	font-size: 2.5rem;
+	font-weight: bold;
+	text-decoration: none;
+	display: inline-block;
+	margin: 0;
+}
+
+.headerIcons {
+	display: none;
+	gap: 1rem;
+	margin-left: 1rem;
+}
+
+.headerIcon {
+	color: white;
+	height: 3.5rem;
+}
+
+.headerSidebarButtonContainer {
+	display: flex;
+	align-items: center;
+}
+
+@media (min-width: 850px) {
+	.headerIcons {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.headerSidebarButtonContainer {
+		display: none;
+	}
+}
