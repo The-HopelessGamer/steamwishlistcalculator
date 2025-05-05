@@ -6,8 +6,13 @@ import CaretIcon from "../../design_system/icons/caret-down-solid.svg?react";
 
 export function CurrencyDropdown(props: DropdownProps) {
 	const [isOpen, setIsOpen] = useState(false);
+	const [searchTerm, setSearchTerm] = useState("");
 	const dropdownRef = useRef<HTMLDivElement>(null);
 	const selectedOption = props.options.find((opt) => opt.value === props.value);
+
+	const filteredOptions = props.options.filter((option) =>
+		option.label.toLowerCase().includes(searchTerm.toLowerCase())
+	);
 
 	useEffect(() => {
 		const handleClickOutside = (event: MouseEvent) => {
@@ -40,7 +45,18 @@ export function CurrencyDropdown(props: DropdownProps) {
 
 			{isOpen && (
 				<div className="currencyDropdownMenu">
-					{props.options.map((option) => (
+					<div className="currencyDropdownSearchContainer">
+						<input
+							type="text"
+							className="currencyDropdownSearch"
+							placeholder="Search Currency"
+							value={searchTerm}
+							onChange={(e) => setSearchTerm(e.target.value)}
+							onClick={(e) => e.stopPropagation()}
+							autoFocus
+						/>
+					</div>
+					{filteredOptions.map((option) => (
 						<div
 							key={option.value}
 							className={classNames([
@@ -51,6 +67,7 @@ export function CurrencyDropdown(props: DropdownProps) {
 							onClick={() => {
 								props.onChange(option.value);
 								setIsOpen(false);
+								setSearchTerm("");
 							}}
 						>
 							{option.label}
