@@ -8,8 +8,8 @@ import DiscordIcon from "../design_system/icons/discord-brands-solid.svg?react";
 import GithubIcon from "../design_system/icons/github-brands-solid.svg?react";
 import HamburgerIcon from "../design_system/icons/bars-solid.svg?react";
 import { BaseButton } from "../design_system/base_button/base_button";
-import { Dropdown } from "../design_system/dropdown/dropdown";
 import { COUNTRY_MAPPINGS } from "../utils";
+import { CurrencyDropdown } from "./currency_dropdown/currency_dropdown";
 
 type HeaderProps = {
 	onClickSidePanel: () => void;
@@ -24,7 +24,7 @@ export function Header(props: HeaderProps) {
 				<h1 className="headerTitle">Steam Wishlist Calculator</h1>
 			</Link>
 			<div className="headerIcons">
-				<Dropdown
+				<CurrencyDropdown
 					onChange={props.setCountryCode}
 					options={[...COUNTRY_MAPPINGS.entries()].map(
 						([countryCode, countryDetails]) => ({

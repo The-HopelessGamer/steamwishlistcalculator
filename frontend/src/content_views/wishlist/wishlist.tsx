@@ -76,7 +76,6 @@ export function Wishlist(props: WishlistProps) {
 	useEffect(() => {
 		if (
 			isSteamId(steamId) &&
-			wishlistLoading === LoadState.Pending &&
 			(props.countryCodeLoading === LoadState.Loaded ||
 				props.countryCodeLoading === LoadState.Failed)
 		) {
@@ -92,7 +91,7 @@ export function Wishlist(props: WishlistProps) {
 				}
 			});
 		}
-	}, [steamId, props.countryCode, props.countryCodeLoading, wishlistLoading]);
+	}, [steamId, props.countryCode, props.countryCodeLoading]);
 
 	if (error) {
 		return <CalculateError text={error} />;
