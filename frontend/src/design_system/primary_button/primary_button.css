@@ -1,6 +1,6 @@
 .primaryButton {
 	color: white;
-	width: 100%;
+	width: 15rem;
 	padding: 1rem;
 	border-radius: 3px;
 	transition: background-color 0.1s linear;

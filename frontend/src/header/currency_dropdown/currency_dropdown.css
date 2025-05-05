@@ -1,6 +1,6 @@
 .currencyDropdownContainer {
 	position: relative;
-	width: 200px;
+	width: 210px;
 }
 
 .currencyDropdownTrigger {
@@ -15,6 +15,7 @@
 	justify-content: space-between;
 	align-items: center;
 	box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.3);
+	white-space: nowrap;
 }
 
 .currencyDropdownMenu {
@@ -47,8 +48,8 @@
 }
 
 .currencyDropdownArrow {
-	font-size: 12px;
-	transition: transform 0.2s ease;
+	width: 2rem;
+	height: 2rem;
 }
 
 .currencyDropdownArrowUp {

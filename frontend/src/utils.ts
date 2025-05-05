@@ -86,7 +86,7 @@ export const COUNTRY_MAPPINGS = new Map<string, CountryDetails>([
 		{ currency: "MYR", locale: "ms-MY", currencyName: "Malaysian Ringgit" },
 	],
 	["MX", { currency: "MXN", locale: "es-MX", currencyName: "Mexican Peso" }],
-	["EU", { currency: "EUR", locale: "en-EU", currencyName: "Euro" }],
+	//["EU", { currency: "EUR", locale: "en-EU", currencyName: "Euro" }], Broken
 	[
 		"NZ",
 		{ currency: "NZD", locale: "en-NZ", currencyName: "New Zealand Dollar" },
@@ -95,9 +95,9 @@ export const COUNTRY_MAPPINGS = new Map<string, CountryDetails>([
 	["PE", { currency: "PEN", locale: "es-PE", currencyName: "Peruvian Sol" }],
 	["PH", { currency: "PHP", locale: "en-PH", currencyName: "Philippine Peso" }],
 	["PL", { currency: "PLN", locale: "pl-PL", currencyName: "Polish Złoty" }],
-	["QA", { currency: "QAR", locale: "ar-QA", currencyName: "Qatari Riyal" }],
+	["QA", { currency: "QAR", locale: "en-US", currencyName: "Qatari Riyal" }],
 	["RU", { currency: "RUB", locale: "ru-RU", currencyName: "Russian Ruble" }],
-	["SA", { currency: "SAR", locale: "ar-SA", currencyName: "Saudi Riyal" }],
+	["SA", { currency: "SAR", locale: "en-US", currencyName: "Saudi Riyal" }],
 	[
 		"SG",
 		{ currency: "SGD", locale: "en-SG", currencyName: "Singapore Dollar" },

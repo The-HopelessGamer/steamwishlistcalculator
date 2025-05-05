@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { classNames } from "../../utils";
 import "./currency_dropdown.css";
 import { DropdownProps, Dropdown } from "../../design_system/dropdown/dropdown";
+import CaretIcon from "../../design_system/icons/caret-down-solid.svg?react";
 
 export function CurrencyDropdown(props: DropdownProps) {
 	const [isOpen, setIsOpen] = useState(false);
@@ -29,14 +30,12 @@ export function CurrencyDropdown(props: DropdownProps) {
 				onClick={() => setIsOpen(!isOpen)}
 			>
 				<span>{selectedOption?.label || "Select option"}</span>
-				<span
+				<CaretIcon
 					className={classNames([
 						"currencyDropdownArrow",
 						isOpen && "currencyDropdownArrowUp",
 					])}
-				>
-					▼
-				</span>
+				/>
 			</div>
 
 			{isOpen && (
