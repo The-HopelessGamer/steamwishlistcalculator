@@ -3,7 +3,6 @@ import { ContentBox } from "../../design_system/content_box/content_box";
 import { PrimaryButton } from "../../design_system/primary_button/primary_button";
 import { useNavigate } from "react-router";
 import { Loader } from "../../design_system/loader/loader";
-import { useState } from "react";
 import { extractSteamId } from "../../utils";
 
 type WishlistFormProps = {
@@ -12,12 +11,12 @@ type WishlistFormProps = {
 
 export function WishlistForm({ totalWishlistsCalculated }: WishlistFormProps) {
 	const navigate = useNavigate();
-	const [steamId, setSteamId] = useState("");
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		// Extract the ID before navigation
-		const processedId = extractSteamId(steamId);
+		const formData = new FormData(e.currentTarget);
+		const inputValue = formData.get("steamId")?.toString() || "";
+		const processedId = extractSteamId(inputValue);
 		navigate(`/wishlist/${processedId}`);
 	};
 
@@ -35,14 +34,14 @@ export function WishlistForm({ totalWishlistsCalculated }: WishlistFormProps) {
 						</span>
 					)}
 				</span>
-				<form onSubmit={handleSubmit}>
+				<form onSubmit={handleSubmit} autoComplete="on">
 					<input
 						type="text"
-						value={steamId}
-						onChange={(e) => setSteamId(e.target.value)}
+						name="steamId"
 						className="wishlistFormInput"
 						placeholder="Steam ID"
 						required
+						autoComplete="on"
 					/>
 					<p>Supports:</p>
 					<ul className="supportedValuesList">

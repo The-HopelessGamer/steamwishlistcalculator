@@ -81,9 +81,7 @@ function App() {
 									<Wishlist
 										countryCodeLoading={countryCodeLoading}
 										countryCode={countryCode}
-										setIsAppScrollable={(value: boolean) =>
-											setIsAppScrollable(value)
-										}
+										setIsAppScrollable={setIsAppScrollable}
 									/>
 								}
 							/>
