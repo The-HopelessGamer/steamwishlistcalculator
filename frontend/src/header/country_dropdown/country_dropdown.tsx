@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import { classNames } from "../../utils";
-import "./currency_dropdown.css";
+import "./country_dropdown.css";
 import { DropdownProps, Dropdown } from "../../design_system/dropdown/dropdown";
 import CaretIcon from "../../design_system/icons/caret-down-solid.svg?react";
 
-export function CurrencyDropdown(props: DropdownProps) {
+export function CountryDropdown(props: DropdownProps) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [searchTerm, setSearchTerm] = useState("");
 	const dropdownRef = useRef<HTMLDivElement>(null);
@@ -29,27 +29,27 @@ export function CurrencyDropdown(props: DropdownProps) {
 	}, []);
 
 	return (
-		<div className="currencyDropdownContainer" ref={dropdownRef}>
+		<div className="countryDropdownContainer" ref={dropdownRef}>
 			<div
-				className="currencyDropdownTrigger"
+				className="countryDropdownTrigger"
 				onClick={() => setIsOpen(!isOpen)}
 			>
-				<span>{selectedOption?.label || "Select Currency"}</span>
+				<span>{selectedOption?.label || "Select Country"}</span>
 				<CaretIcon
 					className={classNames([
-						"currencyDropdownArrow",
-						isOpen && "currencyDropdownArrowUp",
+						"countryDropdownArrow",
+						isOpen && "countryDropdownArrowUp",
 					])}
 				/>
 			</div>
 
 			{isOpen && (
-				<div className="currencyDropdownMenu">
-					<div className="currencyDropdownSearchContainer">
+				<div className="countryDropdownMenu">
+					<div className="countryDropdownSearchContainer">
 						<input
 							type="text"
-							className="currencyDropdownSearch"
-							placeholder="Search Currency"
+							className="countryDropdownSearch"
+							placeholder="Search Country"
 							value={searchTerm}
 							onChange={(e) => setSearchTerm(e.target.value)}
 							onClick={(e) => e.stopPropagation()}
@@ -60,9 +60,8 @@ export function CurrencyDropdown(props: DropdownProps) {
 						<div
 							key={option.value}
 							className={classNames([
-								"currencyDropdownOption",
-								option.value === props.value &&
-									"currencyDropdownOptionSelected",
+								"countryDropdownOption",
+								option.value === props.value && "countryDropdownOptionSelected",
 							])}
 							onClick={() => {
 								props.onChange(option.value);
