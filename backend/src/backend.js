@@ -187,15 +187,12 @@ function isCountryCodeValid(countryCode) {
 		"US",
 		"UY",
 		"VN",
+		"DE",
 	];
 	return countryCodesList.includes(countryCode);
 }
 
 async function getWishlistItems(steamId, countryCode) {
-	if (!isCountryCodeValid(countryCode)) {
-		return undefined;
-	}
-
 	const wishlistItems = await getWishlistItemIds(steamId);
 
 	if (wishlistItems === undefined) {
@@ -238,16 +235,19 @@ function main() {
 		query("vanityUrl").notEmpty().escape(),
 		async function (req, res) {
 			const result = validationResult(req);
+
 			if (!result.isEmpty()) {
 				res.status(400);
 				return res.send("Invalid Steam ID");
 			}
 
 			const steamId = await resolveVanityUrl(req.query.vanityUrl);
+
 			if (steamId === undefined) {
 				res.status(500);
 				return res.send("Failed Fetching Steam ID");
 			}
+
 			return res.send(steamId);
 		}
 	);
@@ -264,14 +264,22 @@ function main() {
 				res.status(400);
 				return res.send("Invalid Shareable Link");
 			}
+
+			if (!isCountryCodeValid(req.query.countryCode)) {
+				res.status(400);
+				return res.send("Unsupported Country Code");
+			}
+
 			const wishlist = await getWishlistItems(
 				req.query.steamId,
 				req.query.countryCode
 			);
+
 			if (wishlist === undefined) {
 				res.status(400);
 				return res.send("Wishlist Empty or Private");
 			}
+
 			return res.send(JSON.stringify(wishlist));
 		}
 	);
@@ -296,7 +304,7 @@ function main() {
 	});
 
 	router.post("/counterUpdate", async function (req, res) {
-		const count = fs.readFileSync("./counter.txt", "utf8");
+		let count = fs.readFileSync("./counter.txt", "utf8");
 		count++;
 		fs.writeFileSync("./counter.txt", count.toString());
 		res.send();
@@ -309,6 +317,12 @@ function main() {
 			res.status(400);
 			return res.send("Unable to get IP Address");
 		}
+
+		if (!isCountryCodeValid(location.country)) {
+			res.status(400);
+			return res.send("Unsupported Country Code");
+		}
+
 		return res.send(location.country);
 	});
 

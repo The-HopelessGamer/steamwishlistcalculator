@@ -1,15 +1,16 @@
-import { useParams } from "react-router";
 import { Loading } from "./loading/loading";
 import { useState, useEffect } from "react";
 import {
 	resolveVanityUrl,
 	getProfileName,
 	getWishlist,
+	counterUpdate,
 } from "../../backend_api";
 import { CalculateError } from "./calculate_error/calculate_error";
-import { LoadState } from "../../utils";
+import { extractSteamId, LoadState } from "../../utils";
 import { Table } from "./table/table";
 import { WishlistItem } from "../../wishlist_item";
+import { useParams } from "react-router";
 
 function isSteamId(steamIdOrVanityUrl: string) {
 	return (
@@ -32,7 +33,9 @@ export function Wishlist(props: WishlistProps) {
 	const [profileNameLoading, setProfileNameLoading] = useState(
 		LoadState.Pending
 	);
-	const [steamId, setSteamId] = useState(useParams().wishlistId ?? "");
+	const [steamId, setSteamId] = useState(
+		extractSteamId(useParams().wishlistId ?? "")
+	);
 	const [error, setError] = useState<string | undefined>(undefined);
 	const [profileName, setProfileName] = useState("");
 	const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
@@ -81,6 +84,7 @@ export function Wishlist(props: WishlistProps) {
 				if (service_response.ok) {
 					setWishlist(service_response.data);
 					setWishlistLoading(LoadState.Loaded);
+					counterUpdate();
 				} else {
 					setError(service_response.text);
 					setWishlistLoading(LoadState.Failed);
