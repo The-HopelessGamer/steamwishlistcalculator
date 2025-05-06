@@ -34,7 +34,7 @@ export function CurrencyDropdown(props: DropdownProps) {
 				className="currencyDropdownTrigger"
 				onClick={() => setIsOpen(!isOpen)}
 			>
-				<span>{selectedOption?.label || "Select option"}</span>
+				<span>{selectedOption?.label || "Select Currency"}</span>
 				<CaretIcon
 					className={classNames([
 						"currencyDropdownArrow",
