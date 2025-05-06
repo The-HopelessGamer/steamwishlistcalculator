@@ -63,7 +63,7 @@ export function SidePanel(props: SidePanelProps) {
 					options={[...COUNTRY_MAPPINGS.entries()].map(
 						([countryCode, countryDetails]) => ({
 							value: countryCode,
-							label: `${countryDetails.currencyName} (${countryDetails.currency})`,
+							label: countryDetails.countryName,
 						})
 					)}
 					value={props.countryCode}
