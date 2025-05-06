@@ -187,13 +187,14 @@ function isCountryCodeValid(countryCode) {
 		"US",
 		"UY",
 		"VN",
+		"DE",
 	];
 	return countryCodesList.includes(countryCode);
 }
 
 async function getWishlistItems(steamId, countryCode) {
 	if (!isCountryCodeValid(countryCode)) {
-		return undefined;
+		return "US";
 	}
 
 	const wishlistItems = await getWishlistItemIds(steamId);
