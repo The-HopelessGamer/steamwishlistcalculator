@@ -175,7 +175,6 @@ function isCountryCodeValid(countryCode) {
 		"BM",
 		"BN",
 		"BO",
-		"BQ",
 		"BR",
 		"BS",
 		"BT",

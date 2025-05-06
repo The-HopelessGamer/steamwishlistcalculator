@@ -71,10 +71,6 @@ export const COUNTRY_MAPPINGS = new Map<string, CountryDetails>([
 	["BM", { currency: "BMD", locale: "en-BM", countryName: "Bermuda" }],
 	["BN", { currency: "BND", locale: "ms-BN", countryName: "Brunei" }],
 	["BO", { currency: "USD", locale: "en-US", countryName: "Bolivia" }],
-	[
-		"BQ",
-		{ currency: "USD", locale: "nl-BQ", countryName: "Caribbean Netherlands" },
-	],
 	["BR", { currency: "BRL", locale: "pt-BR", countryName: "Brazil" }],
 	["BS", { currency: "BSD", locale: "en-BS", countryName: "Bahamas" }],
 	["BT", { currency: "USD", locale: "en-US", countryName: "Bhutan" }],
