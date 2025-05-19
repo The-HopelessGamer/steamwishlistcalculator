@@ -46,6 +46,7 @@ export function Table(props: TableProps) {
 			<a
 				href={STEAM_PROFILE_BASE_URL + props.steamId}
 				className="tableHeaderProfileLink"
+				target="_blank"
 			>
 				{props.profileName}
 			</a>
