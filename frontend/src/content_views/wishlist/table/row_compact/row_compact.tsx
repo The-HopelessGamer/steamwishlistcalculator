@@ -1,6 +1,6 @@
 import { classNames } from "../../../../utils";
 import { WishlistItem } from "../../../../wishlist_item";
-import "./row_compact.css";
+import styles from "./row_compact.module.css";
 
 type RowCompactProps = {
 	item: WishlistItem;
@@ -9,12 +9,12 @@ type RowCompactProps = {
 
 export function RowCompact(props: RowCompactProps) {
 	return (
-		<tr className="tableRowCompact">
+		<tr className={styles.tableRowCompact}>
 			<td>
-				<div className="tableRowCompactLabel">Title</div>
+				<div className={styles.tableRowCompactLabel}>Title</div>
 				<a
 					href={props.item.link()}
-					className="tableRowCompactTitleContainer"
+					className={styles.tableRowCompactTitleContainer}
 					title={props.item.formattedTitle()}
 					target="_blank"
 				>
@@ -22,48 +22,52 @@ export function RowCompact(props: RowCompactProps) {
 				</a>
 			</td>
 			<td>
-				<div className="tableRowCompactLabel">Release Date</div>
-				<div className="tableRowCompactValue">
+				<div className={styles.tableRowCompactLabel}>Release Date</div>
+				<div className={styles.tableRowCompactValue}>
 					{props.item.formattedReleaseDate()}
 				</div>
 			</td>
 			<td>
-				<div className="tableRowCompactLabel">AppID</div>
-				<div className="tableRowCompactValue">{String(props.item.appid())}</div>
+				<div className={styles.tableRowCompactLabel}>AppID</div>
+				<div className={styles.tableRowCompactValue}>
+					{String(props.item.appid())}
+				</div>
 			</td>
 			<td>
-				<div className="tableRowCompactLabel">On Sale</div>
+				<div className={styles.tableRowCompactLabel}>On Sale</div>
 				<div
 					className={classNames([
-						"tableRowCompactValue",
+						styles.tableRowCompactValue,
 						!props.isSalePricing &&
 							props.item.onSale() &&
-							"tableRowDisabledTableText",
+							styles.tableRowDisabledTableText,
 					])}
 				>
 					{props.item.onSale() ? `${props.item.discountPercentage()}%` : "No"}
 				</div>
 			</td>
 			<td>
-				<div className="tableRowCompactLabel">Pre Order</div>
-				<div className="tableRowCompactValue">
+				<div className={styles.tableRowCompactLabel}>Pre Order</div>
+				<div className={styles.tableRowCompactValue}>
 					{props.item.isPreOrder() ? "Yes" : "No"}
 				</div>
 			</td>
 			<td>
-				<div className="tableRowCompactLabel">Price</div>
-				<div className="tableRowCompactPriceContainer">
+				<div className={styles.tableRowCompactLabel}>Price</div>
+				<div className={styles.tableRowCompactPriceContainer}>
 					{props.isSalePricing ? (
 						<>
-							<span className="tableRowCompactPriceText tableRowCompactDisabledTableText tableRowCompactSalePriceTextSmall">
+							<span
+								className={`${styles.tableRowCompactPriceText} ${styles.tableRowCompactDisabledTableText} ${styles.tableRowCompactSalePriceTextSmall}`}
+							>
 								{props.item.formattedOriginalPrice()}
 							</span>
-							<span className="tableRowCompactPriceText">
+							<span className={styles.tableRowCompactPriceText}>
 								{props.item.formattedPrice()}
 							</span>
 						</>
 					) : (
-						<span className="tableRowCompactPriceText">
+						<span className={styles.tableRowCompactPriceText}>
 							{props.item.formattedOriginalPrice() ??
 								props.item.formattedPrice()}
 						</span>

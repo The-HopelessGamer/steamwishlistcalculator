@@ -1,4 +1,4 @@
-import "./export_modal.css";
+import styles from "./export_modal.module.css";
 import { Modal } from "../../../../design_system/modal/modal";
 import { WishlistItem } from "../../../../wishlist_item";
 import { RefObject, useState } from "react";
@@ -61,17 +61,17 @@ export function ExportModal(props: ExportModalProps) {
 
 	const exportFilterOptions = (
 		<>
-			<div className="exportOptionsContainer">
+			<div className={styles.exportOptionsContainer}>
 				<Switch on={filterFree} onChange={(value) => setFilterFree(value)}>
 					Free
 				</Switch>
 			</div>
-			<div className="exportOptionsContainer">
+			<div className={styles.exportOptionsContainer}>
 				<Switch on={filterOnSale} onChange={(value) => setFilterOnSale(value)}>
 					On Sale
 				</Switch>
 			</div>
-			<div className="exportOptionsContainer">
+			<div className={styles.exportOptionsContainer}>
 				<Switch
 					on={filterPreOrder}
 					onChange={(value) => setFilterPreOrder(value)}
@@ -79,7 +79,7 @@ export function ExportModal(props: ExportModalProps) {
 					Pre Order
 				</Switch>
 			</div>
-			<div className="exportOptionsContainer">
+			<div className={styles.exportOptionsContainer}>
 				<Switch
 					on={filterUnlisted}
 					onChange={(value) => setFilterUnlisted(value)}
@@ -98,15 +98,15 @@ export function ExportModal(props: ExportModalProps) {
 		>
 			{isLargeScreen ? (
 				<>
-					<div className="exportRow">
-						<div className="exportControlGroup">
+					<div className={styles.exportRow}>
+						<div className={styles.exportControlGroup}>
 							Mode:
-							<div className="exportModesContainer">{exportModes}</div>
+							<div className={styles.exportModesContainer}>{exportModes}</div>
 						</div>
-						<div className="exportModeDivider" />
-						<div className="exportControlGroup">
+						<div className={styles.exportModeDivider} />
+						<div className={styles.exportControlGroup}>
 							Filter By:
-							<div className="exportFiltersContainer">
+							<div className={styles.exportFiltersContainer}>
 								{exportFilterOptions}
 							</div>
 						</div>
@@ -114,19 +114,21 @@ export function ExportModal(props: ExportModalProps) {
 				</>
 			) : (
 				<>
-					<div className="exportRowCompact">
-						<div className="exportControlGroup">
+					<div className={styles.exportRowCompact}>
+						<div className={styles.exportControlGroup}>
 							Mode:
-							<div className="exportModesCompact">{exportModes}</div>
+							<div className={styles.exportModesCompact}>{exportModes}</div>
 						</div>
-						<div className="exportControlGroupCompact">
+						<div className={styles.exportControlGroupCompact}>
 							Filter By:
-							<div className="exportFiltersCompact">{exportFilterOptions}</div>
+							<div className={styles.exportFiltersCompact}>
+								{exportFilterOptions}
+							</div>
 						</div>
 					</div>
 				</>
 			)}
-			<textarea className="exportData" readOnly value={exportOutput} />
+			<textarea className={styles.exportData} readOnly value={exportOutput} />
 		</Modal>
 	);
 }

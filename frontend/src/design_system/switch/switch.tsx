@@ -1,4 +1,4 @@
-import "./switch.css";
+import styles from "./switch.module.css";
 import { BaseButton } from "../base_button/base_button";
 import { classNames } from "../../utils";
 
@@ -14,7 +14,10 @@ export function Switch(props: SwitchProps) {
 			onClick={() => {
 				props.onChange(!props.on);
 			}}
-			className={classNames(["switch", props.on ? "switchOn" : "switchOff"])}
+			className={classNames([
+				styles.switch,
+				props.on ? styles.switchOn : styles.switchOff,
+			])}
 		>
 			{props.children}
 		</BaseButton>

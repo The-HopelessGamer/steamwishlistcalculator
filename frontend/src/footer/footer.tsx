@@ -1,12 +1,12 @@
-import "./footer.css";
+import styles from "./footer.module.css";
 import { Delimited } from "../design_system/delimited/delimited";
 import { Link } from "react-router";
 import { partners } from "../partners";
 
 export function Footer() {
 	return (
-		<div className="footer">
-			<p className="footerText">
+		<div className={styles.footer}>
+			<p className={styles.footerText}>
 				<Delimited
 					elements={[
 						<Link to="/privacy-policy">Privacy Policy</Link>,
@@ -38,12 +38,12 @@ export function Footer() {
 					delimiter=" - "
 				/>
 			</p>
-			<p className="footerText">
+			<p className={styles.footerText}>
 				This website is Not affiliated with Valve Corporation, Steam, or any of
 				their partners. All Copyrights & Trademarks reserved to their respective
 				owners.
 			</p>
-			<p className="footerText">
+			<p className={styles.footerText}>
 				<span>Website owned & developed by </span>
 				<a
 					href="http://steamcommunity.com/id/The_HopelessGamer"

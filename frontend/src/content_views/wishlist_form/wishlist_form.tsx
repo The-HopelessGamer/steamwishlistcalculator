@@ -1,4 +1,4 @@
-import "./wishlist_form.css";
+import styles from "./wishlist_form.module.css";
 import { ContentBox } from "../../design_system/content_box/content_box";
 import { PrimaryButton } from "../../design_system/primary_button/primary_button";
 import { useNavigate } from "react-router";
@@ -39,15 +39,17 @@ export function WishlistForm() {
 	};
 
 	return (
-		<div className="wishlistForm">
+		<div className={styles.wishlistForm}>
 			<ContentBox color="white">
-				<span className="wishlistFormTitle">Calculate Your Wishlist</span>
-				<span className="wishlistFormTotal">
+				<span className={styles.wishlistFormTitle}>
+					Calculate Your Wishlist
+				</span>
+				<span className={styles.wishlistFormTotal}>
 					Total Wishlists Calculated:{" "}
 					{totalWishlistsCalculated ? (
 						totalWishlistsCalculated.toLocaleString("en-US")
 					) : (
-						<span className="wishlistFormTotalLoader">
+						<span className={styles.wishlistFormTotalLoader}>
 							<Loader color="black" />
 						</span>
 					)}
@@ -56,13 +58,13 @@ export function WishlistForm() {
 					<input
 						type="text"
 						name="steamId"
-						className="wishlistFormInput"
+						className={styles.wishlistFormInput}
 						placeholder="Steam ID"
 						required
 						autoComplete="on"
 					/>
 					<p>Supports:</p>
-					<ul className="supportedValuesList">
+					<ul className={styles.supportedValuesList}>
 						<li>Steam ID64</li>
 						<li>Steam Profile URL</li>
 						<li>Steam Custom URL</li>

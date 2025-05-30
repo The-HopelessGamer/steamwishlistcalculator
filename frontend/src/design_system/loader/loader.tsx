@@ -1,4 +1,4 @@
-import "./loader.css";
+import styles from "./loader.module.css";
 import { classNames } from "../../utils";
 
 type LoaderProps = {
@@ -10,8 +10,8 @@ export function Loader(props: LoaderProps) {
 	return (
 		<span
 			className={classNames([
-				"loader",
-				color === "white" ? "loaderWhite" : "loaderBlack",
+				styles.loader,
+				color === "white" ? styles.loaderWhite : styles.loaderBlack,
 			])}
 		/>
 	);

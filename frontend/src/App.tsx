@@ -1,4 +1,4 @@
-import "./App.css";
+import styles from "./app.module.css";
 import { Header } from "./header/header";
 import { Footer } from "./footer/footer";
 import { Routes, Route } from "react-router";
@@ -37,8 +37,13 @@ function App() {
 	}, [countryCodeLoading]);
 
 	return (
-		<div className={classNames(["app", !isAppScrollable && "appNoScroll"])}>
-			<div className="mobileView">
+		<div
+			className={classNames([
+				styles.app,
+				!isAppScrollable && styles.appNoScroll,
+			])}
+		>
+			<div className={styles.mobileView}>
 				<Header
 					onClickSidePanel={() => {
 						setSidePanelOpen(true);
@@ -47,8 +52,8 @@ function App() {
 					setCountryCode={setCountryCode}
 					countryCode={countryCode}
 				/>
-				<div className="contentContainer">
-					<div className="fixedWidthContainer">
+				<div className={styles.contentContainer}>
+					<div className={styles.fixedWidthContainer}>
 						<Routes>
 							<Route path="/" element={<WishlistForm />} />
 							<Route
@@ -72,8 +77,8 @@ function App() {
 			<Footer />
 			<div
 				className={classNames([
-					"sidePanelContainer",
-					!sidePanelOpen && "sidePanelContainerHidden",
+					styles.sidePanelContainer,
+					!sidePanelOpen && styles.sidePanelContainerHidden,
 				])}
 			>
 				<SidePanel

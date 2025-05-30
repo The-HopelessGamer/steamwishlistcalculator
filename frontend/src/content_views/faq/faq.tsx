@@ -1,5 +1,5 @@
 import { ContentBox } from "../../design_system/content_box/content_box";
-import "./faq.css";
+import styles from "./faq.module.css";
 
 type QuestionAnswer = {
 	question: string;
@@ -67,9 +67,9 @@ const questionAnswers: QuestionAnswer[] = [
 export function Faq() {
 	return (
 		<ContentBox color="white">
-			<h1 className="faqTitle">FAQ</h1>
+			<h1 className={styles.faqTitle}>FAQ</h1>
 			{questionAnswers.map((questionAnswer, index) => (
-				<div className="questionAnswerContainer" key={index}>
+				<div className={styles.questionAnswerContainer} key={index}>
 					<ContentBox color="grey">
 						<p>
 							<b>Question: </b>

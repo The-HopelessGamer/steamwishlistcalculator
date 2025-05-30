@@ -1,4 +1,4 @@
-import "./header.css";
+import styles from "./header.module.css";
 import { Link } from "react-router";
 import HomeIcon from "../design_system/icons/home-solid.svg?react";
 import FaqIcon from "../design_system/icons/question-circle-regular.svg?react";
@@ -19,11 +19,11 @@ type HeaderProps = {
 
 export function Header(props: HeaderProps) {
 	return (
-		<div className="header">
+		<div className={styles.header}>
 			<Link to="/">
-				<h1 className="headerTitle">Steam Wishlist Calculator</h1>
+				<h1 className={styles.headerTitle}>Steam Wishlist Calculator</h1>
 			</Link>
-			<div className="headerIcons">
+			<div className={styles.headerIcons}>
 				<CountryDropdown
 					onChange={props.setCountryCode}
 					options={[...COUNTRY_MAPPINGS.entries()].map(
@@ -35,33 +35,33 @@ export function Header(props: HeaderProps) {
 					value={props.countryCode}
 				/>
 				<Link to="/">
-					<HomeIcon className="headerIcon" />
+					<HomeIcon className={styles.headerIcon} />
 				</Link>
 				<Link to="/faq">
-					<FaqIcon className="headerIcon" />
+					<FaqIcon className={styles.headerIcon} />
 				</Link>
 				<Link to="/partners">
-					<PartnerIcon className="headerIcon" />
+					<PartnerIcon className={styles.headerIcon} />
 				</Link>
 				<a
 					href="https://steamcommunity.com/groups/SteamWishlistCalculator"
 					target="blank"
 				>
-					<SteamIcon className="headerIcon" />
+					<SteamIcon className={styles.headerIcon} />
 				</a>
 				<a href="https://discord.com/invite/abyAUJU" target="blank">
-					<DiscordIcon className="headerIcon" />
+					<DiscordIcon className={styles.headerIcon} />
 				</a>
 				<a
 					href="https://github.com/The-HopelessGamer/steamwishlistcalculator"
 					target="blank"
 				>
-					<GithubIcon className="headerIcon" />
+					<GithubIcon className={styles.headerIcon} />
 				</a>
 			</div>
-			<div className="headerSidebarButtonContainer">
+			<div className={styles.headerSidebarButtonContainer}>
 				<BaseButton onClick={props.onClickSidePanel}>
-					<HamburgerIcon className="headerIcon" />
+					<HamburgerIcon className={styles.headerIcon} />
 				</BaseButton>
 			</div>
 		</div>

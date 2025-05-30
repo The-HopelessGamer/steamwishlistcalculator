@@ -1,4 +1,4 @@
-import "./modal.css";
+import styles from "./modal.module.css";
 import { ContentBox } from "../content_box/content_box";
 import { BaseButton } from "../base_button/base_button";
 import CrossIcon from "../icons/times-solid.svg?react";
@@ -16,19 +16,19 @@ export function Modal(props: ModalProps) {
 			ref={props.ref}
 			aria-modal="true"
 			aria-labelledby="modalDialogTitle"
-			className="modalDialog"
+			className={styles.modalDialog}
 		>
-			<div className="modalDialogContainer" onClick={props.onClickClose}>
-				<div className="modalDialogFixedWidthContainer">
+			<div className={styles.modalDialogContainer} onClick={props.onClickClose}>
+				<div className={styles.modalDialogFixedWidthContainer}>
 					<div onClick={(event) => event.stopPropagation()}>
 						<ContentBox color="white">
-							<div className="modalDialogHeader">
+							<div className={styles.modalDialogHeader}>
 								<h2 id="modalDialogTitle">{props.title}</h2>
 								<BaseButton
-									className="modalDialogCloseButton"
+									className={styles.modalDialogCloseButton}
 									onClick={props.onClickClose}
 								>
-									<CrossIcon className="modalDialogCloseButtonIcon" />
+									<CrossIcon className={styles.modalDialogCloseButtonIcon} />
 								</BaseButton>
 							</div>
 							{props.children}

@@ -1,4 +1,4 @@
-import "./stats.css";
+import styles from "./stats.module.css";
 import { classNames } from "../../../../utils";
 import { WishlistItem } from "../../../../wishlist_item";
 import { getStats } from "../stats_utils";
@@ -11,13 +11,13 @@ type StatsProps = {
 
 export function Stats(props: StatsProps) {
 	return (
-		<div className="wishlistStats">
+		<div className={styles.wishlistStats}>
 			{getStats(props.wishlist, props.isSalePricing, props.countryCode).map(
 				(stat, index) => (
 					<div
 						className={classNames([
-							"wishlistStat",
-							!!index && "wishlistStatBorder",
+							styles.wishlistStat,
+							!!index && styles.wishlistStatBorder,
 						])}
 						key={index}
 					>

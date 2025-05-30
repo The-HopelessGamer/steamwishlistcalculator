@@ -1,7 +1,7 @@
-import "./stats_compact.css";
 import { classNames } from "../../../../utils";
 import { WishlistItem } from "../../../../wishlist_item";
 import { getStats } from "../stats_utils";
+import styles from "./stats_compact.module.css";
 
 type StatsCompactProps = {
 	wishlist: WishlistItem[];
@@ -11,18 +11,18 @@ type StatsCompactProps = {
 
 export function StatsCompact(props: StatsCompactProps) {
 	return (
-		<div className="wishlistStatsCompact">
+		<div className={styles.wishlistStatsCompact}>
 			{getStats(props.wishlist, props.isSalePricing, props.countryCode).map(
 				(stat, index) => (
 					<div
 						className={classNames([
-							"wishlistStatCompact",
-							!!index && "wishlistStatCompactBorder",
+							styles.wishlistStatCompact,
+							!!index && styles.wishlistStatCompactBorder,
 						])}
 						key={index}
 					>
-						<div className="wishlistStatCompactLabel">{stat.label}</div>
-						<div className="wishlistStatCompactValue">{stat.value}</div>
+						<div className={styles.wishlistStatCompactLabel}>{stat.label}</div>
+						<div className={styles.wishlistStatCompactValue}>{stat.value}</div>
 					</div>
 				)
 			)}

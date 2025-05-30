@@ -1,4 +1,4 @@
-import "./table.css";
+import styles from "./table.module.css";
 import { ContentBox } from "../../../design_system/content_box/content_box";
 import { PrimaryButton } from "../../../design_system/primary_button/primary_button";
 import { Stats } from "./stats/stats";
@@ -42,10 +42,10 @@ export function Table(props: TableProps) {
 	};
 
 	const profileHeader = (
-		<div className="tableHeaderProfileLinkContainer">
+		<div className={styles.tableHeaderProfileLinkContainer}>
 			<a
 				href={STEAM_PROFILE_BASE_URL + props.steamId}
-				className="tableHeaderProfileLink"
+				className={styles.tableHeaderProfileLink}
 				target="_blank"
 			>
 				{props.profileName}
@@ -76,7 +76,7 @@ export function Table(props: TableProps) {
 	);
 
 	return (
-		<div className="tableContainer">
+		<div className={styles.tableContainer}>
 			<ExportModal
 				dialogRef={dialogRef}
 				closeModal={closeModal}
@@ -84,18 +84,18 @@ export function Table(props: TableProps) {
 			/>
 			<ContentBox color="white">
 				{isLargeScreen ? (
-					<div className="tableHeaderProfileContainer">
+					<div className={styles.tableHeaderProfileContainer}>
 						<div>{toggleSalePricingButton}</div>
 						{profileHeader}
 						<div>{exportButton}</div>
 					</div>
 				) : (
-					<div className="tableHeaderCompactProfileContainer">
+					<div className={styles.tableHeaderCompactProfileContainer}>
 						{profileHeader}
-						<div className="tableHeaderCompactProfileButton">
+						<div className={styles.tableHeaderCompactProfileButton}>
 							{toggleSalePricingButton}
 						</div>
-						<div className="tableHeaderCompactProfileButton">
+						<div className={styles.tableHeaderCompactProfileButton}>
 							{exportButton}
 						</div>
 					</div>
@@ -107,7 +107,7 @@ export function Table(props: TableProps) {
 							isSalePricing={isSalePricing}
 							countryCode={props.countryCode}
 						/>
-						<div className="tableHeaderDivider" />
+						<div className={styles.tableHeaderDivider} />
 					</>
 				) : (
 					<>
@@ -116,14 +116,18 @@ export function Table(props: TableProps) {
 							isSalePricing={isSalePricing}
 							countryCode={props.countryCode}
 						/>
-						<span className="tableHeaderCompactDivider">Wishlist Items</span>
+						<span className={styles.tableHeaderCompactDivider}>
+							Wishlist Items
+						</span>
 					</>
 				)}
-				<table className="table">
+				<table className={styles.table}>
 					{isLargeScreen && (
-						<thead className="tableHeaderSortingContainer">
+						<thead className={styles.tableHeaderSortingContainer}>
 							<tr>
-								<th className="tableTitleSortButton tableHeaderSortButton">
+								<th
+									className={`${styles.tableTitleSortButton} ${styles.tableHeaderSortButton}`}
+								>
 									<SortButton
 										text="Title"
 										sortKey="sortByTitle"
@@ -132,7 +136,7 @@ export function Table(props: TableProps) {
 										isReversed={isReversed}
 									/>
 								</th>
-								<th className="tableHeaderSortButton">
+								<th className={styles.tableHeaderSortButton}>
 									<SortButton
 										text="Release Date"
 										sortKey="sortByDate"
@@ -141,7 +145,7 @@ export function Table(props: TableProps) {
 										isReversed={isReversed}
 									/>
 								</th>
-								<th className="tableHeaderSortButton">
+								<th className={styles.tableHeaderSortButton}>
 									<SortButton
 										text="AppID"
 										sortKey="sortByAppid"
@@ -150,7 +154,7 @@ export function Table(props: TableProps) {
 										isReversed={isReversed}
 									/>
 								</th>
-								<th className="tableHeaderSortButton">
+								<th className={styles.tableHeaderSortButton}>
 									<SortButton
 										text="On Sale"
 										sortKey="sortBySale"
@@ -159,7 +163,7 @@ export function Table(props: TableProps) {
 										isReversed={isReversed}
 									/>
 								</th>
-								<th className="tableHeaderSortButton">
+								<th className={styles.tableHeaderSortButton}>
 									<SortButton
 										text="Pre Order"
 										sortKey="sortByPreOrder"
@@ -168,7 +172,7 @@ export function Table(props: TableProps) {
 										isReversed={isReversed}
 									/>
 								</th>
-								<th className="tableHeaderSortButton">
+								<th className={styles.tableHeaderSortButton}>
 									<SortButton
 										text="Price"
 										sortKey="sortByPrice"

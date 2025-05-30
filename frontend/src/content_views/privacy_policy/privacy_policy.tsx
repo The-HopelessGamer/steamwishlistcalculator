@@ -1,10 +1,10 @@
 import { ContentBox } from "../../design_system/content_box/content_box";
-import "./privacy_policy.css";
+import styles from "./privacy_policy.module.css";
 
 export function PrivacyPolicy() {
 	return (
 		<ContentBox color="white">
-			<h1 className="privacyPolicyTitle">Privacy Policy</h1>
+			<h1 className={styles.privacyPolicyTitle}>Privacy Policy</h1>
 			<p>
 				<b>Scope of this Privacy Policy</b>
 				<br />

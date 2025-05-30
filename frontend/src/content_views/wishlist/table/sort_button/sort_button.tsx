@@ -2,7 +2,7 @@ import { BaseButton } from "../../../../design_system/base_button/base_button";
 import { classNames } from "../../../../utils";
 import { sortingFunctions } from "../sorting";
 import CaretIcon from "../../../../design_system/icons/caret-down-solid.svg?react";
-import "./sort_button.css";
+import styles from "./sort_button.module.css";
 
 type SortButtonProps = {
 	text: string;
@@ -18,16 +18,16 @@ export function SortButton(props: SortButtonProps) {
 	return (
 		<BaseButton
 			className={classNames([
-				"tableHeaderSortButtonActive",
-				!isActive && "tableHeaderSortButtonInactive",
+				styles.tableHeaderSortButtonActive,
+				!isActive && styles.tableHeaderSortButtonInactive,
 			])}
 			onClick={() => props.onClick(props.sortKey)}
 		>
 			{props.text}
 			<CaretIcon
 				className={classNames([
-					"tableHeaderSortButtonIcon",
-					props.isReversed && isActive && "tableHeaderSortButtonReversed",
+					styles.tableHeaderSortButtonIcon,
+					props.isReversed && isActive && styles.tableHeaderSortButtonReversed,
 				])}
 			/>
 		</BaseButton>

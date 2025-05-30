@@ -1,4 +1,4 @@
-import "./primary_button.css";
+import styles from "./primary_button.module.css";
 import { BaseButton } from "../base_button/base_button";
 import type { BaseButtonProps } from "../base_button/base_button";
 import { classNames } from "../../utils";
@@ -11,8 +11,10 @@ export function PrimaryButton(props: PrimaryButtonProps) {
 	return (
 		<BaseButton
 			className={classNames([
-				"primaryButton",
-				props.disabled ? "primaryButtonDisabled" : "primaryButtonEnabled",
+				styles.primaryButton,
+				props.disabled
+					? styles.primaryButtonDisabled
+					: styles.primaryButtonEnabled,
 			])}
 			{...props}
 		>

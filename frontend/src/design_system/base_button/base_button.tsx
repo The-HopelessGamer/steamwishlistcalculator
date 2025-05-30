@@ -1,5 +1,5 @@
 import React from "react";
-import "./base_button.css";
+import styles from "./base_button.module.css";
 import { classNames } from "../../utils";
 
 export type BaseButtonProps = {
@@ -13,7 +13,7 @@ export type BaseButtonProps = {
 export function BaseButton(props: BaseButtonProps) {
 	return (
 		<button
-			className={classNames(["baseButton", props.className])}
+			className={classNames([styles.baseButton, props.className])}
 			onClick={props.onClick}
 			type={props.type}
 			disabled={props.disabled}

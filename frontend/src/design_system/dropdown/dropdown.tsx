@@ -1,4 +1,4 @@
-import "./dropdown.css";
+import styles from "./dropdown.module.css";
 
 export type Option = {
 	value: string;
@@ -14,6 +14,7 @@ export type DropdownProps = {
 export function Dropdown(props: DropdownProps) {
 	return (
 		<select
+			className={styles.dropdown}
 			onChange={(event) => props.onChange(event.target.value)}
 			value={props.value}
 		>

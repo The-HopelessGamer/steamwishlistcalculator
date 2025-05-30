@@ -1,4 +1,4 @@
-import "./content_box.css";
+import styles from "./content_box.module.css";
 
 type ContentBoxProps = {
 	color: "white" | "grey";
@@ -9,8 +9,10 @@ export function ContentBox(props: ContentBoxProps) {
 	return (
 		<div
 			className={[
-				"contentBox",
-				props.color === "white" ? "contentBoxWhite" : "contentBoxGrey",
+				styles.contentBox,
+				props.color === "white"
+					? styles.contentBoxWhite
+					: styles.contentBoxGrey,
 			].join(" ")}
 		>
 			{props.children}

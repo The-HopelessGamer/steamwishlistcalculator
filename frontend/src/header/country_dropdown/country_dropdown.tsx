@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { classNames } from "../../utils";
-import "./country_dropdown.css";
+import styles from "./country_dropdown.module.css";
 import { DropdownProps, Dropdown } from "../../design_system/dropdown/dropdown";
 import CaretIcon from "../../design_system/icons/caret-down-solid.svg?react";
 
@@ -29,26 +29,26 @@ export function CountryDropdown(props: DropdownProps) {
 	}, []);
 
 	return (
-		<div className="countryDropdownContainer" ref={dropdownRef}>
+		<div className={styles.countryDropdownContainer} ref={dropdownRef}>
 			<div
-				className="countryDropdownTrigger"
+				className={styles.countryDropdownTrigger}
 				onClick={() => setIsOpen(!isOpen)}
 			>
 				<span>{selectedOption?.label || "Select Country"}</span>
 				<CaretIcon
 					className={classNames([
-						"countryDropdownArrow",
-						isOpen && "countryDropdownArrowUp",
+						styles.countryDropdownArrow,
+						isOpen && styles.countryDropdownArrowUp,
 					])}
 				/>
 			</div>
 
 			{isOpen && (
-				<div className="countryDropdownMenu">
-					<div className="countryDropdownSearchContainer">
+				<div className={styles.countryDropdownMenu}>
+					<div className={styles.countryDropdownSearchContainer}>
 						<input
 							type="text"
-							className="countryDropdownSearch"
+							className={styles.countryDropdownSearch}
 							placeholder="Search Country"
 							value={searchTerm}
 							onChange={(e) => setSearchTerm(e.target.value)}
@@ -60,8 +60,9 @@ export function CountryDropdown(props: DropdownProps) {
 						<div
 							key={option.value}
 							className={classNames([
-								"countryDropdownOption",
-								option.value === props.value && "countryDropdownOptionSelected",
+								styles.countryDropdownOption,
+								option.value === props.value &&
+									styles.countryDropdownOptionSelected,
 							])}
 							onClick={() => {
 								props.onChange(option.value);

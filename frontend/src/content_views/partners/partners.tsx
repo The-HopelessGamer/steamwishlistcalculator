@@ -1,13 +1,13 @@
 import { ContentBox } from "../../design_system/content_box/content_box";
-import "./partners.css";
+import styles from "./partners.module.css";
 import { partners } from "../../partners";
 
 export function Partners() {
 	return (
 		<ContentBox color="white">
-			<h1 className="partnersTitle">Partners</h1>
+			<h1 className={styles.partnersTitle}>Partners</h1>
 			{partners.map((partner, index) => (
-				<div className="partnerContainer" key={index}>
+				<div className={styles.partnerContainer} key={index}>
 					<ContentBox color="grey">
 						<p>
 							<b>

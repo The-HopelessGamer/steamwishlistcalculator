@@ -1,4 +1,4 @@
-import "./side_panel.css";
+import styles from "./side_panel.module.css";
 import CrossIcon from "../design_system/icons/times-solid.svg?react";
 import { BaseButton } from "../design_system/base_button/base_button";
 import { Link } from "react-router";
@@ -13,26 +13,37 @@ type SidePanelProps = {
 
 export function SidePanel(props: SidePanelProps) {
 	return (
-		<div className="sidePanel">
-			<BaseButton className="sidePanelCloseButton" onClick={props.onClickClose}>
-				<CrossIcon className="sidePanelCloseButtonIcon" />
+		<div className={styles.sidePanel}>
+			<BaseButton
+				className={styles.sidePanelCloseButton}
+				onClick={props.onClickClose}
+			>
+				<CrossIcon className={styles.sidePanelCloseButtonIcon} />
 			</BaseButton>
-			<Link to="/" className="sidePanelLink" onClick={props.onClickClose}>
+			<Link
+				to="/"
+				className={styles.sidePanelLink}
+				onClick={props.onClickClose}
+			>
 				Home
 			</Link>
-			<Link to="/faq" className="sidePanelLink" onClick={props.onClickClose}>
+			<Link
+				to="/faq"
+				className={styles.sidePanelLink}
+				onClick={props.onClickClose}
+			>
 				FAQ
 			</Link>
 			<Link
 				to="/partners"
-				className="sidePanelLink"
+				className={styles.sidePanelLink}
 				onClick={props.onClickClose}
 			>
 				Partners
 			</Link>
 
 			<a
-				className="sidePanelLink"
+				className={styles.sidePanelLink}
 				href="https://steamcommunity.com/groups/SteamWishlistCalculator"
 				target="blank"
 			>
@@ -42,19 +53,19 @@ export function SidePanel(props: SidePanelProps) {
 			<a
 				href="https://discord.com/invite/abyAUJU"
 				target="blank"
-				className="sidePanelLink"
+				className={styles.sidePanelLink}
 			>
 				Discord
 			</a>
 
 			<a
-				className="sidePanelLink"
+				className={styles.sidePanelLink}
 				href="https://github.com/The-HopelessGamer/steamwishlistcalculator"
 				target="blank"
 			>
 				Github
 			</a>
-			<div className="sidePanelDropdownContainer">
+			<div className={styles.sidePanelDropdownContainer}>
 				<Dropdown
 					onChange={(value) => {
 						props.setCountryCode(value);
