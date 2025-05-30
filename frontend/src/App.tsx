@@ -10,36 +10,19 @@ import { SidePanel } from "./side_panel/side_panel";
 import { useState, useEffect } from "react";
 import { classNames } from "./utils";
 import { Wishlist } from "./content_views/wishlist/wishlist";
-import { counterRead, ip2Country } from "./backend_api";
+import { ip2Country } from "./backend_api";
 import { LoadState } from "./utils";
 import { CalculateError } from "./content_views/wishlist/calculate_error/calculate_error";
 
 function App() {
 	const [sidePanelOpen, setSidePanelOpen] = useState(false);
 	const [isAppScrollable, setIsAppScrollable] = useState(true);
-	const [totalWishlistsCalculated, setTotalWishlistsCalculated] = useState<
-		number | undefined
-	>(undefined);
-	const [totalWishlistsCalculatedLoading, setTotalWishlistsCalculatedLoading] =
-		useState(LoadState.Pending);
 	const [countryCode, setCountryCode] = useState("US");
 	const [countryCodeLoading, setCountryCodeLoading] = useState(
 		LoadState.Pending
 	);
 
 	useEffect(() => {
-		if (totalWishlistsCalculatedLoading === LoadState.Pending) {
-			setTotalWishlistsCalculatedLoading(LoadState.Loading);
-			counterRead().then((serviceResponse) => {
-				if (serviceResponse.ok) {
-					setTotalWishlistsCalculated(serviceResponse.data);
-					setTotalWishlistsCalculatedLoading(LoadState.Loaded);
-				} else {
-					setTotalWishlistsCalculatedLoading(LoadState.Failed);
-				}
-			});
-		}
-
 		if (countryCodeLoading === LoadState.Pending) {
 			setCountryCodeLoading(LoadState.Loading);
 			ip2Country().then((serviceResponse) => {
@@ -51,7 +34,7 @@ function App() {
 				}
 			});
 		}
-	}, [totalWishlistsCalculatedLoading, countryCodeLoading]);
+	}, [countryCodeLoading]);
 
 	return (
 		<div className={classNames(["app", !isAppScrollable && "appNoScroll"])}>
@@ -67,14 +50,7 @@ function App() {
 				<div className="contentContainer">
 					<div className="fixedWidthContainer">
 						<Routes>
-							<Route
-								path="/"
-								element={
-									<WishlistForm
-										totalWishlistsCalculated={totalWishlistsCalculated}
-									/>
-								}
-							/>
+							<Route path="/" element={<WishlistForm />} />
 							<Route
 								path="/wishlist/:wishlistId"
 								element={

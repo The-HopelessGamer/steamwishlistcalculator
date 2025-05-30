@@ -3,14 +3,32 @@ import { ContentBox } from "../../design_system/content_box/content_box";
 import { PrimaryButton } from "../../design_system/primary_button/primary_button";
 import { useNavigate } from "react-router";
 import { Loader } from "../../design_system/loader/loader";
-import { extractSteamId } from "../../utils";
+import { extractSteamId, LoadState } from "../../utils";
+import { useState, useEffect } from "react";
+import { counterRead } from "../../backend_api";
 
-type WishlistFormProps = {
-	totalWishlistsCalculated: number | undefined;
-};
+export function WishlistForm() {
+	const [totalWishlistsCalculated, setTotalWishlistsCalculated] = useState<
+		number | undefined
+	>(undefined);
+	const [totalWishlistsCalculatedLoading, setTotalWishlistsCalculatedLoading] =
+		useState(LoadState.Pending);
 
-export function WishlistForm({ totalWishlistsCalculated }: WishlistFormProps) {
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (totalWishlistsCalculatedLoading === LoadState.Pending) {
+			setTotalWishlistsCalculatedLoading(LoadState.Loading);
+			counterRead().then((serviceResponse) => {
+				if (serviceResponse.ok) {
+					setTotalWishlistsCalculated(serviceResponse.data);
+					setTotalWishlistsCalculatedLoading(LoadState.Loaded);
+				} else {
+					setTotalWishlistsCalculatedLoading(LoadState.Failed);
+				}
+			});
+		}
+	}, [totalWishlistsCalculatedLoading]);
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
