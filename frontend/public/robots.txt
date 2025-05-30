@@ -1,0 +1,2 @@
+Sitemap: https://www.steamwishlistcalculator.com/sitemap.xml
+User-agent: *
