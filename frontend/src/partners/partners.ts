@@ -1,4 +1,4 @@
-import SteamDesign from "./logos/SteamDesign.jpg";
+import SteamDesign from "./logos/SteamDesign.svg";
 import SteamBacklog from "./logos/SteamBacklog.jpg";
 import SteamLadder from "./logos/SteamLadder.png";
 import SteamLevelUp from "./logos/SteamLevelUp.png";
