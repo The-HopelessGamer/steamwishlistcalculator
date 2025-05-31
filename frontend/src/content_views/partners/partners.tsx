@@ -1,6 +1,6 @@
 import { ContentBox } from "../../design_system/content_box/content_box";
 import styles from "./partners.module.css";
-import { partners } from "../../partners";
+import { partners } from "../../partners/partners";
 
 export function Partners() {
 	return (
@@ -9,14 +9,19 @@ export function Partners() {
 			{partners.map((partner, index) => (
 				<div className={styles.partnerContainer} key={index}>
 					<ContentBox color="grey">
-						<p>
-							<b>
-								<a href={partner.url} target="_blank">
-									{partner.name}
-								</a>
-							</b>
-						</p>
-						<p>{partner.description}</p>
+						<div className={styles.partnerLogoContainer}>
+							<img className={styles.partnerLogo} src={partner.logoUrl} />
+							<div>
+								<p>
+									<b>
+										<a href={partner.url} target="_blank">
+											{partner.name}
+										</a>
+									</b>
+								</p>
+								<p>{partner.description}</p>
+							</div>
+						</div>
 					</ContentBox>
 				</div>
 			))}

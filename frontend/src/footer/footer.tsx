@@ -1,7 +1,7 @@
 import styles from "./footer.module.css";
 import { Delimited } from "../design_system/delimited/delimited";
 import { Link } from "react-router";
-import { partners } from "../partners";
+import { partners } from "../partners/partners";
 
 export function Footer() {
 	return (

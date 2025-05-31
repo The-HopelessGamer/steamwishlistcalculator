@@ -5,3 +5,16 @@
 .partnerContainer {
 	margin: 1rem;
 }
+
+.partnerLogo {
+	height: 70px;
+	display: inline-block;
+	margin-right: 1rem;
+	border-radius: 3px;
+}
+
+.partnerLogoContainer {
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+}
