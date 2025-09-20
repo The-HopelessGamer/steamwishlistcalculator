@@ -34,31 +34,27 @@ export function getStats(
 		},
 		{
 			label: "Total Items",
-			value: wishlist.length.toString(),
+			value: new Intl.NumberFormat(COUNTRY_MAPPINGS.get(countryCode)?.locale).format(wishlist.length)
 		},
 		{
 			label: "Free",
-			value: wishlist
-				.reduce((total, item) => total + (item.isFree() ? 1 : 0), 0)
-				.toString(),
+			value: new Intl.NumberFormat(COUNTRY_MAPPINGS.get(countryCode)?.locale).format(wishlist
+				.reduce((total, item) => total + (item.isFree() ? 1 : 0), 0)),
 		},
 		{
 			label: "On Sale",
-			value: wishlist
-				.reduce((total, item) => total + (item.onSale() ? 1 : 0), 0)
-				.toString(),
+			value: new Intl.NumberFormat(COUNTRY_MAPPINGS.get(countryCode)?.locale).format(wishlist
+				.reduce((total, item) => total + (item.onSale() ? 1 : 0), 0)),
 		},
 		{
 			label: "Pre Order",
-			value: wishlist
-				.reduce((total, item) => total + (item.isPreOrder() ? 1 : 0), 0)
-				.toString(),
+			value: new Intl.NumberFormat(COUNTRY_MAPPINGS.get(countryCode)?.locale).format(wishlist
+				.reduce((total, item) => total + (item.isPreOrder() ? 1 : 0), 0)),
 		},
 		{
 			label: "Unlisted",
-			value: wishlist
-				.reduce((total, item) => total + (item.isUnlisted() ? 1 : 0), 0)
-				.toString(),
+			value: new Intl.NumberFormat(COUNTRY_MAPPINGS.get(countryCode)?.locale).format(wishlist
+				.reduce((total, item) => total + (item.isUnlisted() ? 1 : 0), 0)),
 		},
 	];
 }
