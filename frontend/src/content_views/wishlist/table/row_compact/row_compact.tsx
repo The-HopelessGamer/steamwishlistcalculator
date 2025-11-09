@@ -22,6 +22,12 @@ export function RowCompact(props: RowCompactProps) {
 				</a>
 			</td>
 			<td>
+				<div className={styles.tableRowCompactLabel}>Priority</div>
+				<div className={styles.tableRowCompactValue}>
+					{String(props.item.priority)}
+				</div>
+			</td>
+			<td>
 				<div className={styles.tableRowCompactLabel}>Release Date</div>
 				<div className={styles.tableRowCompactValue}>
 					{props.item.formattedReleaseDate()}

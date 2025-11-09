@@ -25,7 +25,7 @@ type TableProps = {
 
 export function Table(props: TableProps) {
 	const [sortingFunctionKey, setSortingFunctionKey] =
-		useState<keyof typeof sortingFunctions>("sortByTitle");
+		useState<keyof typeof sortingFunctions>("sortByPriority");
 	const [isReversed, setIsReversed] = useState(false);
 	const [isSalePricing, setSalePricing] = useState(true);
 	const dialogRef = useRef<HTMLDialogElement | null>(null);
@@ -125,9 +125,16 @@ export function Table(props: TableProps) {
 					{isLargeScreen && (
 						<thead className={styles.tableHeaderSortingContainer}>
 							<tr>
-								<th
-									className={`${styles.tableTitleSortButton} ${styles.tableHeaderSortButton}`}
-								>
+								<th className={styles.tableHeaderSortButton}>
+									<SortButton
+										text="Priority"
+										sortKey="sortByPriority"
+										onClick={handleSort}
+										currentSortKey={sortingFunctionKey}
+										isReversed={isReversed}
+									/>
+								</th>
+								<th className={`${styles.tableTitleSortButton} ${styles.tableHeaderSortButton}`}>
 									<SortButton
 										text="Title"
 										sortKey="sortByTitle"

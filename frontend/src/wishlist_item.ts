@@ -1,17 +1,20 @@
-import { StoreItem } from "protos/dist/common";
+import type { StoreItem } from "protos/dist/common";
 
 const STEAM_STORE_BASE_URL = "https://store.steampowered.com/app/";
 const STEAM_DB_BASE_URL = "https://steamdb.info/app/";
 
 export class WishlistItem {
 	private readonly storeItem: StoreItem;
+	readonly priority: number | undefined;
 
-	constructor(storeItem: StoreItem) {
+	constructor(storeItem: StoreItem, priority: number | undefined) {
 		if (storeItem.appid === undefined) {
 			throw new Error("Undefined AppID");
 		}
 
 		this.storeItem = storeItem;
+		this.priority = priority;
+		console.log(priority);
 	}
 
 	link() {

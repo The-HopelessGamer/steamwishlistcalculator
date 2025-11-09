@@ -10,6 +10,9 @@ type RowProps = {
 export function Row(props: RowProps) {
 	return (
 		<tr className={styles.tableRow}>
+			<td className={styles.tableRowPropertyContainer}>
+				{String(props.item.priority)}
+			</td>
 			<td>
 				<a
 					href={props.item.link()}

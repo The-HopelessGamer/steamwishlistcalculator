@@ -4,8 +4,11 @@
 	box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.3);
 }
 
+.tableRow td {
+	padding: 0.5rem 0rem 0.5rem 0rem;
+}
+
 .tableRowTitleContainer {
-	margin: 1em;
 	font-size: 1.4rem;
 	display: -webkit-box;
 	line-clamp: 1;
@@ -13,12 +16,12 @@
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	max-width: 30rem;
 }
 
 .tableRowPropertyContainer {
 	text-align: center;
 	font-size: 1.4rem;
-	padding: 0.5em 1.2rem 0.5rem 0;
 }
 
 .tableRowPriceText {

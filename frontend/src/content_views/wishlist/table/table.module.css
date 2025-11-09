@@ -2,10 +2,6 @@
 	flex-grow: 1;
 }
 
-.tableTitleSortButton {
-	text-align: left;
-}
-
 .table {
 	overflow-anchor: none;
 	width: 100%;
@@ -69,9 +65,12 @@
 	box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.3);
 }
 
+.tableHeaderSortingContainer th{
+	padding: 0.5rem 0rem 0.5rem 0rem;
+}
+
 .tableHeaderSortingContainer th:first-child {
 	border-radius: 3px 0px 0px 3px;
-	width: 100%;
 }
 
 .tableHeaderSortingContainer th:last-child {
@@ -79,7 +78,10 @@
 }
 
 .tableHeaderSortButton {
-	white-space: nowrap;
-	padding: 0;
-	background-color: white;
+    white-space: nowrap;
+    background-color: white;
+}
+
+.tableTitleSortButton > button {
+	margin: inherit;
 }

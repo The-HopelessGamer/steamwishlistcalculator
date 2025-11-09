@@ -1,6 +1,5 @@
 .tableHeaderSortButtonActive {
-	padding: 0.5rem 1rem;
-	width: 100%;
+	margin: auto;
 	display: flex;
 	align-items: center;
 }

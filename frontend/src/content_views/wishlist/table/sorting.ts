@@ -12,6 +12,7 @@ export const sortingFunctions = {
 	sortByPrice,
 	sortBySale,
 	sortByPreOrder,
+	sortByPriority,
 } satisfies Record<string, SortingFunction>;
 
 function sortByTitle(
@@ -197,5 +198,31 @@ function sortByPreOrder(
 		}
 
 		return 0;
+	});
+}
+
+function sortByPriority(
+	wishlist: WishlistItem[],
+	reverse: boolean
+): WishlistItem[] {
+	const reverseScale = reverse ? -1 : 1;
+
+	return wishlist.sort((a, b) => {
+		const aPriority = a.priority;
+		const bPriority = b.priority;
+
+		if (aPriority === bPriority) {
+			return 0;
+		}
+
+		if (aPriority === undefined) {
+			return 1 * reverseScale;
+		}
+
+		if (bPriority === undefined) {
+			return -1 * reverseScale;
+		}
+
+		return (aPriority - bPriority) * reverseScale;
 	});
 }
