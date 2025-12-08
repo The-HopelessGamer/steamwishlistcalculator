@@ -45,17 +45,7 @@ export function PrivacyPolicy() {
 				</span>
 			</p>
 			<p>
-				<b>Security</b>
-				<br />
-				<span>
-					We take precautions to protect your information. When you submit
-					sensitive information on our contact form in which you must provide
-					information such as Full Name and Email via the website, your
-					information is protected both online and offline.
-				</span>
-			</p>
-			<p>
-				<b>- Updated: 30/11/2024</b>
+				<b>- Updated: 08/12/2025</b>
 			</p>
 		</ContentBox>
 	);

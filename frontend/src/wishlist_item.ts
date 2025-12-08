@@ -14,7 +14,6 @@ export class WishlistItem {
 
 		this.storeItem = storeItem;
 		this.priority = priority;
-		console.log(priority);
 	}
 
 	link() {
