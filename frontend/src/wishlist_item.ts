@@ -75,7 +75,7 @@ export class WishlistItem {
 	}
 
 	formattedOriginalPrice() {
-		return this.storeItem?.bestPurchaseOption?.formattedOriginalPrice;
+		return this.storeItem?.bestPurchaseOption?.formattedOriginalPrice || undefined;
 	}
 
 	price() {
@@ -98,7 +98,7 @@ export class WishlistItem {
 	}
 
 	isUnlisted() {
-		return !(this.storeItem?.unlisted ?? true);
+		return this.storeItem?.unlisted ?? true;
 	}
 
 	isComingSoon() {

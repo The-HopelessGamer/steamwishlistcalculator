@@ -9,7 +9,6 @@ import service_wishlist from "protos/service_wishlist.js";
 
 const BASE_URL = "https://api.steampowered.com/";
 
-
 const STEAM_API_KEY = process.env.STEAM_API_KEY;
 
 async function resolveVanityUrl(vanityUrl: string) {
@@ -46,7 +45,7 @@ async function getProfileName(steamId: string) {
 	}
 }
 
-async function GetWishlistItemCount(steamId: string) {
+async function getWishlistItemCount(steamId: string) {
 	const GetWishlistItemCountRequest = service_wishlist.CWishlistGetWishlistItemCountRequest.create({
 		steamid: steamId,
 	});
@@ -72,7 +71,9 @@ async function GetWishlistItemCount(steamId: string) {
 	}
 }
 
-async function getWishlistItemsFiltered(steamId: string, countryCode: string) {
+async function getWishlistItemsFiltered(steamId: string, countryCode: string, pageSize: number, startIndex: number) {
+
+
 	const getWishlistRequest = service_wishlist.CWishlistGetWishlistSortedFilteredRequest.create({
 		steamid: steamId,
 		dataRequest: {
@@ -84,9 +85,10 @@ async function getWishlistItemsFiltered(steamId: string, countryCode: string) {
 		filters: {},
 		context: {
 			language: "english",
-			countryCode: countryCode,
+			countryCode,
 		},
-		pageSize: 100,
+		pageSize,
+		startIndex,
 	});
 
 	const getWishlistRequestBuffer =
@@ -98,6 +100,7 @@ async function getWishlistItemsFiltered(steamId: string, countryCode: string) {
 			baseURL: BASE_URL,
 			url: "IWishlistService/GetWishlistSortedFiltered/v1",
 			params: {
+				key: STEAM_API_KEY,
 				input_protobuf_encoded: Buffer.from(getWishlistRequestBuffer).toString('base64'),
 			},
 			responseType: "arraybuffer",
@@ -105,7 +108,8 @@ async function getWishlistItemsFiltered(steamId: string, countryCode: string) {
 
 		const getWishlistResponse = service_wishlist.CWishlistGetWishlistSortedFilteredResponse.decode(response.data);
 		return getWishlistResponse?.items ?? [];
-	} catch {
+	} catch (error) {
+		console.log(error);
 		return undefined;
 	}
 }
@@ -114,23 +118,39 @@ function isCountryCodeValid(countryCode: string) {
 	return countryCodesList.includes(countryCode);
 }
 
-async function getStoreItemsWithPriority(steamId: string, countryCode: string) {
-	const storeItems = await getWishlistItemsFiltered(steamId, countryCode);
+async function getWishlistItemsWithPriority(steamId: string, countryCode: string) {
 
-	console.log(storeItems);
+	const MAX_PAGE_SIZE = 1000;
 
-	if (storeItems === undefined) {
-		return undefined;
-	}
+	const wishlistSize = await getWishlistItemCount(steamId);
 
-	/*
-		const storeItems = await getStoreItems(
-			wishlistItems.map((wishlistItem) => wishlistItem.appid).filter(appid => appid !== undefined),
-			countryCode
-		);
-	*/
+	const pageCount = Math.floor((wishlistSize?.count ?? 0) / MAX_PAGE_SIZE) + 1;
 
-	return storeItems;
+	const wishlistItemsPagination = [...Array(pageCount).keys()].map(async pageIndex => {
+
+		const pageStride = MAX_PAGE_SIZE;
+
+		const currentPage = pageIndex * pageStride;
+		const endPoint = currentPage + pageStride;
+		const page = await getWishlistItemsFiltered(steamId, countryCode, pageStride, currentPage);
+
+		const combinedPages = page?.slice(currentPage, endPoint);
+
+		console.log(combinedPages);
+
+		return combinedPages;
+
+	});
+
+	const wishlistItems = (await Promise.all(wishlistItemsPagination)).reduce((acc, item) => {
+		if (item === undefined) {
+			return undefined;
+		}
+		acc?.push(...item);
+		return acc;
+	}, []);
+
+	return wishlistItems;
 }
 
 function main() {
@@ -196,7 +216,7 @@ function main() {
 				return res.send("Unsupported Country Code");
 			}
 
-			const wishlist = await getStoreItemsWithPriority(
+			const wishlist = await getWishlistItemsWithPriority(
 				req.query?.steamId,
 				req.query?.countryCode
 			);

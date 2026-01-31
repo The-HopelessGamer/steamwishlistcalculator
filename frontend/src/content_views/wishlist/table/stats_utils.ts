@@ -12,8 +12,6 @@ export function getStats(
 	countryCode: string
 ): Stat[] {
 
-	console.log(wishlist);
-
 	const totalPriceInCents = wishlist.reduce(
 		(total, item) =>
 			total +
@@ -22,7 +20,7 @@ export function getStats(
 		0
 	);
 
-	
+
 	const totalPriceFormatted = (totalPriceInCents / 100).toLocaleString(
 		COUNTRY_MAPPINGS.get(countryCode)?.locale,
 		{
