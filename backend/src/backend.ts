@@ -120,7 +120,7 @@ function isCountryCodeValid(countryCode: string) {
 
 async function getWishlistItemsWithPriority(steamId: string, countryCode: string) {
 
-	const MAX_PAGE_SIZE = 1000;
+	const MAX_PAGE_SIZE = 10000;
 
 	const wishlistSize = await getWishlistItemCount(steamId);
 
