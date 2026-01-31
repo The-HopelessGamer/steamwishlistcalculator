@@ -98,7 +98,7 @@ export class WishlistItem {
 	}
 
 	isUnlisted() {
-		return this.storeItem?.unlisted ?? true;
+		return this.storeItem?.unlisted ?? false;
 	}
 
 	isComingSoon() {
