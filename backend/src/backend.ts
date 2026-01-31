@@ -1,14 +1,10 @@
 import express from "express";
 import axios from "axios";
-import https from "https";
-import { Pool } from "undici";
 import helmet from "helmet";
-import protobuf from "protobufjs";
 import fs from "fs";
 import { query, validationResult } from "express-validator";
 import { lookup } from "ip-location-api";
 import { countryCodesList } from "./country_codes.ts";
-import common_proto from "protos/common.js";
 import service_wishlist from "protos/service_wishlist.js";
 
 const BASE_URL = "https://api.steampowered.com/";
@@ -50,27 +46,27 @@ async function getProfileName(steamId: string) {
 	}
 }
 
-async function getWishlistItems(steamId: string) {
-	const getWishlistRequest = service_wishlist.CWishlistGetWishlistRequest.create({
+async function GetWishlistItemCount(steamId: string) {
+	const GetWishlistItemCountRequest = service_wishlist.CWishlistGetWishlistItemCountRequest.create({
 		steamid: steamId,
 	});
 
 	const getWishlistRequestBuffer =
-		service_wishlist.CWishlistGetWishlistRequest.encode(getWishlistRequest).finish();
+		service_wishlist.CWishlistGetWishlistItemCountRequest.encode(GetWishlistItemCountRequest).finish();
 
 	try {
 		const response = await axios({
 			method: "get",
 			baseURL: BASE_URL,
-			url: "IWishlistService/GetWishlist/v1",
+			url: "IWishlistService/GetWishlistItemCount/v1",
 			params: {
 				input_protobuf_encoded: Buffer.from(getWishlistRequestBuffer).toString('base64'),
 			},
 			responseType: "arraybuffer",
 		});
 
-		const getWishlistResponse = service_wishlist.CWishlistGetWishlistResponse.decode(response.data);
-		return getWishlistResponse?.items ?? [];
+		const getWishlistItemsCountResponse = service_wishlist.CWishlistGetWishlistItemCountResponse.decode(response.data);
+		return getWishlistItemsCountResponse ?? [];
 	} catch {
 		return undefined;
 	}
@@ -90,6 +86,7 @@ async function getWishlistItemsFiltered(steamId: string, countryCode: string) {
 			language: "english",
 			countryCode: countryCode,
 		},
+		pageSize: 100,
 	});
 
 	const getWishlistRequestBuffer =
