@@ -1,36 +1,22 @@
 import express from "express";
 import axios from "axios";
+import https from "https";
+import { Pool } from "undici";
 import helmet from "helmet";
 import protobuf from "protobufjs";
 import fs from "fs";
 import { query, validationResult } from "express-validator";
 import { lookup } from "ip-location-api";
-import { countryCodesList } from "./country_codes.js";
+import { countryCodesList } from "./country_codes.ts";
+import common_proto from "protos/common.js";
+import service_wishlist from "protos/service_wishlist.js";
 
 const BASE_URL = "https://api.steampowered.com/";
-const COMMON_PROTO = protobuf.loadSync("../protos/src/common.proto");
-const SERVICE_WISHLIST_PROTO = protobuf.loadSync(
-	"../protos/src/service_wishlist.proto"
-);
 
-const CWishlist_GetWishlist_Request = SERVICE_WISHLIST_PROTO.lookupType(
-	"CWishlist_GetWishlist_Request"
-);
-const CWishlist_GetWishlist_Response = SERVICE_WISHLIST_PROTO.lookupType(
-	"CWishlist_GetWishlist_Response"
-);
-
-const CStoreBrowse_GetItems_Request = COMMON_PROTO.lookupType(
-	"CStoreBrowse_GetItems_Request"
-);
-const CStoreBrowse_GetItems_Response = COMMON_PROTO.lookupType(
-	"CStoreBrowse_GetItems_Response"
-);
-const GET_ITEMS_REQUEST_LIMIT = 700;
 
 const STEAM_API_KEY = process.env.STEAM_API_KEY;
 
-async function resolveVanityUrl(vanityUrl) {
+async function resolveVanityUrl(vanityUrl: string) {
 	try {
 		const response = await axios({
 			method: "get",
@@ -47,7 +33,7 @@ async function resolveVanityUrl(vanityUrl) {
 	}
 }
 
-async function getProfileName(steamId) {
+async function getProfileName(steamId: string) {
 	try {
 		const response = await axios({
 			method: "get",
@@ -64,13 +50,13 @@ async function getProfileName(steamId) {
 	}
 }
 
-async function getWishlistItems(steamId) {
-	const getWishlistRequest = CWishlist_GetWishlist_Request.create({
+async function getWishlistItems(steamId: string) {
+	const getWishlistRequest = service_wishlist.CWishlistGetWishlistRequest.create({
 		steamid: steamId,
 	});
 
 	const getWishlistRequestBuffer =
-		CWishlist_GetWishlist_Request.encode(getWishlistRequest).finish();
+		service_wishlist.CWishlistGetWishlistRequest.encode(getWishlistRequest).finish();
 
 	try {
 		const response = await axios({
@@ -78,91 +64,75 @@ async function getWishlistItems(steamId) {
 			baseURL: BASE_URL,
 			url: "IWishlistService/GetWishlist/v1",
 			params: {
-				input_protobuf_encoded: getWishlistRequestBuffer.toString("base64"),
+				input_protobuf_encoded: Buffer.from(getWishlistRequestBuffer).toString('base64'),
 			},
 			responseType: "arraybuffer",
 		});
 
-		const getWishlistResponse = CWishlist_GetWishlist_Response.decode(
-			response.data
-		);
-
-		const getWishlistResponseObject = CWishlist_GetWishlist_Response.toObject(
-			getWishlistResponse,
-			{ longs: Number }
-		);
-
-		return getWishlistResponseObject?.items;
+		const getWishlistResponse = service_wishlist.CWishlistGetWishlistResponse.decode(response.data);
+		return getWishlistResponse?.items ?? [];
 	} catch {
 		return undefined;
 	}
 }
 
-async function getStoreItems(appIds, countryCode) {
-	let items = [];
+async function getWishlistItemsFiltered(steamId: string) {
+	const getWishlistRequest = service_wishlist.CWishlistGetWishlistSortedFilteredRequest.create({
+		steamid: steamId,
+		dataRequest: {
+			includeRelease: true,
+			includeScreenshots: true,
+			includeAllPurchaseOptions: true,
+		},
+		filters: {},
+		context: {
+			language: "english",
+			countryCode: "au",
+		},
+	});
 
-	for (let i = 0; i < appIds.length; i += GET_ITEMS_REQUEST_LIMIT) {
-		const requestedAppIds = appIds.slice(i, i + GET_ITEMS_REQUEST_LIMIT);
+	const getWishlistRequestBuffer =
+		service_wishlist.CWishlistGetWishlistSortedFilteredRequest.encode(getWishlistRequest).finish();
 
-		const getItemsRequest = CStoreBrowse_GetItems_Request.create({
-			ids: requestedAppIds.map((appId) => ({ appid: appId })),
-			context: {
-				language: "english",
-				countryCode,
+	try {
+		const response = await axios({
+			method: "get",
+			baseURL: BASE_URL,
+			url: "IWishlistService/GetWishlistSortedFiltered/v1",
+			params: {
+				input_protobuf_encoded: Buffer.from(getWishlistRequestBuffer).toString('base64'),
 			},
-			dataRequest: {
-				includeRelease: true,
-			},
+			responseType: "arraybuffer",
 		});
-		const getItemsRequestBuffer =
-			CStoreBrowse_GetItems_Request.encode(getItemsRequest).finish();
 
-		try {
-			const response = await axios({
-				method: "get",
-				baseURL: BASE_URL,
-				url: "IStoreBrowseService/GetItems/v1",
-				params: {
-					input_protobuf_encoded: getItemsRequestBuffer.toString("base64"),
-				},
-				responseType: "arraybuffer",
-			});
-
-			const getItemsResponse = CStoreBrowse_GetItems_Response.decode(
-				response.data
-			);
-
-			const getItemsResponseObject = CStoreBrowse_GetItems_Response.toObject(
-				getItemsResponse,
-				{ longs: Number }
-			);
-
-			items = items.concat(getItemsResponseObject.storeItems);
-		} catch {
-			return undefined;
-		}
+		const getWishlistResponse = service_wishlist.CWishlistGetWishlistSortedFilteredResponse.decode(response.data);
+		return getWishlistResponse?.items ?? [];
+	} catch {
+		return undefined;
 	}
-
-	return items;
 }
 
-function isCountryCodeValid(countryCode) {
+function isCountryCodeValid(countryCode: string) {
 	return countryCodesList.includes(countryCode);
 }
 
-async function getStoreItemsWithPriority(steamId, countryCode) {
-	const wishlistItems = await getWishlistItems(steamId);
+async function getStoreItemsWithPriority(steamId: string, countryCode: string) {
+	const storeItems = await getWishlistItemsFiltered(steamId);
 
-	if (wishlistItems === undefined) {
+	console.log(storeItems);
+
+	if (storeItems === undefined) {
 		return undefined;
 	}
 
-	const storeItems = await getStoreItems(
-		wishlistItems.map((wishlistItem) => wishlistItem.appid),
-		countryCode
-	);
+	/*
+		const storeItems = await getStoreItems(
+			wishlistItems.map((wishlistItem) => wishlistItem.appid).filter(appid => appid !== undefined),
+			countryCode
+		);
+	*/
 
-	return storeItems.map((storeItem) => ({storeItem, priority: wishlistItems.find((wishlistItem) => wishlistItem.appid === storeItem.appid).priority}));
+	return storeItems;
 }
 
 function main() {
@@ -199,7 +169,7 @@ function main() {
 				return res.send("Invalid Steam ID");
 			}
 
-			const steamId = await resolveVanityUrl(req.query.vanityUrl);
+			const steamId = await resolveVanityUrl(req.query?.vanityUrl);
 
 			if (steamId === undefined) {
 				res.status(500);
@@ -212,7 +182,7 @@ function main() {
 
 	router.get(
 		"/wishlist",
-		query("steamId" && "countryCode")
+		query(["steamId", "countryCode"])
 			.notEmpty()
 			.escape(),
 		async function (req, res) {
@@ -223,14 +193,14 @@ function main() {
 				return res.send("Invalid Shareable Link");
 			}
 
-			if (!isCountryCodeValid(req.query.countryCode)) {
+			if (!isCountryCodeValid(req.query?.countryCode)) {
 				res.status(400);
 				return res.send("Unsupported Country Code");
 			}
 
 			const wishlist = await getStoreItemsWithPriority(
-				req.query.steamId,
-				req.query.countryCode
+				req.query?.steamId,
+				req.query?.countryCode
 			);
 
 			if (wishlist === undefined) {
@@ -251,7 +221,7 @@ function main() {
 				res.status(400);
 				return res.send("Invalid Steam ID");
 			}
-			const profileName = await getProfileName(req.query.steamId);
+			const profileName = await getProfileName(req.query?.steamId);
 			return res.send(profileName);
 		}
 	);
@@ -262,21 +232,21 @@ function main() {
 	});
 
 	router.post("/counterUpdate", async function (req, res) {
-		let count = fs.readFileSync("./counter.txt", "utf8");
+		let count = Number(fs.readFileSync("./counter.txt", "utf8"));
 		count++;
 		fs.writeFileSync("./counter.txt", count.toString());
 		res.send();
 	});
 
 	router.get("/ip2Country", async function (req, res) {
-		const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
-		const location = lookup(ip);
+		const ip = String(req.headers["x-forwarded-for"] || req.socket.remoteAddress);
+		const location = await Promise.resolve(lookup(ip));
 		if (location === null) {
 			res.status(400);
 			return res.send("Unable to get IP Address");
 		}
 
-		if (!isCountryCodeValid(location.country)) {
+		if (!location.country || !isCountryCodeValid(location.country)) {
 			res.status(400);
 			return res.send("Unsupported Country Code");
 		}

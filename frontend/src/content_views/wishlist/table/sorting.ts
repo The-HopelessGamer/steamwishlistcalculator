@@ -92,8 +92,8 @@ function sortByAppid(
 	const reverseScale = reverse ? -1 : 1;
 
 	return wishlist.sort((a, b) => {
-		const aAppid = a.appid();
-		const bAppid = b.appid();
+		const aAppid = a.appid;
+		const bAppid = b.appid;
 
 		if (aAppid === bAppid) {
 			return 0;
