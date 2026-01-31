@@ -76,18 +76,19 @@ async function getWishlistItems(steamId: string) {
 	}
 }
 
-async function getWishlistItemsFiltered(steamId: string) {
+async function getWishlistItemsFiltered(steamId: string, countryCode: string) {
 	const getWishlistRequest = service_wishlist.CWishlistGetWishlistSortedFilteredRequest.create({
 		steamid: steamId,
 		dataRequest: {
 			includeRelease: true,
-			includeScreenshots: true,
 			includeAllPurchaseOptions: true,
+			includeBasicInfo: true,
+			includeLinks: true,
 		},
 		filters: {},
 		context: {
 			language: "english",
-			countryCode: "au",
+			countryCode: countryCode,
 		},
 	});
 
@@ -117,7 +118,7 @@ function isCountryCodeValid(countryCode: string) {
 }
 
 async function getStoreItemsWithPriority(steamId: string, countryCode: string) {
-	const storeItems = await getWishlistItemsFiltered(steamId);
+	const storeItems = await getWishlistItemsFiltered(steamId, countryCode);
 
 	console.log(storeItems);
 
