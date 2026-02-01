@@ -109,7 +109,6 @@ async function getWishlistItemsFiltered(steamId: string, countryCode: string, pa
 		const getWishlistResponse = service_wishlist.CWishlistGetWishlistSortedFilteredResponse.decode(response.data);
 		return getWishlistResponse?.items ?? [];
 	} catch (error) {
-		console.log(error);
 		return undefined;
 	}
 }
@@ -126,29 +125,25 @@ async function getWishlistItemsWithPriority(steamId: string, countryCode: string
 
 	const pageCount = Math.floor((wishlistSize?.count ?? 0) / MAX_PAGE_SIZE) + 1;
 
-	const wishlistItemsPagination = [...Array(pageCount).keys()].map(async pageIndex => {
+	const wishlistItems = await [...Array(pageCount).keys()].reduce<Promise<any[]>>((accumulatorPromise, pageIndex) => {
+		return accumulatorPromise.then((acc) => {
+			const pageStride = MAX_PAGE_SIZE;
+			const currentPage = pageIndex * pageStride;
+			const endPoint = currentPage + pageStride;
 
-		const pageStride = MAX_PAGE_SIZE;
+			return getWishlistItemsFiltered(steamId, countryCode, pageStride, currentPage).then((page) => {
+				const combinedPages = page?.slice(currentPage, endPoint);
 
-		const currentPage = pageIndex * pageStride;
-		const endPoint = currentPage + pageStride;
-		const page = await getWishlistItemsFiltered(steamId, countryCode, pageStride, currentPage);
+				if (combinedPages === undefined) {
+					return acc;
+				}
 
-		const combinedPages = page?.slice(currentPage, endPoint);
-
-		console.log(combinedPages);
-
-		return combinedPages;
-
-	});
-
-	const wishlistItems = (await Promise.all(wishlistItemsPagination)).reduce((acc, item) => {
-		if (item === undefined) {
-			return undefined;
-		}
-		acc?.push(...item);
-		return acc;
-	}, []);
+				acc.push(...combinedPages);
+				return acc;
+			});
+		});
+	}, Promise.resolve([]));
+	.0
 
 	return wishlistItems;
 }
