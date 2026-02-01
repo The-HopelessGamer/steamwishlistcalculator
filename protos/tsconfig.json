@@ -1,8 +1,8 @@
 {
     "compilerOptions": {
-        "noEmit": true,
-        "lib": ["ESNext"]
-    },
-    "exclude": ["dist/**/*"],
-    "include": ["index.ts"]
+        "lib": [
+            "ESNext"
+        ],
+        "rewriteRelativeImportExtensions": true
+    }
 }

@@ -1,11 +1,18 @@
 {
     "name": "protos",
-    "main": "index.ts",
+    "description": "Protos can be found at: https://github.com/SteamDatabase/Protobufs | https://github.com/SteamDatabase/Protobufs/blob/master/webui/common.proto | https://github.com/SteamDatabase/Protobufs/blob/master/webui/service_wishlist.proto | https://github.com/SteamDatabase/Protobufs/blob/master/webui/common_base.proto | https://github.com/SteamDatabase/Protobufs/blob/master/google/protobuf/descriptor.proto | Descriptor Proto needs the import to be updated.",
+    "exports": {
+        "./common.js": "./dist/common.js",
+        "./common_base.js": "./dist/common_base.js",
+        "./descriptor.js": "./dist/descriptor.js",
+        "./service_wishlist.js": "./dist/service_wishlist.js"
+    },
     "scripts": {
         "generate-protos": "bash -e generate-protos.sh"
     },
     "devDependencies": {
-        "ts-proto": "^2.6.1"
+        "ts-proto": "^2.6.1",
+        "typescript": "^5.9.3"
     },
     "dependencies": {
         "@bufbuild/protobuf": "^2.2.3"

@@ -34,7 +34,7 @@ export function ExportModal(props: ExportModalProps) {
 		.map((wishlistItem) =>
 			exportMode === "title"
 				? wishlistItem.formattedTitle()
-				: wishlistItem.appid().toString()
+				: wishlistItem.appid.toString()
 		)
 		.join(", ");
 

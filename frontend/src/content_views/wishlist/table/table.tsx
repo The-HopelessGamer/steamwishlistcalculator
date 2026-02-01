@@ -198,13 +198,13 @@ export function Table(props: TableProps) {
 						).map((item) =>
 							isLargeScreen ? (
 								<Row
-									key={item.appid()}
+									key={item.appid}
 									item={item}
 									isSalePricing={isSalePricing}
 								/>
 							) : (
 								<RowCompact
-									key={item.appid()}
+									key={item.appid}
 									item={item}
 									isSalePricing={isSalePricing}
 								/>

@@ -27,7 +27,7 @@ export function Row(props: RowProps) {
 				{props.item.formattedReleaseDate()}
 			</td>
 			<td className={styles.tableRowPropertyContainer}>
-				{String(props.item.appid())}
+				{String(props.item.appid)}
 			</td>
 			<td
 				className={classNames([

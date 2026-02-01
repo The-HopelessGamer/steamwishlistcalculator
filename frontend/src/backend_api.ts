@@ -1,4 +1,4 @@
-import type { common } from "protos";
+import type * as common from "protos/common.js";
 import { WishlistItem } from "./wishlist_item";
 
 const API_PATH = "/api";
@@ -162,10 +162,11 @@ export async function getWishlist(steamId: string, countryCode: string): Promise
 		return {
 			ok: true,
 			// TODO: Move type definitions to own file to be shared between frontend and backend.
-			data: ((await response.json()) as { storeItem: common.StoreItem, priority: number | undefined }[]).map(storeItemWithPriority => new WishlistItem(storeItemWithPriority.storeItem, storeItemWithPriority.priority)),
+			data: ((await response.json()) as { storeItem?: common.StoreItem, appid: number, priority: number }[]).map(storeItemWithPriority => new WishlistItem(storeItemWithPriority.storeItem, storeItemWithPriority.priority, storeItemWithPriority.appid)),
 		};
 
-	} catch {
+	} catch (error) {
+		console.log(error);
 		return {
 			ok: false,
 			text: "Failed fetching wishlist",

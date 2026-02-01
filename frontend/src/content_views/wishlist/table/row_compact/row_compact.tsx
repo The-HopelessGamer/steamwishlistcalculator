@@ -36,7 +36,7 @@ export function RowCompact(props: RowCompactProps) {
 			<td>
 				<div className={styles.tableRowCompactLabel}>AppID</div>
 				<div className={styles.tableRowCompactValue}>
-					{String(props.item.appid())}
+					{String(props.item.appid)}
 				</div>
 			</td>
 			<td>
