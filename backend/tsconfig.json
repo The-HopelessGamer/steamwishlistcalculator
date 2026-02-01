@@ -7,6 +7,7 @@
     "strict": true,
     "skipLibCheck": true,
     "rewriteRelativeImportExtensions": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "rootDir": "src"
   }
 }
