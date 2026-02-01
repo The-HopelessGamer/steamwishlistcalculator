@@ -46,12 +46,15 @@ async function getProfileName(steamId: string) {
 }
 
 async function getWishlistItemCount(steamId: string) {
-	const GetWishlistItemCountRequest = service_wishlist.CWishlistGetWishlistItemCountRequest.create({
-		steamid: steamId,
-	});
+	const GetWishlistItemCountRequest =
+		service_wishlist.CWishlistGetWishlistItemCountRequest.create({
+			steamid: steamId,
+		});
 
 	const getWishlistRequestBuffer =
-		service_wishlist.CWishlistGetWishlistItemCountRequest.encode(GetWishlistItemCountRequest).finish();
+		service_wishlist.CWishlistGetWishlistItemCountRequest.encode(
+			GetWishlistItemCountRequest,
+		).finish();
 
 	try {
 		const response = await axios({
@@ -59,40 +62,51 @@ async function getWishlistItemCount(steamId: string) {
 			baseURL: BASE_URL,
 			url: "IWishlistService/GetWishlistItemCount/v1",
 			params: {
-				input_protobuf_encoded: Buffer.from(getWishlistRequestBuffer).toString('base64'),
+				input_protobuf_encoded: Buffer.from(getWishlistRequestBuffer).toString(
+					"base64",
+				),
 			},
 			responseType: "arraybuffer",
 		});
 
-		const getWishlistItemsCountResponse = service_wishlist.CWishlistGetWishlistItemCountResponse.decode(response.data);
+		const getWishlistItemsCountResponse =
+			service_wishlist.CWishlistGetWishlistItemCountResponse.decode(
+				response.data,
+			);
 		return getWishlistItemsCountResponse ?? [];
 	} catch {
 		return undefined;
 	}
 }
 
-async function getWishlistItemsFiltered(steamId: string, countryCode: string, pageSize: number, startIndex: number) {
-
-
-	const getWishlistRequest = service_wishlist.CWishlistGetWishlistSortedFilteredRequest.create({
-		steamid: steamId,
-		dataRequest: {
-			includeRelease: true,
-			includeAllPurchaseOptions: true,
-			includeBasicInfo: true,
-			includeLinks: true,
-		},
-		filters: {},
-		context: {
-			language: "english",
-			countryCode,
-		},
-		pageSize,
-		startIndex,
-	});
+async function getWishlistItemsFiltered(
+	steamId: string,
+	countryCode: string,
+	pageSize: number,
+	startIndex: number,
+) {
+	const getWishlistRequest =
+		service_wishlist.CWishlistGetWishlistSortedFilteredRequest.create({
+			steamid: steamId,
+			dataRequest: {
+				includeRelease: true,
+				includeAllPurchaseOptions: true,
+				includeBasicInfo: true,
+				includeLinks: true,
+			},
+			filters: {},
+			context: {
+				language: "english",
+				countryCode,
+			},
+			pageSize,
+			startIndex,
+		});
 
 	const getWishlistRequestBuffer =
-		service_wishlist.CWishlistGetWishlistSortedFilteredRequest.encode(getWishlistRequest).finish();
+		service_wishlist.CWishlistGetWishlistSortedFilteredRequest.encode(
+			getWishlistRequest,
+		).finish();
 
 	try {
 		const response = await axios({
@@ -101,12 +115,17 @@ async function getWishlistItemsFiltered(steamId: string, countryCode: string, pa
 			url: "IWishlistService/GetWishlistSortedFiltered/v1",
 			params: {
 				key: STEAM_API_KEY,
-				input_protobuf_encoded: Buffer.from(getWishlistRequestBuffer).toString('base64'),
+				input_protobuf_encoded: Buffer.from(getWishlistRequestBuffer).toString(
+					"base64",
+				),
 			},
 			responseType: "arraybuffer",
 		});
 
-		const getWishlistResponse = service_wishlist.CWishlistGetWishlistSortedFilteredResponse.decode(response.data);
+		const getWishlistResponse =
+			service_wishlist.CWishlistGetWishlistSortedFilteredResponse.decode(
+				response.data,
+			);
 		return getWishlistResponse?.items ?? [];
 	} catch (error) {
 		return undefined;
@@ -117,33 +136,43 @@ function isCountryCodeValid(countryCode: string) {
 	return countryCodesList.includes(countryCode);
 }
 
-async function getWishlistItemsWithPriority(steamId: string, countryCode: string) {
-
+async function getWishlistItemsWithPriority(
+	steamId: string,
+	countryCode: string,
+) {
 	const MAX_PAGE_SIZE = 10000;
 
 	const wishlistSize = await getWishlistItemCount(steamId);
 
 	const pageCount = Math.floor((wishlistSize?.count ?? 0) / MAX_PAGE_SIZE) + 1;
 
-	const wishlistItems = await [...Array(pageCount).keys()].reduce<Promise<any[]>>((accumulatorPromise, pageIndex) => {
-		return accumulatorPromise.then((acc) => {
-			const pageStride = MAX_PAGE_SIZE;
-			const currentPage = pageIndex * pageStride;
-			const endPoint = currentPage + pageStride;
+	const wishlistItems = await [...Array(pageCount).keys()].reduce<
+		Promise<
+			| service_wishlist.CWishlistGetWishlistSortedFilteredResponseWishlistItem[]
+			| undefined
+		>
+	>(async (accumulatorPromise, pageIndex) => {
+		const acc = await accumulatorPromise;
+		const pageStride = MAX_PAGE_SIZE;
+		const currentPage = pageIndex * pageStride;
+		const endPoint = currentPage + pageStride;
 
-			return getWishlistItemsFiltered(steamId, countryCode, pageStride, currentPage).then((page) => {
-				const combinedPages = page?.slice(currentPage, endPoint);
+		const page = await getWishlistItemsFiltered(
+			steamId,
+			countryCode,
+			pageStride,
+			currentPage,
+		);
 
-				if (combinedPages === undefined) {
-					return acc;
-				}
+		const combinedPages = page?.slice(currentPage, endPoint);
 
-				acc.push(...combinedPages);
-				return acc;
-			});
-		});
+		if (combinedPages === undefined || acc === undefined) {
+			return undefined;
+		}
+
+		acc.push(...combinedPages);
+		return acc;
 	}, Promise.resolve([]));
-	.0
 
 	return wishlistItems;
 }
@@ -168,7 +197,7 @@ function main() {
 					scriptSrcAttr: ["'unsafe-inline'"],
 				},
 			},
-		})
+		}),
 	);
 
 	router.get(
@@ -190,14 +219,12 @@ function main() {
 			}
 
 			return res.send(steamId);
-		}
+		},
 	);
 
 	router.get(
 		"/wishlist",
-		query(["steamId", "countryCode"])
-			.notEmpty()
-			.escape(),
+		query(["steamId", "countryCode"]).notEmpty().escape(),
 		async function (req, res) {
 			const result = validationResult(req);
 
@@ -213,7 +240,7 @@ function main() {
 
 			const wishlist = await getWishlistItemsWithPriority(
 				req.query?.steamId,
-				req.query?.countryCode
+				req.query?.countryCode,
 			);
 
 			if (wishlist === undefined) {
@@ -222,7 +249,7 @@ function main() {
 			}
 
 			return res.send(JSON.stringify(wishlist));
-		}
+		},
 	);
 
 	router.get(
@@ -236,7 +263,7 @@ function main() {
 			}
 			const profileName = await getProfileName(req.query?.steamId);
 			return res.send(profileName);
-		}
+		},
 	);
 
 	router.get("/counterRead", async function (req, res) {
@@ -252,7 +279,9 @@ function main() {
 	});
 
 	router.get("/ip2Country", async function (req, res) {
-		const ip = String(req.headers["x-forwarded-for"] || req.socket.remoteAddress);
+		const ip = String(
+			req.headers["x-forwarded-for"] || req.socket.remoteAddress,
+		);
 		const location = await Promise.resolve(lookup(ip));
 		if (location === null) {
 			res.status(400);
