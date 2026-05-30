@@ -2,6 +2,7 @@ import SteamDesign from "./logos/SteamDesign.svg";
 import SteamBacklog from "./logos/SteamBacklog.jpg";
 import SteamLadder from "./logos/SteamLadder.png";
 import SteamLevelUp from "./logos/SteamLevelUp.png";
+import SteamProfileTools from "./logos/SteamProfileTools.jpg";
 
 export type Partner = {
 	name: string;
@@ -37,5 +38,12 @@ export const partners: Partner[] = [
 			"The Cheapest and Fastest Way to Level Up Your Steam Profile. Buy Steam Levels with Card, Crypto, CS2 Skins, and Steam Gems!",
 		url: "https://steamlevelup.com/",
 		logoUrl: SteamLevelUp,
+	},
+	{
+		name: "Steam Profile Tools",
+		description:
+			"Tools to design your steam profile! Search for profile backgrounds, create steam artwork, and crop steam profile backgrounds to showcases.",
+		url: "https://steamprofiletools.com/",
+		logoUrl: SteamProfileTools,
 	},
 ];
