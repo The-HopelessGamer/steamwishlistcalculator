@@ -11,6 +11,28 @@ const BASE_URL = "https://api.steampowered.com/";
 
 const STEAM_API_KEY = process.env.STEAM_API_KEY;
 
+async function retryWithBackoff<T>(
+	operation: () => Promise<T>,
+	maxRetries: number = 3,
+	initialDelayMs: number = 1000,
+): Promise<T> {
+	let lastError: Error | undefined;
+
+	for (let attempt = 0; attempt <= maxRetries; attempt++) {
+		try {
+			return await operation();
+		} catch (error) {
+			lastError = error as Error;
+			if (attempt < maxRetries) {
+				const delayMs = initialDelayMs * Math.pow(2, attempt);
+				await new Promise((resolve) => setTimeout(resolve, delayMs));
+			}
+		}
+	}
+
+	throw lastError || new Error("Operation failed after retries");
+}
+
 async function resolveVanityUrl(vanityUrl: string) {
 	try {
 		const response = await axios({
@@ -102,25 +124,29 @@ async function getWishlistItemsFiltered(
 			pageSize,
 			startIndex,
 		});
-
 	const getWishlistRequestBuffer =
 		service_wishlist.CWishlistGetWishlistSortedFilteredRequest.encode(
 			getWishlistRequest,
 		).finish();
 
 	try {
-		const response = await axios({
-			method: "get",
-			baseURL: BASE_URL,
-			url: "IWishlistService/GetWishlistSortedFiltered/v1",
-			params: {
-				key: STEAM_API_KEY,
-				input_protobuf_encoded: Buffer.from(getWishlistRequestBuffer).toString(
-					"base64",
-				),
-			},
-			responseType: "arraybuffer",
-		});
+		const response = await retryWithBackoff(
+			() =>
+				axios({
+					method: "get",
+					baseURL: BASE_URL,
+					url: "IWishlistService/GetWishlistSortedFiltered/v1",
+					params: {
+						key: STEAM_API_KEY,
+						input_protobuf_encoded: Buffer.from(
+							getWishlistRequestBuffer,
+						).toString("base64"),
+					},
+					responseType: "arraybuffer",
+				}),
+			3, // max 3 retries
+			1000, // start with 1 second delay
+		);
 
 		const getWishlistResponse =
 			service_wishlist.CWishlistGetWishlistSortedFilteredResponse.decode(
